@@ -1,0 +1,3 @@
+[submodule "library/fluidgraph"]
+	path = library/fluidgraph
+	url = https://github.com/fluidlog/fluidgraph

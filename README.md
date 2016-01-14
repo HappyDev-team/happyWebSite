@@ -6,3 +6,18 @@ The goal of this repository is to collaboratively work on interfacing the ldp-fr
 The base code of the fluidgraph library by fluidlog (https://github.com/fluidlog/fluidgraph )will probably be used (at least tested).
 
 So, getting back to work ;-)
+
+## Installation
+
+As usual, cloning from sources:
+
+```
+git clone https://github.com/happyDev-team/HappyWebSite
+```
+
+Then, because there is a dependency (to be probably removed later) to the fluidgraph project:
+
+```
+git submodule init
+git submodule update
+```
