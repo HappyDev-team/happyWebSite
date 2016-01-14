@@ -1,6 +1,6 @@
 @font-face {
 	font-family:			bebas;
-	src:					url('BebasNeue.otf');
+	src:					url('resources/fonts/BebasNeue.otf');
 }
 @keyframes linedraw {
     from {stroke-dashoffset: 1000;}
@@ -39,7 +39,7 @@ line  {
 .happy-title h4 {
 	font-size:				130%;
 	font-family:			helvetica, sans-serif;
-	margin:					0;	
+	margin:					0;
 }
 .chevron {
 	background-color:		rgb(253, 200, 21);
