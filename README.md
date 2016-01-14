@@ -21,3 +21,5 @@ Then, because there is a dependency (to be probably removed later) to the fluidg
 git submodule init
 git submodule update
 ```
+
+You should now have the whole project + a library directory containing the fluidgraph library files.
