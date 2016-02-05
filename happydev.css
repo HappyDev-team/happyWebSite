@@ -2,10 +2,12 @@
 	font-family:			bebas;
 	src:					url('resources/fonts/BebasNeue.otf');
 }
+
 @keyframes linedraw {
     from {stroke-dashoffset: 1000;}
     to 	  {stroke-dashoffset: 0;}
 }
+
 body  {
 	color:					rgb(253, 200, 21);
 	stroke:					rgb(253, 200, 21);
@@ -19,6 +21,7 @@ line  {
 	stroke-dashoffset:		1000;
 	animation:			 	linedraw forwards;
 }
+
 .node-name {
 	font-family:			bebas, sans-serif;
 	font-size:				32px;
@@ -30,17 +33,20 @@ line  {
 	text-align:				center;
 	width: 					100%;
 }
+
 .happy-title h1 {
 	font-family:			bebas, sans-serif;
 	font-size:				750%;
 	font-weight:			400;
 	margin:					-20px 0;
 }
+
 .happy-title h4 {
 	font-size:				130%;
 	font-family:			helvetica, sans-serif;
 	margin:					0;
 }
+
 .chevron {
 	background-color:		rgb(253, 200, 21);
 	height:					5px;

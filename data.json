@@ -1,16 +1,16 @@
 {
     "nodes": [
-        {"cx":152, "cy":116},
-        {"cx":522, "cy":120},
+        {"cx":152, "cy":116, "name": "Team", "url": "http://localhost/wordpress/ldp/actor/"},
+        {"cx":522, "cy":120, "name": "Projects", "url": "http://localhost/wordpress/ldp/project/"},
         {"cx":774, "cy":174},
         {"cx":192, "cy":259},
         {"cx":390, "cy":220},
         {"cx":902, "cy":325},
         {"cx":121, "cy":452},
         {"cx":601, "cy":490},
-        {"cx":357, "cy":661},
+        {"cx":357, "cy":661, "name": "Resources", "url": "http://localhost/wordpress/ldp/resource/"},
         {"cx":609, "cy":690},
-        {"cx":818, "cy":638}
+        {"cx":818, "cy":638, "name": "Ideas", "url": "http://localhost/wordpress/ldp/idea/"}
     ],
     "links": [
         {"source":0, "target":3, "delay": 0, "duration": 1000},
