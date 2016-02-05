@@ -13,7 +13,7 @@ function drawNodes(container, data) {
         .attr("cy", function(d) { return d.cy;})
         .attr("r", function(d) { return d.name ? 16 : 4; })
         .on("click", function(d) {
-          window.location.hash = d.url;
+          launchZoom(d);
         });
 
     // addition d'un Text à chaque svg.node
@@ -44,6 +44,13 @@ function drawLinks(container, data) {
         .style("animation-duration", "5s")
         .style("animation-delay", "0.1s");
     return links;
+}
+
+function launchZoom(data) {
+    console.log("X", d.x);
+    console.log("Y", d.y);
+    window.location.hash = d.url;
+
 }
 
 $(function() {
