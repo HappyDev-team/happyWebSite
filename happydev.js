@@ -2,7 +2,7 @@ function getLineLength(line) {
     return Math.sqrt(Math.pow(line.x2 - line.x1, 2) + Math.pow(line.y2 - line.y1, 2))
 }
 function drawNodes(container, data) {
-    var nodes = container.selectAll(".node")
+    window.nodes = container.selectAll(".node")
         .data(data)
         .enter().append("svg")
             .attr("class", "node");
@@ -16,17 +16,19 @@ function drawNodes(container, data) {
     // addition d'un Text à chaque svg.node
     nodes.each(function(d) {
         if (d.name)
-            d3.select(this).append("text")
-                .attr("class", "node-name")
-                .attr("x", function(d) { return d.cx-38; })
-                .attr("y", function(d) { return d.cy+55; })
-                .text(function(d) { return d.name; });
+            d3.select(this).on("click", zoom)
+                .style("cursor", "pointer")
+                .append("text")
+                    .attr("class", "node-name")
+                    .attr("x", function(d) { return d.cx-38; })
+                    .attr("y", function(d) { return d.cy+55; })
+                    .text(function(d) { return d.name; });
     });
     return nodes;
 }
-    
+
 function drawLinks(container, data) { 
-    var links = container.selectAll(".link")
+    window.links = container.selectAll(".link")
         .data(data)
         .enter().append("line")
         .attr("class", "link")
@@ -39,14 +41,51 @@ function drawLinks(container, data) {
     return links;
 }
 
+function zoom(node) {
+    $('.happy-title').hide();
+    if(node.name) {
+        areaLeft = node.cx - viewportWidth/zoomLevel/2;
+        areaTop = node.cy - viewportHeight/zoomLevel/2;
+        svgContainer.transition().duration(750).attr("transform",
+            `translate(${viewportWidth/2-node.cx*zoomLevel},${viewportHeight/2-node.cy*zoomLevel})scale(${zoomLevel})`);
+
+        d3.json(node.container, function(data) {
+            window.members = svgContainer.selectAll(".members")
+                .data(data.members)
+                .enter().append("svg")
+                    .attr("class", "members")
+                    .attr("x", function(d) { return Math.random()*viewportWidth/zoomLevel+areaLeft;})
+                    .attr("y", function(d) { return Math.random()*viewportHeight/zoomLevel+areaTop;})
+                    .on("click", showMember)
+                    .style("cursor", "pointer");
+            
+            members.append("circle").attr("cx", 40).attr("cy", 10)
+                .attr("class", "node").attr("r", 8);
+            
+            members.append("text").attr("class", "member-name").attr("x", 15).attr("y", 25)
+                .text(function(d) { return d.name; });
+        });
+    }
+}
+
+function showMember(member) {
+    $("#panel").show();
+    store.render("#panel", member.iri, "#profile-template");
+}
+
 $(function() {
+    window.store = new MyStore({container:"",context: "http://owl.openinitiative.com/oicontext.jsonld"});
+    
+    window.viewportWidth = 1000;
+    window.viewportHeight = 700;
+    window.zoomLevel = 3;
     d3.json("data.json", function(data) {
-        var svgContainer = d3.select("body").append("svg")
+        window.svgContainer = d3.select("body").append("svg")
             .attr("id", "svg-container")
-            .attr("viewBox", "0 0 1024 768")
+            .attr("viewBox", `0 0 ${viewportWidth} ${viewportHeight}`)
             .attr("height", "100%")
             .attr("width", "100%")
-            .attr("preserveAspectRatio", "xMidYMid meet");
+            .attr("preserveAspectRatio", "xMidYMid meet").append("g");
         d3.layout.force().nodes(data.nodes)
                  .links(data.links)
                  .start();
