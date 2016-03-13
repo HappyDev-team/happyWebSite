@@ -74,7 +74,7 @@ function showMember(member) {
 }
 
 $(function() {
-    window.store = new MyStore({container:"",context: "http://owl.openinitiative.com/oicontext.jsonld"});
+    window.store = new MyStore({context: "http://owl.openinitiative.com/oicontext.jsonld"});
     
     window.viewportWidth = 1000;
     window.viewportHeight = 700;
