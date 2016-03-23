@@ -5,8 +5,13 @@
         <link rel="stylesheet" href="happydev.css" />
         <script type="text/javascript" src="library/d3.min.js"></script>
         <script type="text/javascript" src="library/jquery-1.11.3.min.js"></script>
-        <script src="library/LDP-framework/mystore.js"></script>
+        <script type="text/javascript" src="library/LDP-framework/ldpframework.js"></script>
         <script src="happydev.js"></script>
+        <script id="profile-template" type="text/x-handlebars-template">
+            <h2>{{object.foaf:firstName}} {{object.foaf:name}}</h2>
+            <img src="{{object.foaf:img}}" />
+            <button onclick="$('#panel').hide()">OK</button>
+        </script>
     </head>
     <body>
         <div class="happy-title">
@@ -17,5 +22,6 @@
             <div class="chevron">
             </div>
         </div>
+        <div id="panel"></div>
     </body>
 </html>
