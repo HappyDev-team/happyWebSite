@@ -59,6 +59,9 @@ line  {
     border-left:        solid black;
     display:            none;
 }
+#panel img {
+    max-width: 100%;
+}
 
 .member-name {
     font-size:          10px;

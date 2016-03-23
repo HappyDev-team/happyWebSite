@@ -51,7 +51,7 @@ function zoom(node) {
 
         d3.json(node.container, function(data) {
             window.members = svgContainer.selectAll(".members")
-                .data(data.members)
+                .data(data["@graph"][0]["http://www.w3.org/ns/ldp#contains"])
                 .enter().append("svg")
                     .attr("class", "members")
                     .attr("x", function(d) { return Math.random()*viewportWidth/zoomLevel+areaLeft;})
@@ -70,7 +70,7 @@ function zoom(node) {
 
 function showMember(member) {
     $("#panel").show();
-    store.render("#panel", member.iri, "#profile-template");
+    store.render("#panel", member["@id"], "#profile-template");
 }
 
 $(function() {

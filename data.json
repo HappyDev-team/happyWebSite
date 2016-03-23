@@ -2,7 +2,7 @@
     "nodes": [
         {"cx":152, "cy":116},
         {"cx":522, "cy":120},
-        {"cx":774, "cy":174, "name": "team", "container": "team.json"},
+        {"cx":774, "cy":174, "name": "team", "container": "http://ldp.happy-dev.fr/ldp/members/"},
         {"cx":192, "cy":259},
         {"cx":390, "cy":220},
         {"cx":902, "cy":325},

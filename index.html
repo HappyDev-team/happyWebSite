@@ -8,7 +8,8 @@
         <script type="text/javascript" src="ldpframework.js"></script>
         <script src="happydev.js"></script>
         <script id="profile-template" type="text/x-handlebars-template">
-            <div>{{object.about.name}}: {{object.about.description}}</div>
+            <h2>{{object.foaf:firstName}} {{object.foaf:name}}</h2>
+            <img src="{{object.foaf:img}}" />
             <button onclick="$('#panel').hide()">OK</button>
         </script>
     </head>
