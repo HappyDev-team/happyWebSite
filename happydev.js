@@ -42,12 +42,13 @@ function drawLinks(container, data) {
 }
 
 function zoom(node) {
-    $('.happy-title').hide();
     if(node.name) {
+        $('.happy-title').hide();
         areaLeft = node.cx - viewportWidth/zoomLevel/2;
         areaTop = node.cy - viewportHeight/zoomLevel/2;
         svgContainer.transition().duration(750).attr("transform",
             `translate(${viewportWidth/2-node.cx*zoomLevel},${viewportHeight/2-node.cy*zoomLevel})scale(${zoomLevel})`);
+        window.template = `#${node.name}-template`;
 
         d3.json(node.container, function(data) {
             window.members = svgContainer.selectAll(".members")
@@ -70,7 +71,7 @@ function zoom(node) {
 
 function showMember(member) {
     $("#panel").show();
-    store.render("#panel", member["@id"], "#profile-template");
+    store.render("#panel", member["@id"], window.template);
 }
 
 $(function() {
