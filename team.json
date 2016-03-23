@@ -1,8 +1,0 @@
-{
-    "members": [
-        {"name": "Alexandre Bourlier", "iri": "https://ldp.openinitiative.com:8443/2013/people/8a71fbcb20"},
-        {"name": "Sylvain Le Bon", "iri": "https://ldp.openinitiative.com:8443/2013/people/8a71fbcb20"},
-        {"name": "Romain Weeger", "iri": "https://ldp.openinitiative.com:8443/2013/people/8a71fbcb20"},
-        {"name": "Jonathan Fallon", "iri": "https://ldp.openinitiative.com:8443/2013/people/8a71fbcb20"}
-    ]
-}
