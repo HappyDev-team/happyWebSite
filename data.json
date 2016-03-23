@@ -4,7 +4,7 @@
         {"cx":522, "cy":120},
         {"cx":774, "cy":174, "name": "Team", "container": "http://ldp.happy-dev.fr/ldp/members/"},
         {"cx":192, "cy":259},
-        {"cx":390, "cy":220, "name": "Projects", "url": "http://localhost/wordpress/ldp/project/"},
+        {"cx":390, "cy":220, "name": "Projects", "container": "http://ldp.happy-dev.fr/ldp/projects/"},
         {"cx":902, "cy":325},
         {"cx":121, "cy":452},
         {"cx":601, "cy":490},

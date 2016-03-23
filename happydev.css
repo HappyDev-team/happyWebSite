@@ -32,6 +32,7 @@ line  {
     top:                calc(50% - 8em);
     text-align:         center;
     width:              100%;
+    z-index:            -1;
 }
 
 .happy-title h1 {
