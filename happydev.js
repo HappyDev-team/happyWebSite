@@ -41,7 +41,7 @@ function drawLinks(container, data) {
     return links;
 }
 
-function fecthMembers(container) {
+function fetchMembers(container) {
     d3.json(container, function(data) {
         window.members = svgContainer.selectAll(".members")
             .data(data["@graph"][0]["http://www.w3.org/ns/ldp#contains"])
