@@ -88,6 +88,7 @@ function showMember(member) {
 
 function sendContact() {
     alert('salut ' + $("#contact-name").val() + ' !');
+    $('#contact').hide();
     return false;
 }
 
