@@ -28,5 +28,26 @@
             </div>
         </div>
         <div id="panel"></div>
+        <div id="contact">
+            <form onsubmit="return sendContact()">
+                <div>
+                    <label for="contact-name">Bonjour ! Comment t'appelles tu ?</label>
+                    <input type="text" name="name" id="contact-name" />
+                </div>
+                <div>
+                    <label for="contact-howru">Comment ça va aujourd'hui ?</label>
+                    <input type="text" name="howru" id="contact-howru" />
+                </div>
+                <div>
+                    <label for="contact-request">Qu'est-ce que je peux faire pour toi ?</label>
+                    <input type="text" name="request" id="contact-request" />
+                </div>
+                <div>
+                    <label for="contact-contact">Comment peut-on te joindre ?</label>
+                    <input type="text" name="contact" id="contact-contact" />
+                </div>
+                <input type="submit" />
+            </form>
+        </div>
     </body>
 </html>
