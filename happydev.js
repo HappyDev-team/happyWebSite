@@ -64,7 +64,12 @@ function zoom(node) {
                 .attr("class", "node").attr("r", 8);
             
             members.append("text").attr("class", "member-name").attr("x", 15).attr("y", 25)
-                .text(function(d) { return d["foaf:firstName"] + " " + d["foaf:name"]; });
+                .text(function(d) {
+                    if(d["foaf:firstName"])
+                        return d["foaf:firstName"] + " " + d["foaf:name"];
+                    else
+                        return d["project_title"];
+                });
         });
     }
 }
