@@ -7,10 +7,20 @@
         <script type="text/javascript" src="library/jquery-1.11.3.min.js"></script>
         <script type="text/javascript" src="library/LDP-framework/ldpframework.js"></script>
         <script src="happydev.js"></script>
+        <script id="team-list-template" type="text/x-handlebars-template">
+            <ul id="team-list">
+                {{#each object.ldp:contains}}
+                <li><img src="http://ldp.happy-dev.fr/wp-content/uploads/2016/03/Alexandre-Bourlier_avatar_1401183540.jpg">{{foaf:firstName}} {{foaf:name}}</li>
+                {{/each}}
+            </ul>
+            <button onclick="$('#panel').hide()" class="back">Retour</button>
+        </script>
         <script id="team-template" type="text/x-handlebars-template">
-            <h2>{{object.foaf:firstName}} {{object.foaf:name}}</h2>
-            <img src="{{object.foaf:img}}" />
-            <button onclick="$('#panel').hide()">OK</button>
+            <div id="member">
+                <img src="{{object.foaf:img}}" />
+                <h2>{{object.foaf:firstName}} {{object.foaf:name}}</h2>
+                <button onclick="$('#panel').hide()" class="back">Retour</button>
+            </div>
         </script>
         <script id="projects-template" type="text/x-handlebars-template">
             <h2>{{object.project_title}}</h2>
@@ -27,7 +37,8 @@
             <div class="chevron">
             </div>
         </div>
-        <div id="panel"></div>
+        <div id="panel">
+        </div>
         <div id="contact">
             <form onsubmit="return sendContact()">
                 <div>

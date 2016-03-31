@@ -74,6 +74,8 @@ function zoom(node) {
             svgContainer.transition().duration(750).attr("transform",
                 `translate(${viewportWidth/2-node.cx*zoomLevel},${viewportHeight/2-node.cy*zoomLevel})scale(${zoomLevel})`);
             window.template = `#${node.name}-template`;
+            $("#panel").show();
+            store.render("#panel", node.container, `#${node.name}-list-template`);
             fetchMembers(node.container);
         } else {
             $(node.div).show();

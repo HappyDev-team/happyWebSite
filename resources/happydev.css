@@ -58,17 +58,26 @@ line  {
 #panel {
     position:           fixed;
     top:                0;
-    left:               60%;
+    right:              0;
     height:             100%;
-    width:              40%;
+    width:              100%;
+    max-width:          350px;
     z-index:            2;
     background:         white;
     border-left:        solid black;
     display:            none;
 }
-#panel img {
-    max-width: 100%;
-    max-height: 20em;
+#member img {
+    width: 100%;
+}
+#panel .back {
+    position: absolute;
+    top: 1em;
+    left: 1em;
+    border: medium none;
+    height: 2em;
+    width: 2em;
+    border-radius: 20px;
 }
 
 .member-name {
@@ -85,4 +94,15 @@ line  {
     background:         white;
     padding:            2em;
     display:            none;
+}
+
+#team-list {
+    list-style: none;
+}
+#team-list li {
+    border-bottom: solid 1px lightgray;
+}
+#team-list img {
+    max-height: 3em;
+    border-radius: 50px;
 }
