@@ -10,7 +10,7 @@
         <script id="team-list-template" type="text/x-handlebars-template">
             <ul id="team-list">
                 {{#each object.ldp:contains}}
-                <li><img src="http://ldp.happy-dev.fr/wp-content/uploads/2016/03/Alexandre-Bourlier_avatar_1401183540.jpg">{{foaf:firstName}} {{foaf:name}}</li>
+                <li><img src="{{foaf:img}}">{{foaf:firstName}} {{foaf:name}}</li>
                 {{/each}}
             </ul>
             <button onclick="$('#panel').hide()" class="back">Retour</button>
