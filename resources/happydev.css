@@ -99,10 +99,37 @@ line  {
 #team-list {
     list-style: none;
 }
+
 #team-list li {
-    border-bottom: solid 1px lightgray;
+    border-bottom: 		solid 1px lightgray;
+	padding-top:		10px;
+	padding-bottom:		20px;
 }
+
 #team-list img {
-    max-height: 3em;
-    border-radius: 50px;
+    max-height: 		3em;
+    border-radius: 		50px;
+	display:			inline-block;
+	vertical-align:		middle;
+	min-width:			10%;
+}
+
+#team-list .members-infos{
+	display: 			inline-block;
+	vertical-align:		middle;
+	width:				70%;
+}
+
+#team-list .members-fn{
+	color:				black;
+	font-weight:		bold;
+}
+
+#team-list .members-name{
+	color:				RGB(211,211,211);
+}
+
+#team-list li:hover .members-name{
+	color:				black;
+	font-weight:		bold;
 }

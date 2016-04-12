@@ -10,7 +10,7 @@
         <script id="team-list-template" type="text/x-handlebars-template">
             <ul id="team-list">
                 {{#each object.ldp:contains}}
-                <li><img src="{{foaf:img}}">{{foaf:firstName}} {{foaf:name}}</li>
+                <li><img src="{{foaf:img}}"><div class="members-infos"><span class="members-fn">{{foaf:firstName}} </span><span class="members-name">{{foaf:name}}</span></div></li>
                 {{/each}}
             </ul>
             <button onclick="$('#panel').hide()" class="back">Retour</button>
