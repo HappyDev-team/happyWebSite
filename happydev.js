@@ -113,4 +113,12 @@ $(function() {
         drawNodes(svgContainer, data.nodes);
         drawLinks(svgContainer, data.links);
     });
+	
+	$(".happy-title").on("click", function(){
+		$("#manifeste").slideDown("slow");
+	});
+	
+	$("#manifeste").on("click", function(){
+		$("#manifeste").slideUp("slow");
+	});
 });

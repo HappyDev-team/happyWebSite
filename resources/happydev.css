@@ -32,7 +32,10 @@ line  {
     top:                calc(50% - 8em);
     text-align:         center;
     width:              100%;
-    z-index:            -1;
+}
+
+.happy-title:hover {
+	cursor:				pointer;
 }
 
 .happy-title h1 {
@@ -94,6 +97,23 @@ line  {
     background:         white;
     padding:            2em;
     display:            none;
+}
+
+#manifeste{
+	position:           absolute;
+    border:             solid 1px;
+    top:                10%;
+    left:               10%;
+    right:              10%;
+    bottom:             10%;
+    background:         white;
+    padding:            2em;
+    display:            none;
+	text-align:			justify;
+}
+
+#manifeste h1{
+	text-align: 		center;
 }
 
 #team-list {
