@@ -153,3 +153,19 @@ line  {
 	color:				black;
 	font-weight:		bold;
 }
+
+#unzoom{
+	position: 			fixed;
+	bottom:				50px;
+	z-index:			200;
+	background-color:	white;
+	color:				rgb(253, 200, 21);
+	border:				solid 2px rgb(253, 200, 21);
+	padding-top:		10px;
+	padding-bottom:		10px;
+	padding-right:		20px;
+	padding-left:		20px;
+	font-family:        helvetica, sans-serif;
+	border-radius:		10px;
+	display:			none;
+}
