@@ -113,7 +113,6 @@ function zoom(node) {
                 `translate(${viewportWidth/2-node.cx*zoomLevel},${viewportHeight/2-node.cy*zoomLevel})scale(${zoomLevel})`);
             window.template = `#${node.name}-template`;
             $("#panel").show();
-			$("#unzoom").css("right","360px");
 			$("#unzoom").show();
             store.render("#panel", node.container, `#${node.name}-list-template`);
             fetchMembers(node);
@@ -127,7 +126,7 @@ function zoom(node) {
 function unZoom(){
 	svgContainer.transition().duration(750).attr("transform",``);
 	
-	$("#unzoom").hide();
+	$("#unzoom").hide("slow");
 	$("#panel").hide();
 	$(".members").remove();
 	$(".happy-title").show("slow");
@@ -135,7 +134,6 @@ function unZoom(){
 
 function showMember(member) {
     $("#panel").show();
-	$("#unzoom").css("right","360px");
     store.render("#panel", member["@id"], window.template);
 }
 
@@ -147,8 +145,6 @@ function sendContact() {
 
 function hidePanel(){
 	$('#panel').hide();
-	$("#unzoom").css("right","20px");
-	
 }
 
 $(function() {
