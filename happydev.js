@@ -114,6 +114,7 @@ function zoom(node) {
             fetchMembers(node);
         } else {
             $(node.div).show();
+			$("#manifeste").hide();
         }
     }
 }
