@@ -22,6 +22,14 @@
                 <button onclick="hidePanel()" class="back">Retour</button>
             </div>
         </script>
+		<script id="projects-list-template" type="text/x-handlebars-template">
+            <ul id="project-list">
+                {{#each object.ldp:contains}}
+                <li><img src="{{object.project_picture}}"></li>
+                {{/each}}
+            </ul>
+            <button onclick="hidePanel()" class="back">Retour</button>
+        </script>
         <script id="projects-template" type="text/x-handlebars-template">
             <h2>{{object.project_title}}</h2>
             <img src="{{object.project_picture}}" />

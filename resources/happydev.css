@@ -116,7 +116,7 @@ line  {
 	text-align: 		center;
 }
 
-#team-list {
+#team-list , #project-list{
     list-style: none;
 }
 

@@ -44,12 +44,7 @@ function drawLinks(container, data) {
 function fetchMembers(node) {
     d3.json(node.container, function(data) {
 		var nodes = [{x:(node.cx)-40,y:(node.cy)-10,fixed:true}].concat(data["@graph"][0]["http://www.w3.org/ns/ldp#contains"]);
-		var links = [{source: 0, target: 1},
-						  {source: 0, target: 2},
-						  {source: 0, target: 3},
-						  {source: 0, target: 4},
-						  {source: 0, target: 5},
-						  {source: 0, target: 6}];
+		var links = listingList(nodes);
 		
 		var cont = svgContainer.append("svg").attr("class", "members");
 		
@@ -96,6 +91,16 @@ function fetchMembers(node) {
 				 .attr("y2", function(d){return (d.target.y)+10;});
 		});
     });
+}
+
+function listingList(nodes){
+	var liste = [];
+	
+	for(var i=1 ; i<nodes.length ; i++){
+		liste.push({source:0,target:i});
+	}
+	
+	return liste;
 }
 
 function zoom(node) {
