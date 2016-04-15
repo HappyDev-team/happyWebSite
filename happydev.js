@@ -41,27 +41,60 @@ function drawLinks(container, data) {
     return links;
 }
 
-function fetchMembers(container) {
-    d3.json(container, function(data) {
-        window.members = svgContainer.selectAll(".members")
-            .data(data["@graph"][0]["http://www.w3.org/ns/ldp#contains"])
-            .enter().append("svg")
-                .attr("class", "members")
-                .attr("x", function(d) { return Math.random()*viewportWidth/zoomLevel+areaLeft;})
-                .attr("y", function(d) { return Math.random()*viewportHeight/zoomLevel+areaTop;})
-                .on("click", showMember)
-                .style("cursor", "pointer");
+function fetchMembers(node) {
+    d3.json(node.container, function(data) {
+		var nodes = [{x:(node.cx)-40,y:(node.cy)-10,fixed:true}].concat(data["@graph"][0]["http://www.w3.org/ns/ldp#contains"]);
+		var links = [{source: 0, target: 1},
+						  {source: 0, target: 2},
+						  {source: 0, target: 3},
+						  {source: 0, target: 4},
+						  {source: 0, target: 5},
+						  {source: 0, target: 6}];
+		
+		var cont = svgContainer.append("svg").attr("class", "members");
+		
+        window.members = cont.selectAll(".members")
+						.data(nodes)
+						.enter().append("svg")
+						.on("click", showMember)
+						.style("cursor", "pointer");
         
-        members.append("circle").attr("cx", 40).attr("cy", 10)
-            .attr("class", "node").attr("r", 8);
-        
-        members.append("text").attr("class", "member-name").attr("x", 15).attr("y", 25)
-            .text(function(d) {
-                if(d["foaf:firstName"])
-                    return d["foaf:firstName"] + " " + d["foaf:name"];
-                else
-                    return d["project_title"];
-            });
+		var force = d3.layout.force()
+					.size([viewportWidth/zoomLevel+areaLeft,viewportHeight/zoomLevel+areaTop])
+					.charge(-2000)
+					.nodes(nodes)
+					.links(links)
+					.start();
+							
+		var link = cont.selectAll(".link")
+						.data(links)
+						.enter().append("line")
+						.attr("class", "link");
+						
+		members.append("circle")
+			.attr("cx", 40)
+			.attr("cy", 10)
+			.attr("class", "node").attr("r", 8);
+				
+		members.append("text").attr("class", "member-name")
+			.attr("y", 25)
+			.attr("alignement-baseline","middle")
+			.text(function(d) {
+				if(d["foaf:firstName"])
+					return d["foaf:firstName"] + " " + d["foaf:name"];
+				else
+					return d["project_title"];
+			});
+		
+		force.on("tick",function(){
+			members.attr("x", function(d){return d.x;})
+				.attr("y", function(d){return d.y;});
+				
+			link.attr("x1", function(d){return (d.source.x)+40;})
+				 .attr("y1", function(d){return (d.source.y)+10;})
+				 .attr("x2", function(d){return (d.target.x)+40;})
+				 .attr("y2", function(d){return (d.target.y)+10;});
+		});
     });
 }
 
@@ -78,7 +111,7 @@ function zoom(node) {
 			$("#unzoom").css("right","360px");
 			$("#unzoom").show();
             store.render("#panel", node.container, `#${node.name}-list-template`);
-            fetchMembers(node.container);
+            fetchMembers(node);
         } else {
             $(node.div).show();
         }
