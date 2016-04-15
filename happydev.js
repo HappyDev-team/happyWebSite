@@ -42,6 +42,8 @@ function drawLinks(container, data) {
 }
 
 function fetchMembers(node) {
+	$(".members").remove();
+	
     d3.json(node.container, function(data) {
 		var nodes = [{x:(node.cx)-40,y:(node.cy)-10,fixed:true}].concat(data["@graph"][0]["http://www.w3.org/ns/ldp#contains"]);
 		var links = listingList(nodes);
