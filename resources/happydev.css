@@ -75,12 +75,23 @@ line  {
 }
 #panel .back {
     position: absolute;
+	background-color: rgb(253, 200, 21);
     top: 1em;
     left: 1em;
     border: medium none;
     height: 2em;
     width: 2em;
     border-radius: 20px;
+	font-weight: bold;
+}
+
+#panel-title{
+	text-align:		center;
+	color:			black;
+}
+
+#project img{
+	width: 			100%;
 }
 
 .member-name {
@@ -138,6 +149,7 @@ line  {
 	display: 			inline-block;
 	vertical-align:		middle;
 	width:				70%;
+	padding-left:		10px;
 }
 
 #team-list .members-fn{
@@ -147,11 +159,13 @@ line  {
 
 #team-list .members-name{
 	color:				RGB(211,211,211);
+	transition:		color 2s, font-weight 2s;
 }
 
 #team-list li:hover .members-name{
-	color:				black;
+	color:					black;
 	font-weight:		bold;
+	transition:			0s;
 }
 
 #unzoom{

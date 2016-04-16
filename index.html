@@ -8,33 +8,37 @@
         <script type="text/javascript" src="library/LDP-framework/ldpframework.js"></script>
         <script src="happydev.js"></script>
         <script id="team-list-template" type="text/x-handlebars-template">
+			<h2 id="panel-title">Team</h2>
             <ul id="team-list">
                 {{#each object.ldp:contains}}
                 <li><img src="{{foaf:img}}"><div class="members-infos"><span class="members-fn">{{foaf:firstName}} </span><span class="members-name">{{foaf:name}}</span></div></li>
                 {{/each}}
             </ul>
-            <button onclick="hidePanel()" class="back">Retour</button>
+            <button onclick="hidePanel()" class="back">X</button>
         </script>
         <script id="team-template" type="text/x-handlebars-template">
             <div id="member">
                 <img src="{{object.foaf:img}}" />
                 <h2>{{object.foaf:firstName}} {{object.foaf:name}}</h2>
-                <button onclick="hidePanel()" class="back">Retour</button>
+                <button onclick="hidePanel()" class="back">X</button>
             </div>
         </script>
 		<script id="projects-list-template" type="text/x-handlebars-template">
+			<h2 id="panel-title">Projects</h2>
             <ul id="project-list">
                 {{#each object.ldp:contains}}
-                <li><img src="{{object.project_picture}}"></li>
+                <li><img src="{{project_picture}}"></li>
                 {{/each}}
             </ul>
-            <button onclick="hidePanel()" class="back">Retour</button>
+            <button onclick="hidePanel()" class="back">X</button>
         </script>
         <script id="projects-template" type="text/x-handlebars-template">
-            <h2>{{object.project_title}}</h2>
-            <img src="{{object.project_picture}}" />
-            <button onclick="hidePanel()">OK</button>
-        </script>
+			<div id="project">
+				<h2 id="panel-title">{{object.project_title}}</h2>
+				<img src="{{object.project_picture}}" />
+				<button onclick="hidePanel()" class="back">X</button>
+			</div>
+		</script>
     </head>
     <body>
         <div class="happy-title">
