@@ -110,6 +110,42 @@ line  {
     display:            none;
 }
 
+#contact .back {
+    position: absolute;
+	background-color: rgb(253, 200, 21);
+    top: 1em;
+    left: 1em;
+    border: medium none;
+    height: 2em;
+    width: 2em;
+    border-radius: 20px;
+	font-weight: bold;
+}
+
+#contactEtape1{
+	display: 		none;
+}
+
+#contactEtape2{
+	display: 		none;
+}
+
+#contactEtape3{
+	display: 		none;
+}
+
+.contact-centre{
+	text-align: 			center;
+	margin-bottom:	10px;
+}
+
+#contact label{
+	display:					inline-block;
+	width: 						50%;
+	text-align:				right;
+	margin-bottom:		10px;
+}
+
 #manifeste{
 	position:           absolute;
     border:             solid 1px;
