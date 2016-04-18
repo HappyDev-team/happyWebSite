@@ -108,14 +108,15 @@ function listingList(nodes){
 function zoom(node) {
     if(node.name) {
         if(node.container) {
-            $('.happy-title').hide();
+			$(".happy-title").animate({left:20,top:20,margin:0,width:100,height:50});
+            $('.happy-title').hide("slow");
             areaLeft = node.cx - viewportWidth/zoomLevel/2;
             areaTop = node.cy - viewportHeight/zoomLevel/2;
             svgContainer.transition().duration(750).attr("transform",
                 `translate(${viewportWidth/2-node.cx*zoomLevel},${viewportHeight/2-node.cy*zoomLevel})scale(${zoomLevel})`);
             window.template = `#${node.name}-template`;
             $("#panel").show();
-			$("#unzoom").show();
+			$("#unzoom").show("slow");
             store.render("#panel", node.container, `#${node.name}-list-template`);
             fetchMembers(node);
         } else {
@@ -133,6 +134,7 @@ function unZoom(){
 	$("#panel").hide();
 	$(".members").remove();
 	$(".happy-title").show("slow");
+	$(".happy-title").animate({left:"50%",top:"50%",width:400,height:200,marginLeft:"-200px",marginTop:"-100px"});
 	
 	setHashSilently("");
 }
