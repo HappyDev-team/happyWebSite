@@ -108,15 +108,16 @@ function listingList(nodes){
 function zoom(node) {
     if(node.name) {
         if(node.container) {
-			$(".happy-title").animate({left:20,top:20,margin:0,width:100,height:50});
-            $('.happy-title').hide("slow");
+            $(".happy-title").attr("class","happy-unzoom");
+			$(".happy-unzoom").removeClass("happy-title");
+			$(".happy-unzoom").off();
+			$(".happy-unzoom").on("click",unZoom);
             areaLeft = node.cx - viewportWidth/zoomLevel/2;
             areaTop = node.cy - viewportHeight/zoomLevel/2;
             svgContainer.transition().duration(750).attr("transform",
                 `translate(${viewportWidth/2-node.cx*zoomLevel},${viewportHeight/2-node.cy*zoomLevel})scale(${zoomLevel})`);
             window.template = `#${node.name}-template`;
             $("#panel").show();
-			$("#unzoom").show("slow");
             store.render("#panel", node.container, `#${node.name}-list-template`);
             fetchMembers(node);
         } else {
@@ -129,12 +130,16 @@ function zoom(node) {
 
 function unZoom(){
 	svgContainer.transition().duration(750).attr("transform",``);
-	
-	$("#unzoom").hide("slow");
+
 	$("#panel").hide();
 	$(".members").remove();
-	$(".happy-title").show("slow");
-	$(".happy-title").animate({left:"50%",top:"50%",width:400,height:200,marginLeft:"-200px",marginTop:"-100px"});
+	$(".happy-unzoom").attr("class","happy-title");
+	$(".happy-title").removeClass("happy-unzoom");
+	$(".happy-title").off();
+	$(".happy-title").on("click",function(){
+		$("#manifeste").slideDown("slow");
+		History.pushState(null,"HappyManifesto","manifeste");
+	});
 	
 	History.pushState(null,"HappyHome","/");
 }
@@ -233,9 +238,7 @@ $(function() {
 			$(this).closest("form").append("<div class='contact-centre'>Cet email n'est pas valide!</div>");
 		}
 	});
-	
-	$("#unzoom").on("click",unZoom);
-	
+		
 	var route1 = crossroads.addRoute("team");
 	var route2 = crossroads.addRoute("projects");
 	var route3 = crossroads.addRoute("manifeste");
