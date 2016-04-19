@@ -269,10 +269,10 @@ $(function() {
 		$("#manifeste").slideUp("slow");
 	});
 	
-	if(url.length > 4){
+	if(url.length > 3){
 		var resUrl = url.split("/");
 	
-		crossroads.parse(resUrl[4]);
+		crossroads.parse(resUrl[3]);
 	}
 });
 
