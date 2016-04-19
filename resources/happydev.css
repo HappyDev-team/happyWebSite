@@ -115,20 +115,28 @@ line  {
     width: 100%;
 }
 #panel .back {
-    position: absolute;
-	background-color: rgb(253, 200, 21);
-    top: 1em;
-    left: 1em;
-    border: medium none;
-    height: 2em;
-    width: 2em;
-    border-radius: 20px;
-	font-weight: bold;
+    position: 					absolute;
+	background-color: 	#FFF;
+	color:						rgb(253, 200, 21);
+    top: 						1em;
+    left: 							1em;
+    border: 					medium none;
+    padding-bottom: 	5px;
+	padding-top: 			5px;
+    border-radius: 		20px;
+	font-weight: 			bold;
+	transition:				1s;
+}
+
+#panel .back:hover {
+	cursor:				pointer;
+	transform:		rotate(90deg);
+	transition:		1s;
 }
 
 #panel-title{
 	text-align:		center;
-	color:			black;
+	color:				black;
 }
 
 #project img{
@@ -140,27 +148,35 @@ line  {
 }
 
 #contact {
-    position:           absolute;
-    border:             solid 1px;
-    top:                10%;
-    left:               10%;
-    right:              10%;
-    bottom:             10%;
-    background:         white;
-    padding:            2em;
-    display:            none;
+    position:           	absolute;
+    border:             	solid 1px;
+    top:                		10%;
+    left:               		10%;
+    right:              		10%;
+    bottom:             	10%;
+    background:        white;
+    padding:          	2em;
+    display:            	none;
 }
 
 #contact .back {
-    position: absolute;
-	background-color: rgb(253, 200, 21);
-    top: 1em;
-    left: 1em;
-    border: medium none;
-    height: 2em;
-    width: 2em;
-    border-radius: 20px;
-	font-weight: bold;
+    position: 					absolute;
+	background-color: 	#FFF;
+	color:						rgb(253, 200, 21);
+    top: 						1em;
+    right: 						1em;
+    border:					medium none;
+	padding-bottom: 	5px;
+	padding-top: 			5px;
+    border-radius: 		20px;
+	font-weight: 			bold;
+	transition:				1s;
+}
+
+#contact .back:hover {
+	cursor:				pointer;
+	transform:		rotate(90deg);
+	transition:		1s;
 }
 
 #contactEtape1{
