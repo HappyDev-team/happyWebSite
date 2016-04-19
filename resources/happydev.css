@@ -204,17 +204,17 @@ line  {
 	text-align: 		center;
 }
 
-#team-list , #project-list{
+#team-list , #project-list {
     list-style: none;
 }
 
-#team-list li {
+#team-list li, #project-list li {
     border-bottom: 		solid 1px lightgray;
 	padding-top:		10px;
 	padding-bottom:		20px;
 }
 
-#team-list img {
+#team-list img, #project-list img {
     max-height: 		3em;
     border-radius: 		50px;
 	display:			inline-block;
@@ -222,40 +222,31 @@ line  {
 	min-width:			10%;
 }
 
-#team-list .members-infos{
+#team-list .members-infos {
 	display: 			inline-block;
 	vertical-align:		middle;
 	width:				70%;
 	padding-left:		10px;
 }
 
-#team-list .members-fn{
+#team-list .members-fn {
 	color:				black;
 	font-weight:		bold;
 }
 
-#team-list .members-name{
+#team-list .members-name {
 	color:				RGB(211,211,211);
-	transition:		color 2s, font-weight 2s;
+	transition:			color 2s, font-weight 2s;
 }
 
-#team-list li:hover .members-name{
-	color:					black;
+#team-list li:hover .members-name {
+	color:				black;
 	font-weight:		bold;
 	transition:			0s;
 }
 
-#unzoom{
-	position: 			fixed;
-	top:				20px;
-	left:				20px;
-	z-index:			200;
-	background-color:	white;
-	color:				rgb(253, 200, 21);
-	border:				solid 2px rgb(253, 200, 21);
-	padding-right:		20px;
-	padding-left:		20px;
-	font-family:        helvetica, sans-serif;
-	border-radius:		10px;
-	display:			none;
+#project-list span{
+	color: 				black;
+	font-weight:		bold;
+	padding-left:		10px;
 }
