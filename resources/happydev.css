@@ -159,7 +159,7 @@ line  {
     display:            	none;
 }
 
-#contact .back {
+#contact .back, #manifeste .back {
     position: 					absolute;
 	background-color: 	#FFF;
 	color:						rgb(253, 200, 21);
@@ -173,7 +173,7 @@ line  {
 	transition:				1s;
 }
 
-#contact .back:hover {
+#contact .back:hover, #manifeste .back:hover {
 	cursor:				pointer;
 	transform:		rotate(90deg);
 	transition:		1s;
