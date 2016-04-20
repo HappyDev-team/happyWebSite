@@ -45,7 +45,7 @@ function fetchMembers(node) {
 	$(".members").remove();
 	
     d3.json(node.container, function(data) {
-		var nodes = [{x:(node.cx)-40,y:(node.cy)-10,fixed:true}].concat(data["@graph"][0]["http://www.w3.org/ns/ldp#contains"]);
+		var nodes = [{x:(node.cx)-100,y:(node.cy)-10,fixed:true}].concat(data["@graph"][0]["http://www.w3.org/ns/ldp#contains"]);
 		var links = listingList(nodes);
 		
 		var cont = svgContainer.append("svg").attr("class", "members");
@@ -69,12 +69,13 @@ function fetchMembers(node) {
 						.attr("class", "link");
 						
 		members.append("circle")
-			.attr("cx", 40)
+			.attr("cx", 100)
 			.attr("cy", 10)
 			.attr("class", "node").attr("r", 8);
 				
 		members.append("text").attr("class", "member-name")
-			.attr("y", 25)
+			.attr("y", 30)
+			.attr("x", 100)
 			.attr("alignement-baseline","middle")
 			.text(function(d) {
 				if(d["foaf:firstName"])
@@ -87,9 +88,9 @@ function fetchMembers(node) {
 			members.attr("x", function(d){return d.x;})
 				.attr("y", function(d){return d.y;});
 				
-			link.attr("x1", function(d){return (d.source.x)+40;})
+			link.attr("x1", function(d){return (d.source.x)+100;})
 				 .attr("y1", function(d){return (d.source.y)+10;})
-				 .attr("x2", function(d){return (d.target.x)+40;})
+				 .attr("x2", function(d){return (d.target.x)+100;})
 				 .attr("y2", function(d){return (d.target.y)+10;});
 		});
     });
