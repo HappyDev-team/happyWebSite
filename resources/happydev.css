@@ -108,17 +108,23 @@ line  {
     max-width:          350px;
     z-index:            2;
     background:         white;
-    border-left:        solid black;
+    border-left:        solid 1px lightgray;
     display:            none;
 }
+
 #member img {
     width: 100%;
 }
+
+#member h2 {
+	margin-left:	0.83em;
+}
+
 #panel .back {
     position: 					absolute;
 	background-color: 	#FFF;
 	color:						rgb(253, 200, 21);
-    top: 						1em;
+    top: 						1.5em;
     left: 							1em;
     border: 					medium none;
     padding-bottom: 	5px;
