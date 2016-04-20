@@ -122,15 +122,9 @@ line  {
 
 #panel .back {
     position: 					absolute;
-	background-color: 	#FFF;
-	color:						rgb(253, 200, 21);
-    top: 						1.5em;
+    top: 						1.1em;
     left: 							1em;
-    border: 					medium none;
-    padding-bottom: 	5px;
-	padding-top: 			5px;
-    border-radius: 		20px;
-	font-weight: 			bold;
+    width:						2em;
 	transition:				1s;
 }
 
@@ -167,15 +161,9 @@ line  {
 
 #contact .back, #manifeste .back {
     position: 					absolute;
-	background-color: 	#FFF;
-	color:						rgb(253, 200, 21);
     top: 						1em;
     right: 						1em;
-    border:					medium none;
-	padding-bottom: 	5px;
-	padding-top: 			5px;
-    border-radius: 		20px;
-	font-weight: 			bold;
+	width:						2em;
 	transition:				1s;
 }
 

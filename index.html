@@ -17,13 +17,13 @@
                 <li onclick="showMember({'@id':'{{[@id]}}'})"><img src="{{foaf:img}}"><div class="members-infos"><span class="members-fn">{{foaf:firstName}} </span><span class="members-name">{{foaf:name}}</span></div></li>
                 {{/each}}
             </ul>
-            <button onclick="hidePanel()" class="back">&#10060;</button>
+            <img class="back" src="resources/close.png" onclick="hidePanel()"/>
         </script>
         <script id="team-template" type="text/x-handlebars-template">
             <div id="member">
                 <img src="{{object.foaf:img}}" />
                 <h2>{{object.foaf:firstName}} {{object.foaf:name}}</h2>
-                <button onclick="hidePanel()" class="back">&#10060;</button>
+                <img class="back" src="resources/close.png" onclick="hidePanel()"/>
             </div>
         </script>
 		<script id="projects-list-template" type="text/x-handlebars-template">
@@ -33,13 +33,13 @@
                 <li><img src="{{project_picture}}"/><span>{{project_title}}</span></li>
                 {{/each}}
             </ul>
-            <button onclick="hidePanel()" class="back">&#10060;</button>
+            <img class="back" src="resources/close.png" onclick="hidePanel()"/>
         </script>
         <script id="projects-template" type="text/x-handlebars-template">
 			<div id="project">
 				<h2 id="panel-title">{{object.project_title}}</h2>
 				<img src="{{object.project_picture}}" />
-				<button onclick="hidePanel()" class="back">&#10060;</button>
+				<img class="back" src="resources/close.png" onclick="hidePanel()"/>
 			</div>
 		</script>
     </head>
@@ -67,7 +67,7 @@
 				<li><b>Nous aspirons à nous sentir libre.</b> Le salariat est pour nous une forme d'asservissement. Les membres du réseau Happy Dev sont autonomes et maîtres de leur destin.</li><br/>
 				<li><b>Le réseau est basé sur la contribution ouverte,</b> chacun est libre d'y apporter ce qui lui semble bon.</li>
 			</ul>
-			 <button class="back">&#10060;</button>
+			 <img class="back" src="resources/close.png"/>
 		</div>
         <div id="contact">
             <form onsubmit="return sendContact()">
@@ -87,7 +87,7 @@
                     <label for="contact-contact">Comment peut-on te joindre ?</label>
                     <input type="text" name="contact" id="contact-contact" />
                 </div>
-                <input type="button" class="back" value="&#10060;" />
+                <img class="back" src="resources/close.png"/>
             </form>
         </div>
     </body>
