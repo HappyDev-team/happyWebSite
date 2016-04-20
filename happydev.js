@@ -76,7 +76,7 @@ function fetchMembers(node) {
 		members.append("text").attr("class", "member-name")
 			.attr("y", 30)
 			.attr("x", 100)
-			.attr("alignement-baseline","middle")
+			.attr("text-anchor","middle")
 			.text(function(d) {
 				if(d["foaf:firstName"])
 					return d["foaf:firstName"] + " " + d["foaf:name"];
