@@ -109,9 +109,9 @@ function listingList(nodes){
 function zoom(node) {
     if(node.name) {
         if(node.container) {
-            $(".happy-title").attr("class","happy-unzoom");
+            $(".happy-title").off();
+			$(".happy-title").attr("class","happy-unzoom");
 			$(".happy-unzoom").removeClass("happy-title");
-			$(".happy-unzoom").off();
 			$(".happy-unzoom").on("click",unZoom);
             areaLeft = node.cx - viewportWidth/zoomLevel/2;
             areaTop = node.cy - viewportHeight/zoomLevel/2;
@@ -134,9 +134,9 @@ function unZoom(){
 
 	$("#panel").hide();
 	$(".members").remove();
+	$(".happy-unzoom").off();
 	$(".happy-unzoom").attr("class","happy-title");
 	$(".happy-title").removeClass("happy-unzoom");
-	$(".happy-title").off();
 	$(".happy-title").on("click",function(){
 		$("#manifeste").slideDown("slow");
 		History.pushState(null,"HappyManifesto","manifeste");

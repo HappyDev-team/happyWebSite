@@ -36,7 +36,7 @@ line  {
 	margin-top: -100px;
 	left: 50%;
 	text-align: center;
-	transition: width 2s, height 2s, left 2s, top 2s;
+	transition: 2s;
 }
 
 .happy-unzoom {
@@ -47,7 +47,7 @@ line  {
 	left: 20;
 	margin: 0;
 	text-align: center;
-	transition: width 2s, height 2s, left 2s, top 2s;
+	transition: 2s;
 }
 
 .happy-title:hover {
@@ -63,29 +63,35 @@ line  {
     font-size:          750%;
     font-weight:        400;
     margin:             -20px 0;
-	border:				none;
-	transition: 		font-weight 2s, font-size 2s, border 2s;
+	transition: 		2s;
 }
 
 .happy-unzoom h1{
-	font-size: 			150%;
+	font-family:        bebas, sans-serif;
+	font-size: 			200%;
+	font-weight:		40;
+	margin:             2px 0;/*
 	font-weight: 		bold;
 	border: 			solid 2px rgb(253, 200, 21);
 	border-radius: 		10px;
 	margin-top: 		1px;
 	padding-bottom: 	10px;
-	padding-top:		10px;
-	transition: 		font-weight 2s, font-size 2s, border 2s;
+	padding-top:		10px;*/
+	transition: 		2s
 }
 
 .happy-title h4 {
     font-size:          130%;
     font-family:        helvetica, sans-serif;
     margin:             0;
+	transition:			2s;
 }
 
 .happy-unzoom h4{
-	display: 			none;
+	font-size:			50%;
+    font-family:        helvetica, sans-serif;
+    margin:             0;
+	transition:			2s;
 }
 
 .chevron {
@@ -93,10 +99,14 @@ line  {
     height:             5px;
     width:              19px;
     margin:             30px auto;
+	transition:			2s;
 }
 
 .happy-unzoom .chevron{
-	display: none;
+	height:				1px;
+	width:				5px;
+	margin: 			3px auto;
+	transition:			2s;
 }
 
 #panel {
