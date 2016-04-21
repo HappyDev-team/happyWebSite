@@ -249,6 +249,10 @@ line  {
 	transition:			color 2s, font-weight 2s;
 }
 
+#team-list li:hover{
+	cursor:				pointer;
+}
+
 #team-list li:hover .members-name {
 	color:				black;
 	font-weight:		bold;
@@ -259,4 +263,8 @@ line  {
 	color: 				black;
 	font-weight:		bold;
 	padding-left:		10px;
+}
+
+#project-list li:hover{
+	cursor:				pointer;
 }

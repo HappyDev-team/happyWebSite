@@ -30,7 +30,7 @@
 			<h2 id="panel-title">Projects</h2>
             <ul id="project-list">
                 {{#each object.ldp:contains}}
-                <li><img src="{{project_picture}}"/><span>{{project_title}}</span></li>
+                <li onclick="showMember({'@id':'{{[@id]}}'})"><img src="{{project_picture}}"/><span>{{project_title}}</span></li>
                 {{/each}}
             </ul>
             <img class="back" src="resources/close.png" onclick="hidePanel()"/>
