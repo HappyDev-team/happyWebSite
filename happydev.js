@@ -127,6 +127,7 @@ function zoom(node) {
         }
 		History.pushState(null,"Happy"+node.name,node.name);
     }
+	nodeMemo = node;
 }
 
 function unZoom(){
@@ -167,6 +168,11 @@ function sendContact() {
 
 function hidePanel(){
 	$('#panel').hide();
+	
+	if($("#panel #member").length || $("#panel #project").length){
+		$("#panel").show();
+		store.render("#panel", nodeMemo.container, `#${nodeMemo.name}-list-template`);
+	}
 }
 
 $(function() {
