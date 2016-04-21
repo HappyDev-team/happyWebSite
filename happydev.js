@@ -169,7 +169,7 @@ function sendContact() {
 function hidePanel(){
 	$('#panel').hide("slow");
 	
-	if($("#panel #member").length){
+	if($("#panel #member").length || $("#panel #project").length){
 		$("#panel").show("slow");
 		store.render("#panel", nodeMemo.container, `#${nodeMemo.name}-list-template`);
 	}
