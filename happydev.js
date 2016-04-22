@@ -125,9 +125,10 @@ function zoom(node) {
             $(node.div).show();
 			$("#manifeste").hide();
         }
-		History.pushState(null,"Happy"+node.name,node.name);
+		history.pushState(null,"Happy"+node.name,node.name);
     }
 	nodeMemo = node;
+	isZoom = true;
 }
 
 function unZoom(){
@@ -140,10 +141,11 @@ function unZoom(){
 	$(".happy-title").removeClass("happy-unzoom");
 	$(".happy-title").on("click",function(){
 		$("#manifeste").slideDown("slow");
-		History.pushState(null,"HappyManifesto","manifeste");
+		history.pushState(null,"HappyManifesto","manifeste");
 	});
 	
-	History.pushState(null,"HappyHome","/");
+	history.pushState(null,"HappyHome","/");
+	isZoom = false;
 }
 
 function showMember(member) {
@@ -161,8 +163,8 @@ function sendContact() {
 		contactEtape = 0;
 		$('#contactEtape1, #contactEtape2, #contactEtape3').hide();
 		$(".contact-centre").remove();
+		history.pushState(null,"HappyHome","/");
 		return false;
-		History.pushState(null,"HappyHome","/");
 	}
 }
 
@@ -170,7 +172,7 @@ function hidePanel(){
 	$("#panel").hide("slow");
 	
 	setTimeout(function(){
-		if($("#panel #member").length || $("#panel #project").length){
+		if(($("#panel #member").length || $("#panel #project").length) && isZoom()){
 			$("#panel").html("");
 			$("#panel").show("slow");
 			store.render("#panel", nodeMemo.container, `#${nodeMemo.name}-list-template`);
@@ -202,19 +204,19 @@ $(function() {
 	
 	$(".happy-title").on("click", function(){
 		$("#manifeste").slideDown("slow");
-		History.pushState(null,"HappyManifesto","manifeste");
+		history.pushState(null,"HappyManifesto","manifeste");
 	});
 	
 	$("#manifeste").on("click", function(){
 		$("#manifeste").slideUp("slow");
-		History.pushState(null,"HappyHome","/");
+		history.pushState(null,"HappyHome","/");
 	});
 	
 	contactEtape = 0;
 	
 	$("#contact .back").on("click", function(){
 		$("#contact").hide();
-		History.pushState(null,"HappyHome","/");
+		history.pushState(null,"HappyHome","/");
 	});
 	
 	$("#contact-name").on("change", function(){
@@ -255,10 +257,9 @@ $(function() {
 	var route2 = crossroads.addRoute("projects");
 	var route3 = crossroads.addRoute("manifeste");
 	var route4 = crossroads.addRoute("contact");
+	var route5 = crossroads.addRoute("/");
 	
-	var states = History.getState();
-	
-	var url = states.url;
+	isZoom = false;
 	
 	route1.matched.add(function(){
 		d3.json("data.json",function(data){
@@ -273,21 +274,33 @@ $(function() {
 	});
 	
 	route3.matched.add(function(){
-		unZoom;
+		if(isZoom){
+			unZoom();
+		}
 		$("#contact").hide();
 		$("#manifeste").slideDown("slow");
 	});
 	
 	route4.matched.add(function(){
-		unZoom;
+		if(isZoom){
+			unZoom();
+		}
 		$("#contact").show();
 		$("#manifeste").slideUp("slow");
 	});
 	
-	if(url.length > 3){
-		var resUrl = url.split("/");
+	route5.matched.add(function(){
+		if(isZoom){
+			unZoom();
+		}
+		$("#contact").hide();
+		$("#manifeste").slideUp("slow");
+	});
 	
-		crossroads.parse(resUrl[3]);
+	crossroads.parse(location.pathname);
+	
+	window.onpopstate = function(){
+		crossroads.parse(location.pathname);
 	}
 });
 
