@@ -133,7 +133,7 @@ function zoom(node) {
 function unZoom(){
 	svgContainer.transition().duration(750).attr("transform",``);
 
-	$("#panel").hide("slow");
+	hidePanel();
 	$(".members").remove();
 	$(".happy-unzoom").off();
 	$(".happy-unzoom").attr("class","happy-title");
@@ -167,12 +167,17 @@ function sendContact() {
 }
 
 function hidePanel(){
-	$('#panel').hide("slow");
+	$("#panel").hide("slow");
 	
-	if($("#panel #member").length || $("#panel #project").length){
-		$("#panel").show("slow");
-		store.render("#panel", nodeMemo.container, `#${nodeMemo.name}-list-template`);
-	}
+	setTimeout(function(){
+		if($("#panel #member").length || $("#panel #project").length){
+			$("#panel").html("");
+			$("#panel").show("slow");
+			store.render("#panel", nodeMemo.container, `#${nodeMemo.name}-list-template`);
+		}else{
+			$("#panel").html("");
+		}
+	},400);
 }
 
 $(function() {
