@@ -172,7 +172,7 @@ function hidePanel(){
 	$("#panel").hide("slow");
 	
 	setTimeout(function(){
-		if(($("#panel #member").length || $("#panel #project").length) && isZoom()){
+		if(($("#panel #member").length || $("#panel #project").length) && isZoom){
 			$("#panel").html("");
 			$("#panel").show("slow");
 			store.render("#panel", nodeMemo.container, `#${nodeMemo.name}-list-template`);
