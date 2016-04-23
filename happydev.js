@@ -119,7 +119,8 @@ function zoom(node) {
             svgContainer.transition().duration(750).attr("transform",
                 `translate(${viewportWidth/2-node.cx*zoomLevel},${viewportHeight/2-node.cy*zoomLevel})scale(${zoomLevel})`);
             window.template = `#${node.name}-template`;
-            $("#panel").show("slow");
+            $("#panel").show();
+			$("#panel").animate({right:"0",transition:"0.5s"});
             store.render("#panel", node.container, `#${node.name}-list-template`);
             fetchMembers(node);
         } else {
@@ -134,7 +135,7 @@ function zoom(node) {
 
 function unZoom(){
 	svgContainer.transition().duration(750).attr("transform",``);
-
+	isZoom = false;
 	hidePanel();
 	$(".members").remove();
 	$(".happy-unzoom").off();
@@ -146,11 +147,11 @@ function unZoom(){
 	});
 	
 	history.pushState(null,"HappyHome","/");
-	isZoom = false;
 }
 
 function showMember(member) {
-    $("#panel").show("slow");
+    $("#panel").show();
+	$("#panel").animate({right:"0",transition:"0.5s"});
     store.render("#panel", member["@id"], window.template);
 }
 
@@ -170,17 +171,16 @@ function sendContact() {
 }
 
 function hidePanel(){
-	$("#panel").hide("slow");
-	
-	setTimeout(function(){
-		if(($("#panel #member").length || $("#panel #project").length) && isZoom){
+	if(($("#panel #member").length || $("#panel #project").length) && isZoom){
+		$("#panel").html("");
+		store.render("#panel", nodeMemo.container, `#${nodeMemo.name}-list-template`);
+	}else{
+		$("#panel").animate({right:"-350px",transition:"0.5s"});
+		
+		setTimeout(function(){	
 			$("#panel").html("");
-			$("#panel").show("slow");
-			store.render("#panel", nodeMemo.container, `#${nodeMemo.name}-list-template`);
-		}else{
-			$("#panel").html("");
-		}
-	},400);
+		},500);
+	}
 }
 
 $(function() {
