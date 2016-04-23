@@ -179,7 +179,7 @@ function hidePanel(){
 		
 		setTimeout(function(){	
 			$("#panel").html("");
-		},500);
+		},700);
 	}
 }
 
