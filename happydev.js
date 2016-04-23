@@ -61,6 +61,7 @@ function fetchMembers(node) {
 					.charge(-2000)
 					.nodes(nodes)
 					.links(links)
+					.friction(0.7)
 					.start();
 							
 		var link = cont.selectAll(".link")
