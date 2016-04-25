@@ -120,7 +120,7 @@ function zoom(node) {
                 `translate(${viewportWidth/2-node.cx*zoomLevel},${viewportHeight/2-node.cy*zoomLevel})scale(${zoomLevel})`);
             window.template = `#${node.name}-template`;
             $("#panel").show();
-			$("#panel").animate({right:"0",transition:"0.5s"});
+			$("#panel").animate({right:"0"});
             store.render("#panel", node.container, `#${node.name}-list-template`);
             fetchMembers(node);
         } else {
@@ -151,7 +151,7 @@ function unZoom(){
 
 function showMember(member) {
     $("#panel").show();
-	$("#panel").animate({right:"0",transition:"0.5s"});
+	$("#panel").animate({right:"0"});
     store.render("#panel", member["@id"], window.template);
 }
 
@@ -175,7 +175,7 @@ function hidePanel(){
 		$("#panel").html("");
 		store.render("#panel", nodeMemo.container, `#${nodeMemo.name}-list-template`);
 	}else{
-		$("#panel").animate({right:"-350px",transition:"0.5s"});
+		$("#panel").animate({right:"-350px"});
 		
 		setTimeout(function(){	
 			$("#panel").html("");
