@@ -218,11 +218,28 @@ line  {
     background:         white;
     padding:            2em;
     display:            none;
-	text-align:			justify;
+	text-align:			center;
+}
+
+#manifeste p {
+	color: black;
 }
 
 #manifeste h1{
 	text-align: 		center;
+}
+
+#manifeste ul{
+	list-style:		none;
+	color:			RGB(211,211,211);
+}
+
+#manifeste b{
+	color:			black;
+}
+
+#manifeste li:hover {
+	color:			black;
 }
 
 #team-list , #project-list {
