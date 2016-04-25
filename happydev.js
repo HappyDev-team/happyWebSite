@@ -110,9 +110,7 @@ function listingList(nodes){
 function zoom(node) {
     if(node.name) {
         if(node.container) {
-            $(".happy-title").off();
 			$(".happy-title").attr("class","happy-unzoom");
-			$(".happy-unzoom").removeClass("happy-title");
 			$(".happy-unzoom").on("click",unZoom);
             areaLeft = node.cx - viewportWidth/zoomLevel/2;
             areaTop = node.cy - viewportHeight/zoomLevel/2;
@@ -125,7 +123,6 @@ function zoom(node) {
             fetchMembers(node);
         } else {
             $(node.div).show();
-			$("#manifeste").hide();
         }
 		history.pushState(null,"Happy"+node.name,node.name);
     }
@@ -138,13 +135,7 @@ function unZoom(){
 	isZoom = false;
 	hidePanel();
 	$(".members").remove();
-	$(".happy-unzoom").off();
 	$(".happy-unzoom").attr("class","happy-title");
-	$(".happy-title").removeClass("happy-unzoom");
-	$(".happy-title").on("click",function(){
-		$("#manifeste").slideDown("slow");
-		history.pushState(null,"HappyManifesto","manifeste");
-	});
 	
 	history.pushState(null,"HappyHome","/");
 }
@@ -202,11 +193,6 @@ $(function() {
         drawNodes(svgContainer, data.nodes);
         drawLinks(svgContainer, data.links);
     });
-	
-	$(".happy-title").on("click", function(){
-		$("#manifeste").slideDown("slow");
-		history.pushState(null,"HappyManifesto","manifeste");
-	});
 	
 	$("#manifeste").on("click", function(){
 		$("#manifeste").slideUp("slow");

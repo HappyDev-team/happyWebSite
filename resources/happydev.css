@@ -38,6 +38,7 @@ line  {
 	left: 50%;
 	text-align: center;
 	transition: 0.5s;
+	z-index:			-1;
 }
 
 .happy-unzoom {
@@ -49,10 +50,7 @@ line  {
 	margin: 0;
 	text-align: center;
 	transition: 0.5s;
-}
-
-.happy-title:hover {
-	cursor:				pointer;
+	z-index:			2;
 }
 
 .happy-unzoom:hover{
@@ -71,14 +69,8 @@ line  {
 	font-family:        bebas, sans-serif;
 	font-size: 			200%;
 	font-weight:		40;
-	margin:             2px 0;/*
-	font-weight: 		bold;
-	border: 			solid 2px rgb(253, 200, 21);
-	border-radius: 		10px;
-	margin-top: 		1px;
-	padding-bottom: 	10px;
-	padding-top:		10px;*/
-	transition: 		0.5s
+	margin:             2px 0;
+	transition: 		0.5s;
 }
 
 .happy-title h4 {
