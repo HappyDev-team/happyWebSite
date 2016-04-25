@@ -114,7 +114,7 @@ function zoom(node) {
 			$(".happy-unzoom").on("click",function(){crossroads.parse("/");});
             areaLeft = node.cx - viewportWidth/zoomLevel/2;
             areaTop = node.cy - viewportHeight/zoomLevel/2;
-            svgContainer.transition().duration(750).attr("transform",
+            svgContainer.transition().duration(500).attr("transform",
                 `translate(${viewportWidth/2-node.cx*zoomLevel},${viewportHeight/2-node.cy*zoomLevel})scale(${zoomLevel})`);
             window.template = `#${node.name}-template`;
             $("#panel").show();
@@ -130,7 +130,7 @@ function zoom(node) {
 }
 
 function unZoom(){
-	svgContainer.transition().duration(750).attr("transform",``);
+	svgContainer.transition().duration(500).attr("transform",``);
 	isZoom = false;
 	hidePanel();
 	$(".members").remove();
