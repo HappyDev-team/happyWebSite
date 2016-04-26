@@ -16,8 +16,16 @@ function drawNodes(container, data) {
     // addition d'un Text à chaque svg.node
     nodes.each(function(d) {
         if (d.name)
-            d3.select(this).on("click", function(){crossroads.parse(d.name);})
-                .style("cursor", "pointer")
+			d3.select(this).on("click", function(){
+					if(!isZoom){
+						crossroads.parse(d.name);
+					}else{
+						$("#panel").show();
+						$("#panel").animate({right:"0"});
+						store.render("#panel", d.container, `#${d.name}-list-template`);
+					}
+				})
+				.style("cursor", "pointer")
                 .append("text")
                     .attr("class", "node-name")
                     .attr("x", function(d) { return d.cx-38; })
