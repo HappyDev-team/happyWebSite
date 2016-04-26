@@ -44,7 +44,7 @@ function drawLinks(container, data) {
         .attr("y1", function(d) { return d.source.cy; })
         .attr("x2", function(d) { return d.target.cx; })
         .attr("y2", function(d) { return d.target.cy; })
-        .style("animation-duration", "5s")
+        .style("animation-duration", function(d){return d.duration})
         .style("animation-delay", function(d){return d.delay});
     return links;
 }
