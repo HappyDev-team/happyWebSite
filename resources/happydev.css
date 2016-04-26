@@ -152,19 +152,23 @@ line  {
 
 #contact {
     position:           	absolute;
-    border:             	solid 1px;
+    border:             	solid 1px rgb(253, 200, 21);
     top:                		10%;
     left:               		10%;
     right:              		10%;
-    bottom:             	10%;
-    background:        white;
+    background:        	rgb(253, 200, 21);
+	min-height:			400px;
     padding:          	2em;
     display:            	none;
+	text-align:				center;
+	font-family:	bebas, sans-serif;
+	font-size:		150%;
+	color:					white;
 }
 
 #contact .back, #manifeste .back {
     position: 					absolute;
-    top: 						1em;
+    top: 						16px;
     right: 						1em;
 	width:						2em;
 	transition:				1s;
@@ -172,8 +176,36 @@ line  {
 
 #contact .back:hover, #manifeste .back:hover {
 	cursor:				pointer;
-	transform:		rotate(90deg);
-	transition:		1s;
+	transform:			rotate(90deg);
+	transition:			1s;
+}
+
+#contact form{
+	background-color:		white;
+	margin:					auto;
+	color:					black;
+	width:					400px;
+	padding:				20px 10px 10px 20px;
+	text-align:				left;
+	margin-bottom:			60px;
+}
+
+#contact hr{
+	width:					100px;
+	color:					lightgray;
+}
+
+#contact-happy{
+	position: 		absolute;
+	top:			20px;
+	left:			20px;
+}
+
+#contact-infos{
+	width:			100%;
+	position:		absolute;
+	left:			0;
+	bottom:			20px;
 }
 
 #contactEtape1{
@@ -189,16 +221,36 @@ line  {
 }
 
 .contact-centre{
-	text-align: 			center;
+	text-align:		center;
 	margin-bottom:	10px;
 }
 
 #contact label{
-	display:					inline-block;
-	width: 						50%;
-	text-align:				right;
+	display:			inline-block;
 	margin-bottom:		10px;
 }
+
+#contact input{
+	margin-bottom:		10px;
+	border: 			0;
+	outline: 			0;
+	background: 		transparent;
+	border-bottom: 		2px solid rgb(253, 200, 21);
+	text-align:			right;
+}
+
+.contact-input{
+	text-align: right;
+}
+
+.contact-input span {
+	color:		rgb(253, 200, 21);
+}
+
+#contact .etapes{
+	margin-top:		20px;
+}
+
 
 #manifeste{
 	position:           absolute;

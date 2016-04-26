@@ -70,25 +70,30 @@
 			 <img class="back" src="resources/close.png"/>
 		</div>
         <div id="contact">
+            <div id="contact-happy">HAPPY DEV</div>
             <form onsubmit="return sendContact()">
+				<hr align="left"/>
                 <div>
-                    <label for="contact-name">Bonjour ! Comment t'appelles tu ?</label>
-                    <input type="text" name="name" id="contact-name" />
+                    <label for="contact-name">> Bonjour ! Comment t'appelles tu ?</label><br/>
+                    <div class="contact-input"><span>(entrer)</span><input type="text" name="name" id="contact-name" placeholder="PRENOM"/> <</div>
                 </div>
-                <div id="contactEtape1">
-                    <label for="contact-howru">Comment ça va aujourd'hui ?</label>
-                    <input type="text" name="howru" id="contact-howru" />
+                <div id="contactEtape1" class="etapes">
+                    <label for="contact-howru">> Comment ça va aujourd'hui ?</label><br/>
+					 <div class="contact-input"><span>(entrer)</span><input type="text" name="howru" id="contact-howru" /> <</div>
                 </div>
-                <div id="contactEtape2">
-                    <label for="contact-request">Qu'est-ce que je peux faire pour toi ?</label>
-					<input type="text" name="request" id="contact-request" />
+                <div id="contactEtape2" class="etapes">
+                    <label for="contact-request">> Qu'est-ce que je peux faire pour toi ?</label><br/>
+					<div class="contact-input"><span>(entrer)</span><input type="text" name="request" id="contact-request" placeholder="DESCRIPTIF DU PROJET"/> <</div>					
                 </div>
-                <div id="contactEtape3">
-                    <label for="contact-contact">Comment peut-on te joindre ?</label>
-                    <input type="text" name="contact" id="contact-contact" />
+                <div id="contactEtape3" class="etapes">
+                    <label for="contact-contact">> Comment peut-on te joindre ?</label><br/>
+					<div class="contact-input"><span>(entrer)</span><input type="text" name="contact" id="contact-contact" /> <</div>
                 </div>
                 <img class="back" src="resources/close.png"/>
             </form>
+			<div id="contact-infos">
+				contact@happy-dev.fr 	| 	numéro de tel 	| 	Retrouvez nous à mutinerie
+			</div>
         </div>
     </body>
 </html>
