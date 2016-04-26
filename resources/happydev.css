@@ -111,7 +111,7 @@ line  {
     max-width:          350px;
     z-index:            2;
     background:         white;
-    border-left:        solid 1px lightgray;
+    border-left:        solid 1px #3D3C37;
     display:            none;
 }
 
