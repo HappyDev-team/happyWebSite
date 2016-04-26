@@ -20,8 +20,8 @@
         </script>
         <script id="team-template" type="text/x-handlebars-template">
             <div id="member">
+				<h2 id="panel-title">{{object.foaf:firstName}} {{object.foaf:name}}</h2>
                 <img src="{{object.foaf:img}}" />
-                <h2>{{object.foaf:firstName}} {{object.foaf:name}}</h2>
                 <img class="back" src="resources/close.png" onclick="hidePanel()"/>
             </div>
         </script>
