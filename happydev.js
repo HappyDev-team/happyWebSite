@@ -155,8 +155,23 @@ function sendContact() {
     if(contactEtape != 3){
 		return false;
 	}else{
-		alert('salut ' + $("#contact-name").val() + ' !');
-		$("#contact form").append("<div class='contact-centre'>Merci beaucoup à très bientôt!</div>");
+		$.ajax(
+			{
+				type:"POST",
+				url:"http://ldp.happy-dev.fr/wp-admin/admin-ajax.php",
+				data: {name:$("#contact-name").val()
+				,howru:$("#contact-howru").val(),request:$("#contact-request").val()
+				,contact:$("#contact-contact").val(),mails:mails
+				,action:"send_HD_mail"},
+				dataType: "html"
+			}
+		).success(function(data){
+			if(data == "0" || data == "-1"){
+				$("#contact form").append("<div class='contact-centre'>Un problème s'est produit lors de l'envoi!</div>");
+			}else{
+				$("#contact form").append("<div class='contact-centre'>Merci beaucoup à très bientôt!</div>");
+			}
+		});
 		return false;
 	}
 }
@@ -196,6 +211,19 @@ $(function() {
 	
 	$("#manifeste").on("click", function(){
 		crossroads.parse("/");
+	});
+	
+	mails = "";
+	$.getJSON("conf.json",function(data){
+		var i =0;
+		$.each(data.mails, function(key,val){
+			if(i != 0){
+				mails += ",";
+			}else{
+				i++;
+			}
+			mails += val;
+		});
 	});
 	
 	contactEtape = 0;
