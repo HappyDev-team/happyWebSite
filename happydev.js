@@ -242,7 +242,7 @@ $(function() {
 			$("<div class='contact-centre'>Enchanté "+ $(this).val() +", nous sommes HAPPY DEV!</div>").insertBefore("#contactEtape1");
 			contactEtape += 1;
 		}else{
-			$(this).closest("div").next(".contact-centre").remove();
+			$(this).parent().parent().next(".contact-centre").remove();
 			$("<div class='contact-centre'>Enchanté "+ $(this).val() +", nous sommes HAPPY DEV!</div>").insertBefore("#contactEtape1");
 		}
 	});
