@@ -126,8 +126,7 @@ line  {
 	text-align:				center;
 }
 
-#member .section-title, #project .section-title {
-	text-align:				center;
+#member .section-title, #project .section-title, #member .section-aligner span {
 	font-family:				bebas, sans-serif;
 }
 
