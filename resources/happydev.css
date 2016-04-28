@@ -113,6 +113,7 @@ line  {
     background:         white;
     border-left:        solid 1px #3D3C37;
     display:            none;
+	overflow:			auto;
 }
 
 #member img {
