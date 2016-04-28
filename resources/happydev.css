@@ -157,6 +157,9 @@ line  {
 #panel-title{
 	text-align:		center;
 	color:				black;
+	width:				250px;
+	margin-left:		auto;
+	margin-right:	auto;
 }
 
 #project img{
