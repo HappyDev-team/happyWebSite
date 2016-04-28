@@ -22,6 +22,35 @@
             <div id="member">
 				<h2 id="panel-title">{{object.foaf:firstName}} {{object.foaf:name}}</h2>
                 <img src="{{object.foaf:img}}" />
+				{{#if object.av:biography}}
+					<p>{{object.av:biography}}</p>
+				{{/if}}
+				{{#if object.skillA}}
+					<p class="section-title">Mes compétences</p>
+					<ul>
+						<li>{{object.skillA}}</li>
+						{{#if object.skillB}}
+							<li>{{object.skillB}}</li>
+						{{/if}}
+						{{#if object.skillC}}
+							<li>{{object.skillC}}</li>
+						{{/if}}
+						{{#if object.skillD}}
+							<li>{{object.skillD}}</li>
+						{{/if}}
+						{{#if object.skillE}}
+							<li>{{object.skillE}}</li>
+						{{/if}}
+					</ul>
+				{{/if}}
+				{{#if object.foaf:currentProject}}
+					<p class="section-title">Projets</p>
+					<ul>
+						{{#each object.foaf:currentProject}}
+							<li><a href="{{[@id]}}">{{[@id]}}</a></li>
+						{{/each}}
+					</ul>
+				{{/if}}
                 <img class="back" src="resources/close.png" onclick="hidePanel()"/>
             </div>
         </script>
@@ -38,6 +67,17 @@
 			<div id="project">
 				<h2 id="panel-title">{{object.project_title}}</h2>
 				<img src="{{object.project_picture}}" />
+				{{#if object.project_description}}
+					<p>{{object.project_description}}</p>
+				{{/if}}
+				{{#if object.project_technology}}
+					<p class="section-title">Technologies utilisées</p>
+					<p>{{object.project_technology}}</p>
+				{{/if}}
+				{{#if object.project_url}}
+					<p class="section-title">Visiter le site</p>
+					<p><a href="{{object.project_url}}">{{object.project_url}}</a></p>
+				{{/if}}
 				<img class="back" src="resources/close.png" onclick="hidePanel()"/>
 			</div>
 		</script>

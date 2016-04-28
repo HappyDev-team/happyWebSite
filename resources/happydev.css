@@ -119,6 +119,27 @@ line  {
     width: 100%;
 }
 
+#member p , #project p{
+	color:						black;
+	padding-left:			20px;
+	padding-right:			20px;
+	text-align:				center;
+}
+
+#member .section-title, #project .section-title {
+	text-align:				center;
+	font-family:				bebas, sans-serif;
+}
+
+#member a, #project a{
+	color:					black;
+}
+
+#member ul {
+	margin-left:	20px;
+	color:				black;
+}
+
 #panel .back {
     position: 					absolute;
     top: 						1.1em;
