@@ -316,11 +316,11 @@ line  {
 }
 
 #team-list img, #project-list img {
-    max-height: 		3em;
+    height: 					48px;
     border-radius: 		50px;
-	display:			inline-block;
-	vertical-align:		middle;
-	min-width:			10%;
+	display:					inline-block;
+	vertical-align:			middle;
+	width:						48px;
 }
 
 #team-list .members-infos {
