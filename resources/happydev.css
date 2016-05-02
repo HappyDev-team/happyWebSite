@@ -140,6 +140,13 @@ line  {
 	color:				black;
 }
 
+#member .list-photo{
+	width:				48px;
+	height:				48px;
+	border-radius:	50px;
+	margin-left:		10px;
+}
+
 #panel .back {
     position: 					absolute;
     top: 						1.1em;

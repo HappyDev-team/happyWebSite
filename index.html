@@ -48,11 +48,9 @@
 				{{/if}}
 				{{#if object.foaf:currentProject}}
 					<p class="section-title">Projets</p>
-					<ul>
-						{{#each object.foaf:currentProject}}
-							<li><a href="{{[@id]}}">{{[@id]}}</a></li>
-						{{/each}}
-					</ul>
+						{{#ldpeach object.foaf:currentProject "div"}}
+							<img src="{{project_picture}}" class="list-photo"/>
+						{{/ldpeach}}
 				{{/if}}
                 <img class="back" src="resources/close.png" onclick="hidePanel()"/>
             </div>
