@@ -3,6 +3,11 @@
     src:                url('fonts/BebasNeue.otf');
 }
 
+@font-face {
+	font-family:		sanspro;
+	src:				url('fonts/SourceSansPro-Light.ttf');
+}
+
 @keyframes linedraw {
     from    {stroke-dashoffset: 1000;}
     to      {stroke-dashoffset: 0;}
@@ -174,6 +179,7 @@ line  {
 }
 
 .member-name {
+	font-family:		sanspro;
     font-size:          10px;
 }
 
