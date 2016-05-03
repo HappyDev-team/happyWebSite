@@ -152,6 +152,10 @@ line  {
 	margin-left:		10px;
 }
 
+#member .list-photo:hover{
+	cursor:				pointer;
+}
+
 #panel .back {
     position: 					absolute;
     top: 						1.1em;
