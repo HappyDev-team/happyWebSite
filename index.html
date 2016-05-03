@@ -49,7 +49,7 @@
 				{{#if object.foaf:currentProject}}
 					<p class="section-title">Projets</p>
 						{{#ldpeach object.foaf:currentProject "div"}}
-							<img src="{{project_picture}}" class="list-photo"/>
+							<img src="{{project_picture}}" class="list-photo" onclick="zoneMove('{{[@id]}}')"/>
 						{{/ldpeach}}
 				{{/if}}
                 <img class="back" src="resources/close.png" onclick="hidePanel()"/>

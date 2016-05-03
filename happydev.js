@@ -115,7 +115,7 @@ function listingList(nodes){
 	return liste;
 }
 
-function zoom(node) {
+function zoom(node, cible) {
     if(node.name) {
         if(node.container) {
 			$(".happy-title").attr("class","happy-unzoom");
@@ -127,7 +127,12 @@ function zoom(node) {
             window.template = `#${node.name}-template`;
             $("#panel").show();
 			$("#panel").animate({right:"0"});
-            store.render("#panel", node.container, `#${node.name}-list-template`);
+            if(typeof cible === "undefined"){
+				store.render("#panel", node.container, `#${node.name}-list-template`);
+			}else{
+				var res = decodeURIComponent(cible);
+				store.render("#panel", res, window.template);
+			}
             fetchMembers(node);
         } else {
 			crossroads.parse(node.name);
@@ -187,6 +192,11 @@ function hidePanel(){
 			$("#panel").html("");
 		},700);
 	}
+}
+
+function zoneMove(id){
+	var res = encodeURIComponent(id);
+	crossroads.parse("projects/"+res);
 }
 
 $(function() {
@@ -271,6 +281,7 @@ $(function() {
 	var route3 = crossroads.addRoute("manifeste");
 	var route4 = crossroads.addRoute("contact");
 	var route5 = crossroads.addRoute("/");
+	var route6 = crossroads.addRoute("projects/{id}");
 	
 	isZoom = false;
 	
@@ -313,6 +324,13 @@ $(function() {
 		$("#contact").hide();
 		$("#manifeste").slideUp("slow");
 		history.pushState(null,"HappyHome","/");
+	});
+	
+	route6.matched.add(function(id){
+		d3.json("data.json",function(data){
+			zoom(data.nodes[4],id);
+			history.pushState(null,"Happy"+data.nodes[4].name,data.nodes[4].name);
+		});
 	});
 	
 	crossroads.parse(location.pathname);
