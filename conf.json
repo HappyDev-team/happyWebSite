@@ -1,0 +1,12 @@
+{
+	"force":{
+		"charge":-2000,
+		"friction":0.7
+	},
+	"mails":{
+		"1":"alexandre@happy-dev.fr",
+		"2":"jonathan@happy-dev.fr",
+		"3":"romain@happy-dev.fr",
+		"4":"sylvain@happy-dev.fr"
+	}
+}

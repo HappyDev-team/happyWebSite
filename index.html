@@ -2,16 +2,86 @@
     <head>
         <meta charset="utf-8" />
         <title>happyHome</title>
-        <link rel="stylesheet" href="happydev.css" />
-        <script type="text/javascript" src="d3.min.js"></script>
-        <script type="text/javascript" src="jquery-1.11.3.min.js"></script>
-        <script type="text/javascript" src="ldpframework.js"></script>
+        <link rel="stylesheet" href="resources/happydev.css" />
+        <script type="text/javascript" src="library/d3.min.js"></script>
+        <script type="text/javascript" src="library/jquery-1.11.3.min.js"></script>
+        <script type="text/javascript" src="library/LDP-framework/ldpframework.js"></script>
+		<script type="text/javascript" src="library/crossroads/signals.js"></script>
+		<script type="text/javascript" src="library/crossroads/crossroads.min.js"></script>
         <script src="happydev.js"></script>
-        <script id="profile-template" type="text/x-handlebars-template">
-            <h2>{{object.foaf:firstName}} {{object.foaf:name}}</h2>
-            <img src="{{object.foaf:img}}" />
-            <button onclick="$('#panel').hide()">OK</button>
+        <script id="team-list-template" type="text/x-handlebars-template">
+			<h2 id="panel-title">Team</h2>
+            <ul id="team-list">
+                {{#each object.ldp:contains}}
+                <li onclick="showMember({'@id':'{{[@id]}}'})"><img src="{{foaf:img}}"><div class="members-infos"><span class="members-fn">{{foaf:firstName}} </span><span class="members-name">{{foaf:name}}</span></div></li>
+                {{/each}}
+            </ul>
+            <img class="back" src="resources/close.png" onclick="hidePanel()"/>
         </script>
+        <script id="team-template" type="text/x-handlebars-template">
+            <div id="member">
+				<h2 id="panel-title">{{object.foaf:firstName}} {{object.foaf:name}}</h2>
+                <img src="{{object.foaf:img}}" />
+				{{#if object.av:biography}}
+					<p>{{object.av:biography}}</p>
+				{{/if}}
+				{{#if object.city}}
+					<p class="section-aligner"><span>Ville </span>: {{object.city}}</p>
+				{{/if}}
+				{{#if object.skillA}}
+					<p class="section-title">Mes compétences</p>
+					<ul>
+						<li>{{object.skillA}}</li>
+						{{#if object.skillB}}
+							<li>{{object.skillB}}</li>
+						{{/if}}
+						{{#if object.skillC}}
+							<li>{{object.skillC}}</li>
+						{{/if}}
+						{{#if object.skillD}}
+							<li>{{object.skillD}}</li>
+						{{/if}}
+						{{#if object.skillE}}
+							<li>{{object.skillE}}</li>
+						{{/if}}
+					</ul>
+				{{/if}}
+				{{#if object.foaf:currentProject}}
+					<p class="section-title">Projets</p>
+						{{#ldpeach object.foaf:currentProject "div"}}
+							<img src="{{project_picture}}" class="list-photo" onclick="zoneMove('{{[@id]}}')"/>
+						{{/ldpeach}}
+				{{/if}}
+                <img class="back" src="resources/close.png" onclick="hidePanel()"/>
+            </div>
+        </script>
+		<script id="projects-list-template" type="text/x-handlebars-template">
+			<h2 id="panel-title">Projects</h2>
+            <ul id="project-list">
+                {{#each object.ldp:contains}}
+                <li onclick="showMember({'@id':'{{[@id]}}'})"><img src="{{project_picture}}"/><span>{{project_title}}</span></li>
+                {{/each}}
+            </ul>
+            <img class="back" src="resources/close.png" onclick="hidePanel()"/>
+        </script>
+        <script id="projects-template" type="text/x-handlebars-template">
+			<div id="project">
+				<h2 id="panel-title">{{object.project_title}}</h2>
+				<img src="{{object.project_picture}}" />
+				{{#if object.project_description}}
+					<p>{{object.project_description}}</p>
+				{{/if}}
+				{{#if object.project_technology}}
+					<p class="section-title">Technologies utilisées</p>
+					<p>{{object.project_technology}}</p>
+				{{/if}}
+				{{#if object.project_url}}
+					<p class="section-title">Visiter le site</p>
+					<p><a href="{{object.project_url}}">{{object.project_url}}</a></p>
+				{{/if}}
+				<img class="back" src="resources/close.png" onclick="hidePanel()"/>
+			</div>
+		</script>
     </head>
     <body>
         <div class="happy-title">
@@ -22,6 +92,49 @@
             <div class="chevron">
             </div>
         </div>
-        <div id="panel"></div>
+        <div id="panel">
+        </div>
+		<div id="manifeste">
+			<h1>HAPPY DEV</h1>
+			<p>Happy Dev est le rassemblement spontané d'humains bienveillants, réunis par ces valeurs communes :</p>
+			<ul>
+				<li><b>Nous aspirons à prendre notre pied dans le travail.</b><br/> Nous refusons de prendre part à toute besogne qui nous rendrait malheureux. L'épanouissement des membres du réseau passe avant la recherche de revenus.</li><br/>
+				<li><b>Nos clients sont nos collaborateurs et amis</b><br/>, ils sont les porteurs de projets au sein du réseau, nous ne faisons pas les projets POUR eux, mais AVEC eux.</li><br/>
+				<li><b>Nous désirons avoir un impact positif sur le monde.</b><br/> Nous sommes conscients des enjeux de notre époque, et ne voulons pas rester simples spectateurs. Nous voyons dans les technologies numériques un puissant levier de transformation.</li><br/>
+				<li><b>Nous ne laissons pas une collaboration décevoir un client.</b><br/> Nous sommes collectivement responsables du succès des projets. L'enthousiasme de nos clients est la clé de voûte qui assure la pérennité du réseau.</li><br/>
+				<li><b>La bonne humeur est un objectif assumé.</b><br/> Nous aspirons à ce qu'une joyeuse énergie se dégage du réseau, basée sur l'écoute et la compréhension mutuelle. Nous contribuons tous à l'ambiance générale par nos passions et nos extravagances.</li><br/>
+				<li><b>Notre métier est humain avant d'être technique.</b><br/> Nous pensons que l'excès de formalisme empêche l'épanouissement des relations humaines. C'est dans la confiance et l'écoute attentive des besoins que nous souhaitons honorer nos engagements.</li><br/>
+				<li><b>Nous aspirons à nous sentir libre.</b><br/> Le salariat est pour nous une forme d'asservissement. Les membres du réseau Happy Dev sont autonomes et maîtres de leur destin.</li><br/>
+				<li><b>Le réseau est basé sur la contribution ouverte,</b><br/> chacun est libre d'y apporter ce qui lui semble bon.</li>
+			</ul>
+			<p>Tous les membres du réseau Happy Dev ont signé ce manifeste.</p>
+			 <img class="back" src="resources/close.png"/>
+		</div>
+        <div id="contact">
+            <div id="contact-happy">HAPPY DEV</div>
+            <form onsubmit="return sendContact()">
+				<hr align="left"/>
+                <div>
+                    <label for="contact-name">> Bonjour ! Comment t'appelles tu ?</label><br/>
+                    <div class="contact-input"><span>(entrer)</span><input type="text" name="name" id="contact-name" placeholder="PRENOM"/> <</div>
+                </div>
+                <div id="contactEtape1" class="etapes">
+                    <label for="contact-howru">> Comment ça va aujourd'hui ?</label><br/>
+					 <div class="contact-input"><span>(entrer)</span><input type="text" name="howru" id="contact-howru" /> <</div>
+                </div>
+                <div id="contactEtape2" class="etapes">
+                    <label for="contact-request">> Qu'est-ce que je peux faire pour toi ?</label><br/>
+					<div class="contact-input"><span>(entrer)</span><input type="text" name="request" id="contact-request" placeholder="DESCRIPTIF DU PROJET"/> <</div>					
+                </div>
+                <div id="contactEtape3" class="etapes">
+                    <label for="contact-contact">> Comment peut-on te joindre ?</label><br/>
+					<div class="contact-input"><span>(entrer)</span><input type="text" name="contact" id="contact-contact" /> <</div>
+                </div>
+                <img class="back" src="resources/close.png"/>
+            </form>
+			<div id="contact-infos">
+				contact@happy-dev.fr 	| 	numéro de tel 	| 	Retrouvez nous à mutinerie
+			</div>
+        </div>
     </body>
 </html>
