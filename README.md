@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Happy Dev Website
 
 Happy Dev is a network of independent developers. [happy-dev.fr](http://happy-dev.fr)

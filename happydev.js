@@ -248,13 +248,10 @@ $(function() {
 	
 	$("#contact-name").on("change", function(){
 		$("#contactEtape1").fadeIn();
-		if(contactEtape == 0){
-			$("<div class='contact-centre'>Enchanté "+ $(this).val() +", nous sommes HAPPY DEV!</div>").insertBefore("#contactEtape1");
-			contactEtape += 1;
-		}else{
-			$(this).parent().parent().next(".contact-centre").remove();
-			$("<div class='contact-centre'>Enchanté "+ $(this).val() +", nous sommes HAPPY DEV!</div>").insertBefore("#contactEtape1");
-		}
+		if(contactEtape == 0) contactEtape += 1;
+		else $(this).parent().parent().next(".contact-centre").remove();
+		
+		$("<div class='contact-centre'>Bonjour "+ $(this).val() +" !</div>").insertBefore("#contactEtape1");
 	});
 	
 	$("#contact-howru").on("change", function(){
