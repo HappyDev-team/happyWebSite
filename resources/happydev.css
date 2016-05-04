@@ -312,14 +312,10 @@ line  {
 
 #manifeste ul{
 	list-style:		none;
-	color:			RGB(211,211,211);
-}
-
-#manifeste b{
 	color:			black;
 }
 
-#manifeste li:hover {
+#manifeste b{
 	color:			black;
 }
 
