@@ -174,7 +174,7 @@ function sendContact() {
 			if(data == "0" || data == "-1"){
 				$("#contact form").append("<div class='contact-centre'>Un problème s'est produit lors de l'envoi!</div>");
 			}else{
-				$("#contact form").append("<div class='contact-centre'>Merci beaucoup à très bientôt!</div>");
+				closeContact();
 			}
 		});
 		return false;
@@ -197,6 +197,14 @@ function hidePanel(){
 function zoneMove(id){
 	var res = encodeURIComponent(id);
 	crossroads.parse("projects/"+res);
+}
+
+function closeContact(){
+	$("#contact-name, #contact-howru, #contact-request, #contact-contact").val("");
+	contactEtape = 0;
+	$('#contactEtape1, #contactEtape2, #contactEtape3').hide();
+	$(".contact-centre").remove();
+	crossroads.parse("/");
 }
 
 $(function() {
@@ -239,19 +247,16 @@ $(function() {
 	contactEtape = 0;
 	
 	$("#contact .back").on("click", function(){
-		$("#contact-name, #contact-howru, #contact-request, #contact-contact").val("");
-		contactEtape = 0;
-		$('#contactEtape1, #contactEtape2, #contactEtape3').hide();
-		$(".contact-centre").remove();
-		crossroads.parse("/");
+		closeContact();
 	});
 	
 	$("#contact-name").on("change", function(){
 		$("#contactEtape1").fadeIn();
-		if(contactEtape == 0) contactEtape += 1;
-		else $(this).parent().parent().next(".contact-centre").remove();
-		
-		$("<div class='contact-centre'>Bonjour "+ $(this).val() +" !</div>").insertBefore("#contactEtape1");
+		if(contactEtape == 0){
+			contactEtape += 1;
+		}
+		$("#contactEtape1 label").html("&gt; Enchanté "+$("#contact-name").val()+", comment ça va aujourd'hui?");
+		$("#contact-howru").focus();
 	});
 	
 	$("#contact-howru").on("change", function(){
@@ -259,6 +264,7 @@ $(function() {
 		if(contactEtape == 1){
 			contactEtape += 1;
 		}
+		$("#contact-request").focus();
 	});
 	
 	$("#contact-request").on("change",function(){
@@ -267,10 +273,13 @@ $(function() {
 			$("<div class='contact-centre'>Ta demande va être prise en compte dans les meilleurs délais.</div>").insertBefore("#contactEtape3");
 			contactEtape +=1;
 		}
+		$("#contact-contact").focus();
 	});
 	
 	$("#contact-contact").on("change",function(){
-			$(this).closest("form").submit();
+		if(contactEtape == 3){
+			$("#contact form").append("<div class='contact-centre'>Merci beaucoup à très bientôt!<br/><input type='button' id='envoyer' name='envoyer' value='ENVOYER' onclick='sendContact()' /></div>");
+		}
 	});
 		
 	var route1 = crossroads.addRoute("team");
