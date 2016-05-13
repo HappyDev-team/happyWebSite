@@ -14,6 +14,7 @@
 }
 
 body  {
+	margin:				0;
     color:              rgb(253, 200, 21);
     stroke:             rgb(253, 200, 21);
     fill:               rgb(253, 200, 21);
