@@ -96,6 +96,7 @@ NetworkViewer.prototype.unZoom = function(){
 	this.svgContainer.transition().duration(500).attr("transform",``);
 	this.panel.animate({right: -this.panel.width()});
 	$(".members").remove();
+	$(document).off();
 }
 
 NetworkViewer.prototype.fetchMembers = function(node){
