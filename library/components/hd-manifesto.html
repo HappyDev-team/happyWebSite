@@ -1,0 +1,63 @@
+<template id="manifesto-template">
+	<style scoped>
+		:host(hd-manifesto){
+			text-align: center;
+			display:	block;
+			width:	100%;
+			height:	100%;
+			padding-bottom:	40px;
+			background-color:	white;
+			color:	black;
+		}		
+		hd-manifesto{
+			text-align: center;
+			display:	block;
+			width:	100%;
+			height:	100%;
+			padding-bottom:	40px;
+			background-color:	white;
+			color:	black;
+		}
+		#manifesto-title {
+			margin-top:	0;
+			padding-top:	10px;
+			color:	rgb(253, 200, 21);
+		}
+		:host(hd-manifesto) > p {
+			padding-left:	32px;
+			padding-right:	32px;
+		}
+		hd-manifesto > p {
+			padding-left:	32px;
+			padding-right:	32px;
+		}
+	</style>
+			<h1 id="manifesto-title">HAPPY DEV</h1>
+			<p>Happy Dev est le rassemblement spontané d'humains bienveillants, réunis par ces valeurs communes :</p>
+			<p><b>Nous aspirons à prendre notre pied dans le travail.</b><br/>Nous refusons de prendre part à toute besogne qui nous rendrait malheureux. L'épanouissement des membres du réseau passe avant la recherche de revenus.</p>
+			<p><b>Nos clients sont nos collaborateurs et amis</b><br/>, ils sont les porteurs de projets au sein du réseau, nous ne faisons pas les projets POUR eux, mais AVEC eux.</p>
+			<p><b>Nous désirons avoir un impact positif sur le monde.</b><br/>Nous sommes conscients des enjeux de notre époque, et ne voulons pas rester simples spectateurs. Nous voyons dans les technologies numériques un puissant levier de transformation.</p>
+			<p><b>Nous ne laissons pas une collaboration décevoir un client.</b><br/>Nous sommes collectivement responsables du succès des projets. L'enthousiasme de nos clients est la clé de voûte qui assure la pérennité du réseau.</p>
+			<p><b>La bonne humeur est un objectif assumé.</b><br/>Nous aspirons à ce qu'une joyeuse énergie se dégage du réseau, basée sur l'écoute et la compréhension mutuelle. Nous contribuons tous à l'ambiance générale par nos passions et nos extravagances.</p>
+			<p><b>Notre métier est humain avant d'être technique.</b><br/>Nous pensons que l'excès de formalisme empêche l'épanouissement des relations humaines. C'est dans la confiance et l'écoute attentive des besoins que nous souhaitons honorer nos engagements.</p>
+			<p><b>Nous aspirons à nous sentir libre.</b><br/>Le salariat est pour nous une forme d'asservissement. Les membres du réseau Happy Dev sont autonomes et maîtres de leur destin.</p>
+			<p><b>Le réseau est basé sur la contribution ouverte,</b><br/>chacun est libre d'y apporter ce qui lui semble bon.</p>
+			<p>Tous les membres du réseau Happy Dev ont signé ce manifeste.</p>
+</template>
+	
+<script>
+	(function(){
+		var localDoc = document._currentScript.ownerDocument;
+		
+		var ManifestoPrototype = Object.create(HTMLElement.prototype, {
+            createdCallback: {
+                value: function() {
+                    var clone = document.importNode(localDoc.querySelector('#manifesto-template').content, true);
+                    this.createShadowRoot().appendChild(clone);
+                }
+            }
+        });
+
+		document.registerElement("hd-manifesto",{prototype: ManifestoPrototype});
+	})();
+</script>

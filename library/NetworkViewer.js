@@ -3,6 +3,7 @@ function NetworkViewer(globalData){
 	this.panel = globalData.panel;
 	this.principal = globalData.principal;
 	this.title = globalData.title;
+	this.manifesto = globalData.manifesto;
 	
     this.viewportWidth = 1000;
     this.viewportHeight = 780;
@@ -96,7 +97,7 @@ NetworkViewer.prototype.unZoom = function(){
 	this.svgContainer.transition().duration(500).attr("transform",``);
 	this.panel.animate({right: -this.panel.width()});
 	$(".members").remove();
-	$(document).off();
+	this.stopMoving();
 }
 
 NetworkViewer.prototype.fetchMembers = function(node){
@@ -213,11 +214,14 @@ NetworkViewer.prototype.crossroad = function(road){
 	}.bind(this));
 	
 	route3.matched.add(function(){
+		this.unZoom();
 		this.principal.show();
+		this.principal.append("<"+this.manifesto+"></"+this.manifesto+">");
 		history.pushState(null,"HappyManifesto","manifeste");
 	}.bind(this));
 	
 	route4.matched.add(function(){
+		this.unZoom();
 		this.principal.show();
 		history.pushState(null,"HappyContact","contact");
 	}.bind(this));
@@ -225,6 +229,7 @@ NetworkViewer.prototype.crossroad = function(road){
 	route5.matched.add(function(){
 		this.unZoom();
 		this.principal.hide();
+		this.principal.find($(this.manifesto)).remove();
 		history.pushState(null,"HappyHome","/");
 	}.bind(this));
 	
@@ -241,18 +246,27 @@ NetworkViewer.prototype.crossroad = function(road){
 NetworkViewer.prototype.movingContainer = function(){
 	 var mouseMovement = false;
 	
-	$(document).on("mousedown", function(elem){
+	$("#svg-container").on("mousedown", function(elem){
 		mouseMovement = true;
-	});
+		elem.preventDefault();
+	}.bind(this));
 	
-	$(document).on("mousemove", function(elem){
+	$("#svg-container").on("mousemove", function(elem){
 		if(mouseMovement){
+			var mouseX = this.viewportWidth - elem.clientX;
+			var mouseY = this.viewportHeight - elem.clientY;
+			console.log(mouseX+" "+elem.clientX);
+			console.log(mouseY+" "+elem.clientY);
 			this.svgContainer.transition().attr("transform",
-                `translate(${this.viewportWidth/2-elem.pageX*this.zoomLevel},${this.viewportHeight/2-elem.pageY*this.zoomLevel})scale(${this.zoomLevel})`);
+                `translate(${this.viewportWidth/2-elem.clientX*this.zoomLevel},${this.viewportHeight/2-elem.clientY*this.zoomLevel})scale(${this.zoomLevel})`);
 		}
 	}.bind(this));
 	
-	$(document).on("mouseup", function(elem){
+	$("#svg-container").on("mouseup", function(elem){
 		mouseMovement = false;
 	});
+}
+
+NetworkViewer.prototype.stopMoving = function(){
+	$("#svg-container").off();
 }
