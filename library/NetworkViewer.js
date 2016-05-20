@@ -3,7 +3,6 @@ function NetworkViewer(globalData){
 	this.panel = globalData.panel;
 	this.principal = globalData.principal;
 	this.title = globalData.title;
-	this.manifesto = globalData.manifesto;
 	
     this.viewportWidth = 1000;
     this.viewportHeight = 780;
@@ -11,7 +10,9 @@ function NetworkViewer(globalData){
 	
 	d3.json(globalData.file, function(data) {
 		this.nodes = data.nodes;
-		this.links = data.links;
+		
+		this.viewerMap = new Map(data.nodes.filter(this.selecNodes));
+		
         this.svgContainer = d3.select("body").append("svg")
             .attr("id", "svg-container")
             .attr("viewBox", `0 0 ${this.viewportWidth} ${this.viewportHeight}`)
@@ -22,9 +23,16 @@ function NetworkViewer(globalData){
                  .links(data.links)
                  .start();
         this.drawNodes();
-        this.drawLinks();
+        this.drawLinks(data.links);
 		this.crossroad(location.pathname);
     }.bind(this));
+}
+
+NetworkViewer.prototype.selecNodes = function(node){
+	if(node.name) {
+		var obj = new Array();
+		return obj[node.name] = node;
+	}
 }
 
 NetworkViewer.prototype.drawNodes = function(){
@@ -40,13 +48,12 @@ NetworkViewer.prototype.drawNodes = function(){
         .attr("r", function(d) { return d.name ? 16 : 4; });
 
     nodes.each(function(d) {
-        if (d.name)
+        if (d.name){
 			d3.select(this).on("click", function(){
 				if(location.pathname.startsWith("/"+d.name) && d.container){
 					objectNV.panel.animate({right:"0"});
 				}else{
-					// objectNV.crossroad(d); A retravailler
-					crossroads.parse(d.name);
+					objectNV.crossroad(d.name);
 				}
 			})
 			.style("cursor", "pointer")
@@ -56,13 +63,13 @@ NetworkViewer.prototype.drawNodes = function(){
 				.attr("y", function(d) { return d.cy+55; })
 				.attr("text-anchor","middle")
 				.text(function(d) { return d.name; });
-    });
+		}});
     return nodes;
 };
 
-NetworkViewer.prototype.drawLinks = function(){
+NetworkViewer.prototype.drawLinks = function(links){
 	window.links = this.svgContainer.selectAll(".link")
-        .data(this.links)
+        .data(links)
         .enter().append("line")
         .attr("class", "link")
         .attr("x1", function(d) { return d.source.cx; })
@@ -96,6 +103,7 @@ NetworkViewer.prototype.unZoom = function(){
 	$(".happy-unZoom").attr("class",this.title);
 	this.svgContainer.transition().duration(500).attr("transform",``);
 	this.panel.animate({right: -this.panel.width()});
+	this.panel.find(this.component).remove();
 	$(".members").remove();
 	this.stopMoving();
 }
@@ -166,81 +174,50 @@ NetworkViewer.prototype.nodesLinkList = function(nodes){
 	return liste;
 };
 
-/* Travail en cours...
 NetworkViewer.prototype.crossroad = function(road){
 	this.road = road;
 	var route1 = crossroads.addRoute("/");
 	var route2 = crossroads.addRoute("{section}");
-	
+		
 	route1.matched.add(function(){
 		this.unZoom();
 		this.principal.hide();
+		this.principal.find($(this.component)).remove();
+		this.panel.find($("h2")).remove();
+		this.panel.find($(this.component)).remove();
 		history.pushState(null,"HappyHome","/");
 	}.bind(this));
 	
 	route2.matched.add(function(){
+		// console.log(this.viewerMap);
+		var roads;
+		this.nodes.map(function(n){
+			if("/"+n.name == this.road){
+				roads = n;
+			}
+		}.bind(this));
+		this.road = roads;
+		this.panel.find($("h2")).remove();
+		this.panel.find($(this.component)).remove();
 		if(this.road.container){
+			this.component = this.road.component;
+			this.panel.append("<h2>"+this.road.name+"</h2>");
+			this.panel.append("<"+this.component+" data-src='"+this.road.container+"'></"+this.component+">");
 			this.zoom(this.road);
 			history.pushState(null,"Happy "+this.road.name,this.road.name);
 		}else{
+			this.unZoom();
+			this.component = this.road.component;
 			this.principal.show();
+			if(this.road.target){
+				this.principal.append("<"+this.component+" data-target='"+this.road.target+"' data-action="+this.road.action+" data-mails="+this.road.mails+"></"+this.component+">");
+			}
+			else this.principal.append("<"+this.component+"></"+this.component+">");
 			history.pushState(null,"Happy "+this.road.name,this.road.name);
 		}
 	}.bind(this));
 	
-	if(this.road.name){
-		crossroads.parse(this.road.name);
-	}else{
-		crossroads.parse(this.road);
-	}
-}*/
-
-NetworkViewer.prototype.crossroad = function(road){
-	var route1 = crossroads.addRoute("team");
-	var route2 = crossroads.addRoute("projects");
-	var route3 = crossroads.addRoute("manifeste");
-	var route4 = crossroads.addRoute("contact");
-	var route5 = crossroads.addRoute("/");
-	// var route6 = crossroads.addRoute("projects/{id}");
-		
-	route1.matched.add(function(){
-		this.zoom(this.nodes[2]);
-		history.pushState(null,"Happy"+this.nodes[2].name,this.nodes[2].name);
-	}.bind(this));
-	
-	route2.matched.add(function(){
-			this.zoom(this.nodes[4]);
-			history.pushState(null,"Happy"+this.nodes[4].name,this.nodes[4].name);
-	}.bind(this));
-	
-	route3.matched.add(function(){
-		this.unZoom();
-		this.principal.show();
-		this.principal.append("<"+this.manifesto+"></"+this.manifesto+">");
-		history.pushState(null,"HappyManifesto","manifeste");
-	}.bind(this));
-	
-	route4.matched.add(function(){
-		this.unZoom();
-		this.principal.show();
-		history.pushState(null,"HappyContact","contact");
-	}.bind(this));
-	
-	route5.matched.add(function(){
-		this.unZoom();
-		this.principal.hide();
-		this.principal.find($(this.manifesto)).remove();
-		history.pushState(null,"HappyHome","/");
-	}.bind(this));
-	
-	// route6.matched.add(function(id){
-		// d3.json("data.json",function(data){
-			// zoom(data.nodes[4],id);
-			// history.pushState(null,"Happy"+data.nodes[4].name,data.nodes[4].name);
-		// });
-	// });
-	
-	crossroads.parse(road);
+	crossroads.parse(this.road);
 }
 
 NetworkViewer.prototype.movingContainer = function(){
@@ -248,23 +225,31 @@ NetworkViewer.prototype.movingContainer = function(){
 	
 	$("#svg-container").on("mousedown", function(elem){
 		mouseMovement = true;
+		this.mouseX = elem.clientX;
+		this.mouseY = elem.clientY;
 		elem.preventDefault();
 	}.bind(this));
 	
 	$("#svg-container").on("mousemove", function(elem){
 		if(mouseMovement){
-			var mouseX = this.viewportWidth - elem.clientX;
-			var mouseY = this.viewportHeight - elem.clientY;
-			console.log(mouseX+" "+elem.clientX);
-			console.log(mouseY+" "+elem.clientY);
+			this.relativeX = this.mouseX - elem.clientX;
+			this.relativeY = this.mouseY - elem.clientY;
 			this.svgContainer.transition().attr("transform",
-                `translate(${this.viewportWidth/2-elem.clientX*this.zoomLevel},${this.viewportHeight/2-elem.clientY*this.zoomLevel})scale(${this.zoomLevel})`);
+                `translate(${this.areaLeft-this.relativeX},${this.areaTop-this.relativeY})scale(${this.zoomLevel})`);
 		}
 	}.bind(this));
 	
 	$("#svg-container").on("mouseup", function(elem){
+		this.areaLeft -= this.relativeX;
+        this.areaTop -= this.relativeY;
 		mouseMovement = false;
-	});
+	}.bind(this));
+	
+	$("#svg-container").on("mouseleave", function(elem){
+		this.areaLeft -= this.relativeX;
+        this.areaTop -= this.relativeY;
+		mouseMovement = false;
+	}.bind(this));
 }
 
 NetworkViewer.prototype.stopMoving = function(){

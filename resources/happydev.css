@@ -120,6 +120,12 @@ line  {
 	overflow:			auto;
 }
 
+#panel > h2 {
+	color:	black;
+	text-align: center;
+	text-transform: uppercase;
+}
+
 #panel .back {
     position: 					absolute;
     top: 						1.1em;

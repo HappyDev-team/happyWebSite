@@ -1,0 +1,247 @@
+<template id="project-template">
+    <style scoped>
+		hd-projects {
+			display:			block;
+			border-bottom: 		solid 1px lightgray;
+			padding-top:		10px;
+			padding-bottom:		20px;
+			color:	black;
+			width:	100%;
+		}
+		.backImage {
+			position: absolute;
+			top:	80px;
+			left:	16px;
+			display: none;
+		}
+		.backImage:hover {
+			cursor: pointer;
+		}
+		.project-title {
+			display: none;
+			width:	275px;
+			margin-left:	auto;
+			margin-right:	auto;
+			text-align:center;
+			margin-top:	0;
+		}
+        .project-image {
+            height:		48px;
+			width:		48px;
+			border-radius:	50px;
+			vertical-align:	middle;
+        }
+		.reduce-title:hover {
+			cursor:	pointer;
+		}
+        .detail {
+			border:	none;
+		}
+		.detail .backImage {
+			display: block;
+		}
+		.detail .project-title {
+			display: block;
+		}
+		.detail > .project-image {
+			width:	100%;
+			height:	initial;
+			border-radius:	initial;
+		}
+		.detail > .reduce-title {
+			display:	none;
+		}
+		#project-full {
+			text-align: center;
+		}
+		#project-full > a{
+			color:	black;
+		}
+		:host(hd-projects) {
+			display:			block;
+			border-bottom: 		solid 1px lightgray;
+			padding-top:		10px;
+			padding-bottom:		20px;
+			color:	black;
+			width:	100%;
+		}
+		::content .backImage {
+			position: absolute;
+			top:	80px;
+			left:	16px;
+			display: none;
+		}
+		::content .backImage:hover {
+			cursor: pointer;
+		}
+		::content .project-title {
+			display: none;
+			width:	275px;
+			margin-left:	auto;
+			margin-right:	auto;
+			text-align:center;
+			margin-top:	0;
+		}
+        ::content .project-image {
+            height:		48px;
+			width:		48px;
+			border-radius:	50px;
+			vertical-align:	middle;
+        }
+		::content .reduce-title:hover {
+			cursor:	pointer;
+		}
+        :host(.detail) {
+			border:	none;
+		}
+		:host(.detail) ::content .backImage {
+			display: block;
+		}
+		:host(.detail) ::content .project-title {
+			display: block;
+		}
+		:host(.detail) ::content .project-image {
+			width:	100%;
+			height:	initial;
+			border-radius:	initial;
+		}
+		:host(.detail) ::content .reduce-title {
+			display:	none;
+		}
+		::content #project-full {
+			text-align: center;
+		}
+		::content #project-full > a{
+			color:	black;
+		}
+    </style>
+		<content select=".project-title"></content>
+        <content select=".project-image"></content>
+		<content select=".reduce-title"></content>
+		<content></content>
+</template>
+
+<script type="text/javascript" src="http://preview.happy-dev.fr/library/LDP-framework/ldpframework.js"></script>
+<script>
+    (function(){
+        var localDoc = document._currentScript.ownerDocument;
+        window.store = new MyStore({context: "http://owl.openinitiative.com/oicontext.jsonld"});
+        
+		var ProjectPrototype = Object.create(HTMLElement.prototype, {
+			createdCallback: {
+                value: function() {
+                    this.loadData();
+                    var clone = document.importNode(localDoc.querySelector('#project-template').content, true);
+                    this.createShadowRoot().appendChild(clone);
+                }
+            }
+		});
+		
+		 ProjectPrototype.loadData = function loadData() {
+            if(this.dataset.src) {
+                store.get(this.dataset.src).then(function(project) {
+					var projectTitle = document.createElement("h2");
+					projectTitle.setAttribute("class","project-title");
+					projectTitle.appendChild(document.createTextNode(project["project_title"]));
+                    var img = document.createElement("img");
+					img.setAttribute("class","project-image");
+                    img.src = project["project_picture"];
+					var reduceTitle = document.createElement("span");
+					reduceTitle.setAttribute("class","reduce-title");
+					reduceTitle.appendChild(document.createTextNode(project["project_title"]));
+					
+					this.appendChild(projectTitle);
+                    this.appendChild(img);
+                    this.appendChild(reduceTitle);
+                });
+            }
+        };
+		
+		ProjectPrototype.toggleDetail = function toggleDetail(event) {
+			 Array.prototype.forEach.call(this.parentNode.childNodes, (elt) => {
+                    if(elt != this) elt.style.display = (this.className == "detail"?"block":"none");
+				});
+            this.className = (this.className == "detail"?"":"detail");
+			
+			var imag = this.querySelector(".project-image");
+			if(imag.offsetHeight != 48){
+				if(this.dataset.src){
+					store.get(this.dataset.src).then(function(project){
+						var container = document.createElement("div");
+						container.setAttribute("id","project-full");
+						if(project["project_description"]){
+							var description = document.createElement("p");
+							description.appendChild(document.createTextNode(project["project_description"]));
+							container.appendChild(description);
+						}
+						if(project["project_technology"]){
+							var technoTitle = document.createElement("h3");
+							technoTitle.appendChild(document.createTextNode("TECHNOLOGIES UTILISEES"));
+							var techno = document.createElement("p");
+							techno.appendChild(document.createTextNode(project["project_technology"]));
+							container.appendChild(technoTitle);
+							container.appendChild(techno);
+						}
+						if(project["project_url"]){
+							var urlTitle = document.createElement("h3");
+							urlTitle.appendChild(document.createTextNode("VISITER LE SITE"));
+							var url = document.createElement("a");
+							url.setAttribute("href",project["project_url"]);
+							url.appendChild(document.createTextNode(project["project_url"]));
+							container.appendChild(urlTitle);
+							container.appendChild(url);
+						}
+						this.appendChild(container);
+					}.bind(this));
+				}
+			}else{
+				if(this.querySelector("#project-full")){
+					var cible = this.querySelector("#project-full");
+					cible.remove();
+				}
+			}
+		};
+		
+        document.registerElement('hd-projects', {prototype: ProjectPrototype});
+        
+        document.registerElement('hd-projects-list', {
+            prototype: Object.create(HTMLElement.prototype, {
+                createdCallback: {
+                    value: function() {
+                        if(this.dataset.src) {
+                            store.list(this.dataset.src).then(function(list) {
+                                list.forEach(function(project) {
+                                    var projectElt = document.createElement("hd-projects");
+									var backImage = document.createElement("img");
+									backImage.src = "resources/round_back.png";
+									backImage.className = "backImage";
+									backImage.addEventListener("click",function(){
+										this.parentNode.toggleDetail();
+									});
+									var projectTitle = document.createElement("h2");
+									projectTitle.setAttribute("class","project-title");
+									projectTitle.appendChild(document.createTextNode(project["project_title"]));
+                                    var img = document.createElement("img");
+									img.className = "project-image";
+                                    img.src = project["project_picture"];
+									var projectReduce = document.createElement("span");
+									projectReduce.className = "reduce-title";
+									projectReduce.appendChild(document.createTextNode(project["project_title"]));
+									projectReduce.addEventListener("click",function(){
+										this.parentNode.toggleDetail();
+									});
+                                    projectElt.appendChild(backImage);
+									projectElt.appendChild(projectTitle);
+									projectElt.appendChild(img);
+                                    projectElt.appendChild(projectReduce);
+									projectElt.dataset.src = project["@id"];
+                                    this.appendChild(projectElt);
+                                }.bind(this));
+                            }.bind(this));
+                        }
+                    }
+                }
+            })
+        });
+    })();
+</script>
