@@ -79,8 +79,9 @@
 			font-family:	bebas, sans-serif;
 			font-size:		150%;
 			color:	white;
+			padding-top:	32px;
 		}
-		hd-contact > hr {
+		hd-contact hr {
 			width:					100px;
 			color:					lightgray;
 		}
@@ -118,32 +119,32 @@
 		.hd-contact-input {
 			text-align: right;
 		}
-		.hd-step textarea {
+		textarea {
 			width:	400px;
 			height: 100px;
 			resize:	none;
+			margin-bottom: 20px;
 		}
-		.hd-step #divButtonRequest {
+		#divButtonRequest {
 			text-align: center;
-			margin-top:	10px;
 		}
-		.hd-step #divButtonFinal {
+		#divButtonFinal {
 			text-align: center;
 			margin-top:	10px;
 		}
 		.hd-step .hd-contact-input {
 			text-align: right;
 		}
-		.hd-step .hd-contact-allInput {
-			margin-bottom:		10px;
+		.hd-contact-allInput {
+			margin-bottom:		20px;
 			border: 			0;
 			outline: 			0;
 			background: 		transparent;
 			border-bottom: 		2px solid rgb(253, 200, 21);
 			text-align:			right;
 		}
-		.hd-step label {
-			margin-bottom:		10px;
+		label {
+			margin-bottom:		20px;
 		}
 		.hd-step button {
 			font-family:	bebas, sans-serif;
@@ -157,7 +158,7 @@
 	</style>
 			<div id="contact-title">HAPPY DEV</div>
 			<div id="contact-infos">Retrouvez nous à mutinerie</div>
-			<form id="hd-form">
+			<form id="hd-form" onsubmit="return false;">
 				<hr align="left"/>
 				<content></content>
 			</form>
@@ -254,8 +255,10 @@
 				step3Button.setAttribute("id","hd-contact-button");
 				step3Button.appendChild(document.createTextNode("Valider"));
 				step3Button.addEventListener("click",function(){
-					this.step4();
-					this.querySelector("#divButtonRequest").remove();
+					if(this.querySelector("#hd-contact-request").value != ""){
+						this.step4();
+						this.querySelector("#divButtonRequest").remove();
+					}
 				}.bind(this));
 				divButton.appendChild(step3Button);
 				container.appendChild(label);
@@ -288,7 +291,7 @@
 				step4Button.setAttribute("id","hd-contact-validationButton");
 				step4Button.appendChild(document.createTextNode("Valider"));
 				step4Button.addEventListener("click",function(){
-					this.mailSend();
+					if(this.querySelector("#hd-contact-contact").value != "") this.mailSend();
 				}.bind(this));
 				divButton.appendChild(step4Button);
 				inputDiv.appendChild(input);
