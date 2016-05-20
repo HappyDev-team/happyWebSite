@@ -192,7 +192,7 @@ NetworkViewer.prototype.crossroad = function(road){
 		// console.log(this.viewerMap);
 		var roads;
 		this.nodes.map(function(n){
-			if("/"+n.name == this.road){
+			if("/"+n.name == this.road || n.name == this.road){
 				roads = n;
 			}
 		}.bind(this));
