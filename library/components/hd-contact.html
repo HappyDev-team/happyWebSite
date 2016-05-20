@@ -312,23 +312,25 @@
 			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
 			
 			xhttp.onreadystatechange = function(){
-				if(xhttp.readyState == 4 && xhttp.status == 200){
-					var messAlert = document.createElement("div");
-					messAlert.setAttribute("id","messAlert");
-					messAlert.appendChild(document.createTextNode("Merci pour ton message, on va le prendre en compte dans les meilleurs délais!"));
-					
-					this.appendChild(messAlert);
-					var objectCP = this;
-					setTimeout(function() {
-						event = new MouseEvent("click");
-						objectCP.parentNode.querySelector("img").dispatchEvent(event);},3000);
-				}else{
-					var errorDiv = document.createElement("div");
-					errorDiv.setAttribute("id","errorDiv");
-					errorDiv.appendChild(document.createTextNode("Une erreur s'est produite, merci de réessayer plus tard."));
-					errorDiv.appendChild(document.createElement("br"));
-					errorDiv.appendChild(document.createTextNode("Veuillez nous excusez pour la gène occasioné."));
-					this.appendChild(errorDiv);
+				if(xhttp.readyState == 4){
+					if(xhttp.status == 200){
+						var messAlert = document.createElement("div");
+						messAlert.setAttribute("id","messAlert");
+						messAlert.appendChild(document.createTextNode("Merci pour ton message, on va le prendre en compte dans les meilleurs délais!"));
+						
+						this.appendChild(messAlert);
+						var objectCP = this;
+						setTimeout(function() {
+							event = new MouseEvent("click");
+							objectCP.parentNode.querySelector("img").dispatchEvent(event);},3000);
+					}else{
+						var errorDiv = document.createElement("div");
+						errorDiv.setAttribute("id","errorDiv");
+						errorDiv.appendChild(document.createTextNode("Une erreur s'est produite, merci de réessayer plus tard."));
+						errorDiv.appendChild(document.createElement("br"));
+						errorDiv.appendChild(document.createTextNode("Veuillez nous excusez pour la gène occasioné."));
+						this.appendChild(errorDiv);
+					}
 				}
 			}.bind(this);
 			
