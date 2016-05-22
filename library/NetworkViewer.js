@@ -89,10 +89,10 @@ NetworkViewer.prototype.zoom = function(node){
 			$(".happy-unZoom").on("click",function(elem){
 				this.crossroad("/");
 			}.bind(this));
-			this.areaLeft = node.cx - this.viewportWidth/this.zoomLevel/2;
-            this.areaTop = node.cy - this.viewportHeight/this.zoomLevel/2;
 			this.svgContainer.transition().duration(500).attr("transform",
                 `translate(${this.viewportWidth/2-node.cx*this.zoomLevel},${this.viewportHeight/2-node.cy*this.zoomLevel})scale(${this.zoomLevel})`);
+			this.areaLeft = d3.transform(this.svgContainer.attr("transform")).translate[0];
+			this.areaTop = d3.transform(this.svgContainer.attr("transform")).translate[1];
 			this.fetchMembers(node);
 			this.movingContainer();
 		}
@@ -231,23 +231,23 @@ NetworkViewer.prototype.movingContainer = function(){
 	}.bind(this));
 	
 	$("#svg-container").on("mousemove", function(elem){
-		if(mouseMovement){
-			this.relativeX = this.mouseX - elem.clientX;
-			this.relativeY = this.mouseY - elem.clientY;
-			this.svgContainer.transition().attr("transform",
-                `translate(${this.areaLeft-this.relativeX},${this.areaTop-this.relativeY})scale(${this.zoomLevel})`);
+		this.relativeX = this.mouseX - elem.clientX;
+		this.relativeY = this.mouseY - elem.clientY;
+		if(mouseMovement && (this.relativeX || this.relativeY)){
+			this.svgContainer.transition().duration(0).attr("transform",
+                `translate(${this.areaLeft-(this.relativeX*this.zoomLevel)},${this.areaTop-(this.relativeY*this.zoomLevel)})scale(${this.zoomLevel})`);
+			this.areaLeft = d3.transform(this.svgContainer.attr("transform")).translate[0];
+			this.areaTop = d3.transform(this.svgContainer.attr("transform")).translate[1];
+			this.mouseX = elem.clientX;
+			this.mouseY = elem.clientY;
 		}
 	}.bind(this));
 	
 	$("#svg-container").on("mouseup", function(elem){
-		this.areaLeft -= this.relativeX;
-        this.areaTop -= this.relativeY;
 		mouseMovement = false;
 	}.bind(this));
 	
-	$("#svg-container").on("mouseleave", function(elem){
-		this.areaLeft -= this.relativeX;
-        this.areaTop -= this.relativeY;
+	$("#svg-container").on("mouseleave", function(elem){	
 		mouseMovement = false;
 	}.bind(this));
 }
