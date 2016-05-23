@@ -111,6 +111,8 @@ NetworkViewer.prototype.unZoom = function(){
 NetworkViewer.prototype.fetchMembers = function(node){
 	$(".members").remove();
 	
+	var objectNV = this;
+	
     d3.json(node.container, function(data) {
 		var nodes = [{x:(node.cx)-100,y:(node.cy)-10,fixed:true}].concat(data["@graph"][0]["http://www.w3.org/ns/ldp#contains"]);
 		var links = this.nodesLinkList(nodes);
@@ -139,6 +141,11 @@ NetworkViewer.prototype.fetchMembers = function(node){
 			.attr("cx", 100)
 			.attr("cy", 10)
 			.attr("class", "node").attr("r", 8);
+			
+		this.members.on("click",function(d){
+			if(d.project_title)	objectNV.componentCalling(d.project_title);
+			else objectNV.componentCalling(d["foaf:nick"]);
+		});
 				
 		this.members.append("text").attr("class", "member-name")
 			.attr("y", 30)
@@ -256,4 +263,42 @@ NetworkViewer.prototype.movingContainer = function(){
 
 NetworkViewer.prototype.stopMoving = function(){
 	$("#svg-container").off();
+}
+
+NetworkViewer.prototype.componentCalling = function(target){
+	if($(this.component).children(".detail"))
+		$(this.component).children(".detail").children(".backImage").trigger("click");
+	$(this.component).children("#"+this.slugify(target)).children(".reduce-title").trigger("click");
+}
+
+NetworkViewer.prototype.slugify = function(value){
+	if(value){
+		var rExps=[
+			{re:/[\xC0-\xC6]/g, ch:'A'},
+			{re:/[\xE0-\xE6]/g, ch:'a'},
+			{re:/[\xC8-\xCB]/g, ch:'E'},
+			{re:/[\xE8-\xEB]/g, ch:'e'},
+			{re:/[\xCC-\xCF]/g, ch:'I'},
+			{re:/[\xEC-\xEF]/g, ch:'i'},
+			{re:/[\xD2-\xD6]/g, ch:'O'},
+			{re:/[\xF2-\xF6]/g, ch:'o'},
+			{re:/[\xD9-\xDC]/g, ch:'U'},
+			{re:/[\xF9-\xFC]/g, ch:'u'},
+			{re:/[\xC7-\xE7]/g, ch:'c'},
+			{re:/[\xD1]/g, ch:'N'},
+			{re:/[\xF1]/g, ch:'n'} ];
+	 
+	// converti les caractères accentués en leurs équivalent alpha
+		for(var i=0, len=rExps.length; i<len; i++)
+			value=value.replace(rExps[i].re, rExps[i].ch);
+	 
+		// 1) met en bas de casse
+		// 2) remplace les espace par des tirets
+		// 3) enleve tout les caratères non alphanumeriques
+		// 4) enlève les doubles tirets
+		return value.toLowerCase()
+			.replace(/\s+/g, '-')
+			.replace(/[^a-z0-9-]/g, '')
+			.replace(/\-{2,}/g,'-');
+	}
 }
