@@ -143,8 +143,9 @@ NetworkViewer.prototype.fetchMembers = function(node){
 			.attr("class", "node").attr("r", 8);
 			
 		this.members.on("click",function(d){
-			if(d.project_title)	objectNV.componentCalling(d.project_title);
-			else objectNV.componentCalling(d["foaf:nick"]);
+			var adress = location.pathname.split("/");
+			if(d.project_title)	objectNV.crossroad(adress[1]+"/"+d.project_title);
+			else objectNV.crossroad(adress[1]+"/"+d["foaf:nick"]);
 		});
 				
 		this.members.append("text").attr("class", "member-name")
@@ -182,9 +183,9 @@ NetworkViewer.prototype.nodesLinkList = function(nodes){
 };
 
 NetworkViewer.prototype.crossroad = function(road){
-	this.road = road;
 	var route1 = crossroads.addRoute("/");
 	var route2 = crossroads.addRoute("{section}");
+	var route3 = crossroads.addRoute("/{section}/{title}");
 		
 	route1.matched.add(function(){
 		this.unZoom();
@@ -195,36 +196,57 @@ NetworkViewer.prototype.crossroad = function(road){
 		history.pushState(null,"HappyHome","/");
 	}.bind(this));
 	
-	route2.matched.add(function(){
+	route2.matched.add(function(section){
 		// console.log(this.viewerMap);
 		var roads;
 		this.nodes.map(function(n){
-			if("/"+n.name == this.road || n.name == this.road){
+			if("/"+n.name == section || n.name == section){
 				roads = n;
 			}
-		}.bind(this));
-		this.road = roads;
+		});
 		this.panel.find($("h2")).remove();
 		this.panel.find($(this.component)).remove();
-		if(this.road.container){
-			this.component = this.road.component;
-			this.panel.append("<h2>"+this.road.name+"</h2>");
-			this.panel.append("<"+this.component+" data-src='"+this.road.container+"'></"+this.component+">");
-			this.zoom(this.road);
-			history.pushState(null,"Happy "+this.road.name,this.road.name);
+		if(roads.container){
+			this.component = roads.component;
+			this.panel.append("<h2>"+roads.name+"</h2>");
+			this.panel.append("<"+this.component+" data-src='"+roads.container+"'></"+this.component+">");
+			this.zoom(roads);
+			history.pushState(null,"Happy "+roads.name,roads.name);
 		}else{
 			this.unZoom();
-			this.component = this.road.component;
+			this.component = roads.component;
 			this.principal.show();
-			if(this.road.target){
-				this.principal.append("<"+this.component+" data-target='"+this.road.target+"' data-action="+this.road.action+" data-mails="+this.road.mails+"></"+this.component+">");
+			if(roads.target){
+				this.principal.append("<"+this.component+" data-target='"+roads.target+"' data-action="+roads.action+" data-mails="+roads.mails+"></"+this.component+">");
 			}
 			else this.principal.append("<"+this.component+"></"+this.component+">");
-			history.pushState(null,"Happy "+this.road.name,this.road.name);
+			history.pushState(null,"Happy "+roads.name,roads.name);
 		}
 	}.bind(this));
 	
-	crossroads.parse(this.road);
+	route3.matched.add(function(section,id){
+		var roads;
+		// console.log(section+" / "+id);
+		this.nodes.map(function(n){
+			if("/"+n.name == section || n.name == section){
+				roads = n;
+			}
+		});
+		if(this.component != roads.component){
+			if(this.component){
+				this.panel.find($("h2")).remove();
+				this.panel.find($(this.component)).remove();
+			}
+			this.component = roads.component;
+			this.panel.append("<h2>"+roads.name+"</h2>");
+			this.panel.append("<"+this.component+" data-src='"+roads.container+"'></"+this.component+">");
+			this.zoom(roads);
+		}
+		this.componentCalling(id);
+		history.pushState(null,"Happy "+roads.name,"/"+roads.name+"/"+this.slugify(id));
+	}.bind(this));
+	
+	crossroads.parse(road);
 }
 
 NetworkViewer.prototype.movingContainer = function(){
