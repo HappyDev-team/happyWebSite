@@ -179,7 +179,7 @@ NetworkViewer.prototype.crossroad = function(road){
 	var route1 = crossroads.addRoute("/");
 	var route2 = crossroads.addRoute("{section}");
 	var route3 = crossroads.addRoute("/{section}/{title}");
-		
+	
 	route1.matched.add(function(){
 		this.unZoom();
 		this.principal.hide();
@@ -209,7 +209,7 @@ NetworkViewer.prototype.crossroad = function(road){
 				}
 			}.bind(this));
 			this.zoom(roads);
-			history.pushState(null,"Happy "+roads.name,roads.name);
+			history.pushState(null,"Happy "+roads.name,"/"+roads.name);
 		}else{
 			this.unZoom();
 			this.component = roads.component;
@@ -221,7 +221,7 @@ NetworkViewer.prototype.crossroad = function(road){
 				}.bind(this));
 			}
 			else this.principal.append("<"+this.component+"></"+this.component+">");
-			history.pushState(null,"Happy "+roads.name,roads.name);
+			history.pushState(null,"Happy "+roads.name,"/"+roads.name);
 		}
 	}.bind(this));
 	
