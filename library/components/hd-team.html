@@ -361,6 +361,8 @@
                                     var memberElt = document.createElement("hd-team-member");
 									if(member["foaf:nick"])
 										memberElt.setAttribute("id", memberElt.slugify(member["foaf:nick"]));
+									else
+										memberElt.setAttribute("id",memberElt.slugify(member["foaf:firstName"] + " " + member["foaf:name"]));
 									var backImage = document.createElement("img");
 									backImage.src = "resources/round_back.png";
 									backImage.className = "backImage";
