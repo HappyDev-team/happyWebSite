@@ -213,7 +213,7 @@ NetworkViewer.prototype.crossroad = function(road){
 				this.principal.append("<"+this.component+" data-target='"+roads.target+"' data-action="+roads.action+" data-mails="+roads.mails+"></"+this.component+">");
 				$(this.component).on("hdSend", function(){
 					this.crossroad("/");
-				});
+				}.bind(this));
 			}
 			else this.principal.append("<"+this.component+"></"+this.component+">");
 			history.pushState(null,"Happy "+roads.name,roads.name);
@@ -267,11 +267,11 @@ NetworkViewer.prototype.movingContainer = function(){
 	
 	$("#svg-container").on("mouseup", function(elem){
 		mouseMovement = false;
-	}.bind(this));
+	});
 	
 	$("#svg-container").on("mouseleave", function(elem){	
 		mouseMovement = false;
-	}.bind(this));
+	});
 }
 
 NetworkViewer.prototype.stopMoving = function(){
