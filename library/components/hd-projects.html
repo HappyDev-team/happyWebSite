@@ -254,7 +254,7 @@
                                     var projectElt = document.createElement("hd-projects");
 									projectElt.setAttribute("id", projectElt.slugify(project["project_title"]));
 									var backImage = document.createElement("img");
-									backImage.src = "resources/round_back.png";
+									backImage.src = "/resources/round_back.png";
 									backImage.className = "backImage";
 									backImage.addEventListener("click",function(){
 										this.parentNode.toggleDetail();
@@ -283,6 +283,9 @@
 									projectElt.dataset.src = project["@id"];
                                     this.appendChild(projectElt);
                                 }.bind(this));
+								if(this.dataset.selected){
+									this.querySelector("#"+this.dataset.selected).toggleDetail();
+								}
                             }.bind(this));
                         }
                     }

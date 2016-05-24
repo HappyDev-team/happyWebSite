@@ -1,5 +1,5 @@
 $(function(){
-	var chargeur = {"file":"data.json","panel":$("#panel"),"principal":$("#centrale"),"title":"happy-title"};
+	var chargeur = {"file":"/data.json","panel":$("#panel"),"principal":$("#centrale"),"title":"happy-title"};
 	
 	var happyStar = new NetworkViewer(chargeur);
 

@@ -364,7 +364,7 @@
 									else
 										memberElt.setAttribute("id",memberElt.slugify(member["foaf:firstName"] + " " + member["foaf:name"]));
 									var backImage = document.createElement("img");
-									backImage.src = "resources/round_back.png";
+									backImage.src = "/resources/round_back.png";
 									backImage.className = "backImage";
 									backImage.addEventListener("click",function(){
 										this.parentNode.toggleDetail();
@@ -400,6 +400,9 @@
                                     memberElt.dataset.src = member["@id"];
                                     this.appendChild(memberElt);
                                 }.bind(this));
+								if(this.dataset.selected){
+									this.querySelector("#"+this.dataset.selected).toggleDetail();
+								}
                             }.bind(this));
                         }
                     }

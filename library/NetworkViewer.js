@@ -235,7 +235,7 @@ NetworkViewer.prototype.crossroad = function(road){
 			}
 			this.component = roads.component;
 			this.panel.append("<h2>"+roads.name+"</h2>");
-			this.panel.append("<"+this.component+" data-src='"+roads.container+"'></"+this.component+">");
+			this.panel.append("<"+this.component+" data-src='"+roads.container+"' data-selected='"+id+"'></"+this.component+">");
 			this.zoom(roads);
 			$(this.component).on("hdSelected", function(){
 				if($(this.component).children(".detail").attr("id")){
@@ -248,7 +248,6 @@ NetworkViewer.prototype.crossroad = function(road){
 				}
 			}.bind(this));
 		}
-		this.componentCalling(id);
 		history.pushState(null,"Happy "+roads.name,"/"+roads.name+"/"+this.slugify(id));
 	}.bind(this));
 	
@@ -294,6 +293,7 @@ NetworkViewer.prototype.stopMoving = function(){
 }
 
 NetworkViewer.prototype.componentCalling = function(target){
+	console.log(target);
 	if($(this.component).children(".detail").attr("id"))
 		$(this.component).children(".detail").children(".backImage").trigger("click");
 	$(this.component).children("#"+this.slugify(target)).children(".reduce-title").trigger("click");

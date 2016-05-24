@@ -1,6 +1,6 @@
 Options +FollowSymlinks
 RewriteEngine On
-RewriteBase	/
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteCond %{REQUEST_FILENAME} !-d
-RewriteRule ^(.*)$ index.html [L,QSA]
+RewriteBase /
+RewriteRule ^(library|resources) - [L]
+RewriteRule (.+)(js|css|json|html)$ - [L]
+RewriteRule (.*) index.html [L,QSA]
