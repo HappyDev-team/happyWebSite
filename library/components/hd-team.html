@@ -222,11 +222,14 @@
 					var name = document.createElement("span");
 					name.setAttribute("class","hd-member-name");
 					name.appendChild(document.createTextNode(member["foaf:name"]));
+					var memberFull = document.createElement("div");
+					memberFull.setAttribute("id","member-full");
 					
 					this.appendChild(memberTitle);
                     this.appendChild(img);
                     this.appendChild(fn);
 					this.appendChild(name);
+					this.appendChild(member-full);
                 });
             }
         };
@@ -246,8 +249,9 @@
 			if(imag.offsetHeight != 48){
 				if(this.dataset.src){
 					store.get(this.dataset.src).then(function(member){
-						var container = document.createElement("div");
-						container.setAttribute("id","member-full");
+						var container = this.querySelector("#member-full");
+						container.style.display = "block";
+						container.innerHTML = "";
 						if(member["av:biography"]){
 							var bio = document.createElement("p");
 							bio.appendChild(document.createTextNode(member["av:biography"]));
@@ -304,13 +308,12 @@
 								});
 							}.bind(container));
 						}
-						this.appendChild(container);
 					}.bind(this));
 				}
 			}else{
 				if(this.querySelector("#member-full")){
 					var cible = this.querySelector("#member-full");
-					cible.remove();
+					cible.style.display = "none";
 				}
 			}
         };
@@ -368,6 +371,7 @@
 									memberTitle.appendChild(document.createTextNode(member["foaf:firstName"] + " " + member["foaf:name"]));
 									var img = document.createElement("img");
 									img.className = "member-image";
+									img.src = member["foaf:img"];
 									var memberReduce = document.createElement("div");
 									memberReduce.className = "reduce-title";
 									memberReduce.addEventListener("click",function(){
@@ -381,11 +385,13 @@
 									name.className = "hd-member-name";
 									name.appendChild(document.createTextNode(member["foaf:name"]));
 									memberReduce.appendChild(name);
-                                    img.src = member["foaf:img"];
+									var memberFull = document.createElement("div");
+									memberFull.setAttribute("id","member-full");
 									memberElt.appendChild(backImage);
 									memberElt.appendChild(memberTitle);
                                     memberElt.appendChild(img);
                                     memberElt.appendChild(memberReduce);
+									memberElt.appendChild(memberFull);
                                     memberElt.dataset.src = member["@id"];
                                     this.appendChild(memberElt);
                                 }.bind(this));

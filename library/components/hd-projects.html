@@ -177,8 +177,8 @@
 			if(imag.offsetHeight != 48){
 				if(this.dataset.src){
 					store.get(this.dataset.src).then(function(project){
-						var container = document.createElement("div");
-						container.setAttribute("id","project-full");
+						var container = this.querySelector("#project-full");
+						container.style.display = "block";
 						if(project["project_description"]){
 							var description = document.createElement("p");
 							description.appendChild(document.createTextNode(project["project_description"]));
@@ -201,13 +201,12 @@
 							container.appendChild(urlTitle);
 							container.appendChild(url);
 						}
-						this.appendChild(container);
 					}.bind(this));
 				}
 			}else{
 				if(this.querySelector("#project-full")){
 					var cible = this.querySelector("#project-full");
-					cible.remove();
+					cible.style.display = "none";
 				}
 			}
 		};
@@ -271,10 +270,13 @@
 									projectReduce.addEventListener("click",function(){
 										this.parentNode.toggleDetail();
 									});
+									var projectFull = document.createElement("div");
+									projectFull.setAttribute("id","project-full");
                                     projectElt.appendChild(backImage);
 									projectElt.appendChild(projectTitle);
 									projectElt.appendChild(img);
                                     projectElt.appendChild(projectReduce);
+									projectElt.appendChild(projectFull);
 									projectElt.dataset.src = project["@id"];
                                     this.appendChild(projectElt);
                                 }.bind(this));
