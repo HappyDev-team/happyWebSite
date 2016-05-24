@@ -26,13 +26,6 @@ function NetworkViewer(globalData){
     }.bind(this));
 }
 
-NetworkViewer.prototype.selecNodes = function(node){
-	if(node.name) {
-		var obj = new Array();
-		return obj[node.name] = node;
-	}
-}
-
 NetworkViewer.prototype.drawNodes = function(nodelist){
 	window.nodes = this.svgContainer.selectAll(".node")
         .data(nodelist)
@@ -141,9 +134,10 @@ NetworkViewer.prototype.fetchMembers = function(node){
 			.attr("class", "node").attr("r", 8);
 			
 		this.members.on("click",function(d){
-			var adress = location.pathname.split("/");
-			if(d.project_title)	objectNV.crossroad(adress[1]+"/"+d.project_title);
-			else objectNV.crossroad(adress[1]+"/"+d["foaf:nick"]);
+			objectNV.panel.animate({right:"0"});
+			var oldURL = location.pathname.split("/");
+			if(d.project_title)	objectNV.crossroad(oldURL[1]+"/"+d.project_title);
+			else objectNV.crossroad(oldURL[1]+"/"+d["foaf:nick"]);
 		});
 				
 		this.members.append("text").attr("class", "member-name")
@@ -203,6 +197,16 @@ NetworkViewer.prototype.crossroad = function(road){
 			this.component = roads.component;
 			this.panel.append("<h2>"+roads.name+"</h2>");
 			this.panel.append("<"+this.component+" data-src='"+roads.container+"'></"+this.component+">");
+			$(this.component).on("hdSelected", function(){
+				if($(this.component).children(".detail").attr("id")){
+					var id = $(this.component).children(".detail").attr("id");
+					var oldURL = location.pathname.split("/");
+					history.pushState(null,"Happy "+oldURL[1],"/"+oldURL[1]+"/"+id);
+				}else{
+					var oldURL = location.pathname.split("/");
+					history.pushState(null,"Happy "+oldURL[1],"/"+oldURL[1]);
+				}
+			}.bind(this));
 			this.zoom(roads);
 			history.pushState(null,"Happy "+roads.name,roads.name);
 		}else{
@@ -232,6 +236,16 @@ NetworkViewer.prototype.crossroad = function(road){
 			this.panel.append("<h2>"+roads.name+"</h2>");
 			this.panel.append("<"+this.component+" data-src='"+roads.container+"'></"+this.component+">");
 			this.zoom(roads);
+			$(this.component).on("hdSelected", function(){
+				if($(this.component).children(".detail").attr("id")){
+					var id = $(this.component).children(".detail").attr("id");
+					var oldURL = location.pathname.split("/");
+					history.pushState(null,"Happy "+oldURL[1],"/"+oldURL[1]+"/"+id);
+				}else{
+					var oldURL = location.pathname.split("/");
+					history.pushState(null,"Happy "+oldURL[1],"/"+oldURL[1]);
+				}
+			}.bind(this));
 		}
 		this.componentCalling(id);
 		history.pushState(null,"Happy "+roads.name,"/"+roads.name+"/"+this.slugify(id));
@@ -279,7 +293,7 @@ NetworkViewer.prototype.stopMoving = function(){
 }
 
 NetworkViewer.prototype.componentCalling = function(target){
-	if($(this.component).children(".detail"))
+	if($(this.component).children(".detail").attr("id"))
 		$(this.component).children(".detail").children(".backImage").trigger("click");
 	$(this.component).children("#"+this.slugify(target)).children(".reduce-title").trigger("click");
 }

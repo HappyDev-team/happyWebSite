@@ -357,6 +357,7 @@
                         if(this.dataset.src) {
                             store.list(this.dataset.src).then(function(list) {
                                 list.forEach(function(member) {
+									var eventSelected = new Event("hdSelected");
                                     var memberElt = document.createElement("hd-team-member");
 									if(member["foaf:nick"])
 										memberElt.setAttribute("id", memberElt.slugify(member["foaf:nick"]));
@@ -365,6 +366,7 @@
 									backImage.className = "backImage";
 									backImage.addEventListener("click",function(){
 										this.parentNode.toggleDetail();
+										this.parentNode.parentNode.dispatchEvent(eventSelected);
 									});
                                     var memberTitle = document.createElement("h2");
 									memberTitle.className ="member-title";
@@ -376,6 +378,7 @@
 									memberReduce.className = "reduce-title";
 									memberReduce.addEventListener("click",function(){
 										this.parentNode.toggleDetail();
+										this.parentNode.parentNode.dispatchEvent(eventSelected);
 									});
 									var fn = document.createElement("span");
 									fn.className = "hd-member-fn";
