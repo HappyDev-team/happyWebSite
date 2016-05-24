@@ -9,9 +9,7 @@ function NetworkViewer(globalData){
     this.zoomLevel = 3;
 	
 	d3.json(globalData.file, function(data) {
-		this.nodes = data.nodes;
-		
-		this.viewerMap = new Map(data.nodes.filter(this.selecNodes));
+		this.viewerMap = new Map(data.nodes.filter(o=>o.name).map(o=>[o.name,o]));
 		
         this.svgContainer = d3.select("body").append("svg")
             .attr("id", "svg-container")
@@ -22,7 +20,7 @@ function NetworkViewer(globalData){
         d3.layout.force().nodes(data.nodes)
                  .links(data.links)
                  .start();
-        this.drawNodes();
+        this.drawNodes(data.nodes);
         this.drawLinks(data.links);
 		this.crossroad(location.pathname);
     }.bind(this));
@@ -35,9 +33,9 @@ NetworkViewer.prototype.selecNodes = function(node){
 	}
 }
 
-NetworkViewer.prototype.drawNodes = function(){
+NetworkViewer.prototype.drawNodes = function(nodelist){
 	window.nodes = this.svgContainer.selectAll(".node")
-        .data(this.nodes)
+        .data(nodelist)
         .enter().append("svg");
 	
 	var objectNV = this;
@@ -197,13 +195,8 @@ NetworkViewer.prototype.crossroad = function(road){
 	}.bind(this));
 	
 	route2.matched.add(function(section){
-		// console.log(this.viewerMap);
 		var roads;
-		this.nodes.map(function(n){
-			if("/"+n.name == section || n.name == section){
-				roads = n;
-			}
-		});
+		roads = this.viewerMap.get(section);
 		this.panel.find($("h2")).remove();
 		this.panel.find($(this.component)).remove();
 		if(roads.container){
@@ -218,6 +211,9 @@ NetworkViewer.prototype.crossroad = function(road){
 			this.principal.show();
 			if(roads.target){
 				this.principal.append("<"+this.component+" data-target='"+roads.target+"' data-action="+roads.action+" data-mails="+roads.mails+"></"+this.component+">");
+				$(this.component).on("hdSend", function(){
+					this.crossroad("/");
+				});
 			}
 			else this.principal.append("<"+this.component+"></"+this.component+">");
 			history.pushState(null,"Happy "+roads.name,roads.name);
@@ -226,12 +222,7 @@ NetworkViewer.prototype.crossroad = function(road){
 	
 	route3.matched.add(function(section,id){
 		var roads;
-		// console.log(section+" / "+id);
-		this.nodes.map(function(n){
-			if("/"+n.name == section || n.name == section){
-				roads = n;
-			}
-		});
+		roads = this.viewerMap.get(section);
 		if(this.component != roads.component){
 			if(this.component){
 				this.panel.find($("h2")).remove();

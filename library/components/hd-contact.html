@@ -179,6 +179,7 @@
         });
 		
 		ContactPrototype.data = function data(){
+			this.eventSend = new Event("hdSend");
 			var container = document.createElement("div");
 			var contactBr = document.createElement("br");
 			var label = document.createElement("label");
@@ -324,8 +325,7 @@
 						this.appendChild(messAlert);
 						var objectCP = this;
 						setTimeout(function() {
-							event = new MouseEvent("click");
-							objectCP.parentNode.querySelector("img").dispatchEvent(event);},3000);
+							objectCP.dispatchEvent(eventSend);},3000);
 					}else{
 						var errorDiv = document.createElement("div");
 						errorDiv.setAttribute("id","errorDiv");
@@ -336,7 +336,6 @@
 					}
 				}
 			}.bind(this);
-			
 			xhttp.send(params);
 		}
 		
