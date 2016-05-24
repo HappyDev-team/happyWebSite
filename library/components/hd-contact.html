@@ -325,7 +325,7 @@
 						this.appendChild(messAlert);
 						var objectCP = this;
 						setTimeout(function() {
-							objectCP.dispatchEvent(eventSend);},3000);
+							objectCP.dispatchEvent(objectCP.eventSend);},3000);
 					}else{
 						var errorDiv = document.createElement("div");
 						errorDiv.setAttribute("id","errorDiv");
