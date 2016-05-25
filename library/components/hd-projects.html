@@ -179,6 +179,7 @@
 					store.get(this.dataset.src).then(function(project){
 						var container = this.querySelector("#project-full");
 						container.style.display = "block";
+						container.innerHTML = "";
 						if(project["project_description"]){
 							var description = document.createElement("p");
 							description.appendChild(document.createTextNode(project["project_description"]));
