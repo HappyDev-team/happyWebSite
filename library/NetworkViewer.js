@@ -43,6 +43,7 @@ NetworkViewer.prototype.drawNodes = function(nodelist){
 			d3.select(this).on("click", function(){
 				if(location.pathname.startsWith("/"+d.name) && d.container){
 					objectNV.panel.animate({right:"0"});
+					objectNV.componentCalling();
 				}else{
 					objectNV.crossroad(d.name);
 				}
@@ -280,7 +281,8 @@ NetworkViewer.prototype.stopMoving = function(){
 NetworkViewer.prototype.componentCalling = function(target){
 	if($(this.component).children(".detail").attr("id"))
 		$(this.component).children(".detail").children(".backImage").trigger("click");
-	$(this.component).children("#"+this.slugify(target)).children(".reduce-title").trigger("click");
+	if(target)
+		$(this.component).children("#"+this.slugify(target)).children(".reduce-title").trigger("click");
 }
 
 NetworkViewer.prototype.hdSelectedAction = function(){
