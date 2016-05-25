@@ -137,7 +137,7 @@ NetworkViewer.prototype.fetchMembers = function(node){
 			objectNV.panel.animate({right:"0"});
 			var oldURL = location.pathname.split("/");
 			if(d.project_title)	objectNV.crossroad(oldURL[1]+"/"+d.project_title);
-			else if(d["foaf:nick"]) objectNV.crossroad(oldURL[1]+"/"+d["foaf:nick"]);
+			else if(d["foaf:nick"]) objectNV.crossroad(oldURL[1]+"/"+objectNV.slugify(d["foaf:nick"]));
 			else objectNV.crossroad(oldURL[1]+"/"+d["foaf:firstName"] + " " + d["foaf:name"]);
 		});
 				
