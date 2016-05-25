@@ -2,7 +2,7 @@
     "nodes": [
         {"cx":152, "cy":116},
         {"cx":522, "cy":120},
-        {"cx":774, "cy":174, "name": "team", "container": "http://ldp.happy-dev.fr/ldp/members/","component":"hd-team"},
+        {"cx":774, "cy":174, "name": "team", "container": "http://ldp.happy-dev.fr/ldp/members/","component":"hd-team","targetUrl":"projects"},
         {"cx":192, "cy":259},
         {"cx":390, "cy":220, "name": "projects", "container": "http://ldp.happy-dev.fr/ldp/projects/","component":"hd-projects-list"},
         {"cx":902, "cy":325},

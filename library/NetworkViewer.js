@@ -197,9 +197,14 @@ NetworkViewer.prototype.crossroad = function(road){
 		if(roads.container){
 			this.component = roads.component;
 			this.panel.append("<h2>"+roads.name+"</h2>");
-			this.panel.append("<"+this.component+" data-src='"+roads.container+"'></"+this.component+">");
+			var targetURL = "";
+			if(roads.targetUrl) targetURL = "data-targetURL="+roads.targetUrl;
+			this.panel.append("<"+this.component+" data-src='"+roads.container+"' "+targetURL+"></"+this.component+">");
 			$(this.component).on("hdSelected", function(){
 				this.hdSelectedAction();
+			}.bind(this));
+			$(this.component).on("hdRessourceClicked",function(e){
+				this.hdRessourceClickedAction($(this.component).attr("data-targetURL"),this.slugify(e.originalEvent.detail));
 			}.bind(this));
 			this.zoom(roads);
 			history.pushState(null,"Happy "+roads.name,"/"+roads.name);
@@ -228,10 +233,15 @@ NetworkViewer.prototype.crossroad = function(road){
 			}
 			this.component = roads.component;
 			this.panel.append("<h2>"+roads.name+"</h2>");
-			this.panel.append("<"+this.component+" data-src='"+roads.container+"' data-selected='"+id+"'></"+this.component+">");
+			var targetURL = "";
+			if(roads.targetUrl) targetURL = "data-targetURL="+roads.targetUrl;
+			this.panel.append("<"+this.component+" data-src='"+roads.container+"' data-selected='"+id+"' "+targetURL+"></"+this.component+">");
 			this.zoom(roads);
 			$(this.component).on("hdSelected", function(){
 				this.hdSelectedAction();
+			}.bind(this));
+			$(this.component).on("hdRessourceClicked",function(e){
+				this.hdRessourceClickedAction($(this.component).attr("data-targetURL"),this.slugify(e.originalEvent.detail));
 			}.bind(this));
 		}
 		this.componentCalling(id);
@@ -294,6 +304,11 @@ NetworkViewer.prototype.hdSelectedAction = function(){
 		var oldURL = location.pathname.split("/");
 		history.pushState(null,"Happy "+oldURL[1],"/"+oldURL[1]);
 	}
+}
+
+NetworkViewer.prototype.hdRessourceClickedAction = function(targetUrl,value){
+	this.crossroad(targetUrl+"/"+value);
+	history.pushState(null,"Happy "+targetUrl,"/"+targetUrl+"/"+value);
 }
 
 NetworkViewer.prototype.slugify = function(value){

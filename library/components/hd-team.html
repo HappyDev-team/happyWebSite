@@ -320,6 +320,10 @@
 								store.get(member["foaf:currentProject"]["@id"]).then(function(project){
 									var img = document.createElement("img");
 									img.src = project.project_picture;
+									img.addEventListener("click",function(elem){
+										var hdRessourceClicked = new CustomEvent("hdRessourceClicked",{detail: project.project_title});
+										this.parentNode.parentNode.parentNode.parentNode.dispatchEvent(hdRessourceClicked);
+									});
 									projectDiv.appendChild(img);
 								}.bind(projectDiv));
 							}else{
@@ -327,6 +331,10 @@
 									store.get(projectURL["@id"]).then(function(project){
 										var img = document.createElement("img");
 										img.src = project.project_picture;
+										img.addEventListener("click",function(elem){
+											var hdRessourceClicked = new CustomEvent("hdRessourceClicked",{detail: project.project_title});
+											this.parentNode.parentNode.parentNode.parentNode.dispatchEvent(hdRessourceClicked);
+										});
 										projectDiv.appendChild(img);
 									}.bind(projectDiv));
 								}.bind(projectDiv));
