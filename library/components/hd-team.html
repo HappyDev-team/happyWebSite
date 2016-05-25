@@ -93,6 +93,12 @@
 		#cityContainer h3{
 			margin-right:	5px;
 		}
+		#hdProjectDiv img {
+			height: 48px;
+            border-radius: 50px;
+            width: 48px;
+			vertical-align:	middle;
+		}
 		:host(hd-team-member) {
 			display:			block;
 			border-bottom: 		solid 1px lightgray;
@@ -184,6 +190,13 @@
 		}
 		::content #cityContainer h3{
 			margin-right:	5px;
+		}
+		::content #hdProjectDiv img {
+			height: 48px;
+            border-radius: 50px;
+            width: 48px;
+			vertical-align:	middle;
+			margin-left:	10px;
 		}
     </style>
 		<content select=".member-title"></content>
@@ -299,14 +312,27 @@
 							container.appendChild(skills);
 						}
 						if(member["foaf:currentProject"]){
-							store.list(member["foaf:currentProject"]).then(function(listing){
-								listing.forEach(function(project){
-									var imgProj = document.createElement("img");
-									imgProj.className("img-project");
-									imgProj.src = project["project_picture"];
-									container.appendChild(imgProj);
-								});
-							}.bind(container));
+							var projectTitle = document.createElement("h3");
+							projectTitle.appendChild(document.createTextNode("PROJETS"));
+							var projectDiv = document.createElement("div");
+							projectDiv.setAttribute("id","hdProjectDiv");
+							if(!member["foaf:currentProject"].length){
+								store.get(member["foaf:currentProject"]["@id"]).then(function(project){
+									var img = document.createElement("img");
+									img.src = project.project_picture;
+									projectDiv.appendChild(img);
+								}.bind(projectDiv));
+							}else{
+								member["foaf:currentProject"].forEach(function(projectURL){
+									store.get(projectURL["@id"]).then(function(project){
+										var img = document.createElement("img");
+										img.src = project.project_picture;
+										projectDiv.appendChild(img);
+									}.bind(projectDiv));
+								}.bind(projectDiv));
+							}
+							container.appendChild(projectTitle);
+							container.appendChild(projectDiv);
 						}
 					}.bind(this));
 				}
