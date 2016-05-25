@@ -1,15 +1,15 @@
-function NetworkViewer(globalData){
+function NetworkViewer(globalOptions){
 	this.store = new MyStore({context: "http://owl.openinitiative.com/oicontext.jsonld"});
-	this.panel = globalData.panel;
-	this.principal = globalData.principal;
-	this.title = globalData.title;
+	this.panel = globalOptions.panel;
+	this.principal = globalOptions.principal;
+	this.title = globalOptions.title;
 	
     this.viewportWidth = 1000;
     this.viewportHeight = 780;
     this.zoomLevel = 3;
 	
-	d3.json(globalData.file, function(data) {
-		this.viewerMap = new Map(data.nodes.filter(o=>o.name).map(o=>[o.name,o]));
+	d3.json(globalOptions.file, function(data) {
+		this.nodesMap = new Map(data.nodes.filter(o=>o.name).map(o=>[o.name,o]));
 		
         this.svgContainer = d3.select("body").append("svg")
             .attr("id", "svg-container")
@@ -108,9 +108,9 @@ NetworkViewer.prototype.fetchMembers = function(node){
 		var nodes = [{x:(node.cx)-100,y:(node.cy)-10,fixed:true}].concat(data["@graph"][0]["http://www.w3.org/ns/ldp#contains"]);
 		var links = this.nodesLinkList(nodes);
 		
-		var cont = this.svgContainer.append("svg").attr("class", "members");
+		var container = this.svgContainer.append("svg").attr("class", "members");
 		
-        this.members = cont.selectAll(".members")
+        this.members = container.selectAll(".members")
 						.data(nodes)
 						.enter().append("svg")
 						.style("cursor", "pointer");
@@ -123,7 +123,7 @@ NetworkViewer.prototype.fetchMembers = function(node){
 					.friction(0.7)
 					.start();
 							
-		var link = cont.selectAll(".link")
+		var link = container.selectAll(".link")
 						.data(links)
 						.enter().append("line")
 						.attr("class", "link");
@@ -165,14 +165,13 @@ NetworkViewer.prototype.fetchMembers = function(node){
 };
 
 NetworkViewer.prototype.nodesLinkList = function(nodes){
-	var liste = [];
-	
-	//Comment supprimé la première valeur 0:0???
+	var list = [];
+
 	nodes.map(function(elem){
-		liste.push({source:0,target:elem});
+		list.push({source:0,target:elem});
 	});
 	
-	return liste;
+	return list;
 };
 
 NetworkViewer.prototype.crossroad = function(road){
@@ -191,7 +190,7 @@ NetworkViewer.prototype.crossroad = function(road){
 	
 	route2.matched.add(function(section){
 		var roads;
-		roads = this.viewerMap.get(section);
+		roads = this.nodesMap.get(section);
 		this.panel.find($("h2")).remove();
 		this.panel.find($(this.component)).remove();
 		if(roads.container){
@@ -199,14 +198,7 @@ NetworkViewer.prototype.crossroad = function(road){
 			this.panel.append("<h2>"+roads.name+"</h2>");
 			this.panel.append("<"+this.component+" data-src='"+roads.container+"'></"+this.component+">");
 			$(this.component).on("hdSelected", function(){
-				if($(this.component).children(".detail").attr("id")){
-					var id = $(this.component).children(".detail").attr("id");
-					var oldURL = location.pathname.split("/");
-					history.pushState(null,"Happy "+oldURL[1],"/"+oldURL[1]+"/"+id);
-				}else{
-					var oldURL = location.pathname.split("/");
-					history.pushState(null,"Happy "+oldURL[1],"/"+oldURL[1]);
-				}
+				this.hdSelectedAction();
 			}.bind(this));
 			this.zoom(roads);
 			history.pushState(null,"Happy "+roads.name,"/"+roads.name);
@@ -227,7 +219,7 @@ NetworkViewer.prototype.crossroad = function(road){
 	
 	route3.matched.add(function(section,id){
 		var roads;
-		roads = this.viewerMap.get(section);
+		roads = this.nodesMap.get(section);
 		if(this.component != roads.component){
 			if(this.component){
 				this.panel.find($("h2")).remove();
@@ -238,18 +230,10 @@ NetworkViewer.prototype.crossroad = function(road){
 			this.panel.append("<"+this.component+" data-src='"+roads.container+"' data-selected='"+id+"'></"+this.component+">");
 			this.zoom(roads);
 			$(this.component).on("hdSelected", function(){
-				if($(this.component).children(".detail").attr("id")){
-					var id = $(this.component).children(".detail").attr("id");
-					var oldURL = location.pathname.split("/");
-					history.pushState(null,"Happy "+oldURL[1],"/"+oldURL[1]+"/"+id);
-				}else{
-					var oldURL = location.pathname.split("/");
-					history.pushState(null,"Happy "+oldURL[1],"/"+oldURL[1]);
-				}
+				this.hdSelectedAction();
 			}.bind(this));
 		}
 		this.componentCalling(id);
-		history.pushState(null,"Happy "+roads.name,"/"+roads.name+"/"+this.slugify(id));
 	}.bind(this));
 	
 	crossroads.parse(road);
@@ -294,10 +278,20 @@ NetworkViewer.prototype.stopMoving = function(){
 }
 
 NetworkViewer.prototype.componentCalling = function(target){
-	console.log(target);
 	if($(this.component).children(".detail").attr("id"))
 		$(this.component).children(".detail").children(".backImage").trigger("click");
 	$(this.component).children("#"+this.slugify(target)).children(".reduce-title").trigger("click");
+}
+
+NetworkViewer.prototype.hdSelectedAction = function(){
+	if($(this.component).children(".detail").attr("id")){
+		var id = $(this.component).children(".detail").attr("id");
+		var oldURL = location.pathname.split("/");
+		history.pushState(null,"Happy "+oldURL[1],"/"+oldURL[1]+"/"+id);
+	}else{
+		var oldURL = location.pathname.split("/");
+		history.pushState(null,"Happy "+oldURL[1],"/"+oldURL[1]);
+	}
 }
 
 NetworkViewer.prototype.slugify = function(value){
@@ -316,15 +310,10 @@ NetworkViewer.prototype.slugify = function(value){
 			{re:/[\xC7-\xE7]/g, ch:'c'},
 			{re:/[\xD1]/g, ch:'N'},
 			{re:/[\xF1]/g, ch:'n'} ];
-	 
-	// converti les caractères accentués en leurs équivalent alpha
+
 		for(var i=0, len=rExps.length; i<len; i++)
 			value=value.replace(rExps[i].re, rExps[i].ch);
 	 
-		// 1) met en bas de casse
-		// 2) remplace les espace par des tirets
-		// 3) enleve tout les caratères non alphanumeriques
-		// 4) enlève les doubles tirets
 		return value.toLowerCase()
 			.replace(/\s+/g, '-')
 			.replace(/[^a-z0-9-]/g, '')
