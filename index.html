@@ -14,7 +14,22 @@
 		<script type="text/javascript" src="/library/crossroads/signals.js"></script>
 		<script type="text/javascript" src="/library/crossroads/crossroads.min.js"></script>
         <script type="text/javascript" src="/library/NetworkViewer.js"></script>
-		<script type="text/javascript" src="/happydev.js"></script>
+		<script>
+			$(function(){
+				var loadingOptions = {"file":"/data.json","panel":$("#panel"),"principal":$("#centrale"),"title":"happy-title"};
+				
+				var happyDevNetwork = new NetworkViewer(loadingOptions);
+
+				$("#centrale img").on("click", function(){
+					happyDevNetwork.crossroad("/");
+				});
+				
+				$("#panel img").on("click", function(){
+					$("#panel").animate({right:"-350px"});
+				});
+				
+			});
+		</script>
     </head>
     <body>
         <div class="happy-title">
