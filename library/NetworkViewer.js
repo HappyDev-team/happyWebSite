@@ -248,6 +248,7 @@ NetworkViewer.prototype.crossroad = function(road){
 				}
 			}.bind(this));
 		}
+		this.componentCalling(id);
 		history.pushState(null,"Happy "+roads.name,"/"+roads.name+"/"+this.slugify(id));
 	}.bind(this));
 	
