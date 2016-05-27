@@ -22,7 +22,8 @@ function NetworkViewer(globalOptions){
                  .start();
         this.drawNodes(data.nodes);
         this.drawLinks(data.links);
-		this.crossroad(location.pathname);
+		this.crossroadInit();
+		crossroads.parse(location.pathname);
     }.bind(this));
 }
 
@@ -45,7 +46,7 @@ NetworkViewer.prototype.drawNodes = function(nodelist){
 					objectNV.panel.animate({right:"0"});
 					objectNV.componentCalling();
 				}else{
-					objectNV.crossroad(d.name);
+					crossroads.parse(d.name);
 				}
 			})
 			.style("cursor", "pointer")
@@ -75,11 +76,11 @@ NetworkViewer.prototype.drawLinks = function(links){
 
 NetworkViewer.prototype.zoom = function(node){
 	if(node.name){
-		if(node.container){
+		if(node.ldp){
 			this.panel.animate({right:"0"});
 			$("."+this.title).attr("class","happy-unZoom");
 			$(".happy-unZoom").on("click",function(elem){
-				this.crossroad("/");
+				crossroads.parse("/");
 			}.bind(this));
 			this.areaLeft = node.cx - this.viewportWidth/this.zoomLevel/2;
             this.areaTop = node.cy - this.viewportHeight/this.zoomLevel/2;
@@ -95,6 +96,7 @@ NetworkViewer.prototype.unZoom = function(){
 	$(".happy-unZoom").attr("class",this.title);
 	this.svgContainer.transition().duration(500).attr("transform",``);
 	this.panel.animate({right: -this.panel.width()});
+	this.panel.find($("h2")).remove();
 	this.panel.find(this.component).remove();
 	$(".members").remove();
 	this.stopMoving();
@@ -105,7 +107,7 @@ NetworkViewer.prototype.fetchMembers = function(node){
 	
 	var objectNV = this;
 	
-    d3.json(node.container, function(data) {
+    d3.json(node.options[0].value, function(data) {
 		var nodes = [{x:(node.cx)-100,y:(node.cy)-10,fixed:true}].concat(data["@graph"][0]["http://www.w3.org/ns/ldp#contains"]);
 		var links = this.nodesLinkList(nodes);
 		
@@ -137,9 +139,9 @@ NetworkViewer.prototype.fetchMembers = function(node){
 		this.members.on("click",function(d){
 			objectNV.panel.animate({right:"0"});
 			var oldURL = location.pathname.split("/");
-			if(d.project_title)	objectNV.crossroad(oldURL[1]+"/"+d.project_title);
-			else if(d["foaf:nick"]) objectNV.crossroad(oldURL[1]+"/"+objectNV.slugify(d["foaf:nick"]));
-			else objectNV.crossroad(oldURL[1]+"/"+d["foaf:firstName"] + " " + d["foaf:name"]);
+			if(d.project_title)	crossroads.parse(oldURL[1]+"/"+d.project_title);
+			else if(d["foaf:nick"]) crossroads.parse(oldURL[1]+"/"+objectNV.slugify(d["foaf:nick"]));
+			else crossroads.parse(oldURL[1]+"/"+d["foaf:firstName"] + " " + d["foaf:name"]);
 		});
 				
 		this.members.append("text").attr("class", "member-name")
@@ -175,7 +177,7 @@ NetworkViewer.prototype.nodesLinkList = function(nodes){
 	return list;
 };
 
-NetworkViewer.prototype.crossroad = function(road){
+NetworkViewer.prototype.crossroadInit = function(){
 	var route1 = crossroads.addRoute("/");
 	var route2 = crossroads.addRoute("{section}");
 	var route3 = crossroads.addRoute("/{section}/{title}");
@@ -183,8 +185,6 @@ NetworkViewer.prototype.crossroad = function(road){
 	route1.matched.add(function(){
 		this.unZoom();
 		this.principal.slideUp();
-		this.panel.find($("h2")).remove();
-		this.panel.find($(this.component)).remove();
 		history.pushState(null,"HappyHome","/");
 	}.bind(this));
 	
@@ -193,34 +193,23 @@ NetworkViewer.prototype.crossroad = function(road){
 		roads = this.nodesMap.get(section);
 		this.panel.find($("h2")).remove();
 		this.panel.find($(this.component)).remove();
-		if(roads.container){
-			this.component = roads.component;
+		if(roads.ldp){
 			this.panel.append("<h2>"+roads.name+"</h2>");
-			var targetURL = "";
-			if(roads.targetUrl) targetURL = "data-targetURL="+roads.targetUrl;
-			this.panel.append("<"+this.component+" data-src='"+roads.container+"' "+targetURL+"></"+this.component+">");
-			$(this.component).on("hdSelected", function(){
-				this.hdSelectedAction();
-			}.bind(this));
-			$(this.component).on("hdRessourceClicked",function(e){
-				this.hdRessourceClickedAction($(this.component).attr("data-targetURL"),this.slugify(e.originalEvent.detail));
-			}.bind(this));
+			this.panel.append(this.appendComponent(roads));
+			this.PanelComponentEvent();
 			this.zoom(roads);
-			history.pushState(null,"Happy "+roads.name,"/"+roads.name);
 		}else{
 			this.unZoom();
 			this.principal.find($(this.component)).remove();
-			this.component = roads.component;
-			if(roads.target){
-				this.principal.append("<"+this.component+" data-target='"+roads.target+"' data-action="+roads.action+" data-mails="+roads.mails+"></"+this.component+">");
+			this.principal.append(this.appendComponent(roads));
+			if(roads.mail){
 				$(this.component).on("hdSend", function(){
 					this.crossroad("/");
 				}.bind(this));
 			}
-			else this.principal.append("<"+this.component+"></"+this.component+">");
 			this.principal.slideDown();
-			history.pushState(null,"Happy "+roads.name,"/"+roads.name);
 		}
+		history.pushState(null,"Happy "+roads.name,"/"+roads.name);
 	}.bind(this));
 	
 	route3.matched.add(function(section,id){
@@ -231,23 +220,14 @@ NetworkViewer.prototype.crossroad = function(road){
 				this.panel.find($("h2")).remove();
 				this.panel.find($(this.component)).remove();
 			}
-			this.component = roads.component;
 			this.panel.append("<h2>"+roads.name+"</h2>");
-			var targetURL = "";
-			if(roads.targetUrl) targetURL = "data-targetURL="+roads.targetUrl;
-			this.panel.append("<"+this.component+" data-src='"+roads.container+"' data-selected='"+id+"' "+targetURL+"></"+this.component+">");
+			var newRoads = [{roads},{"name":"selected","value":id}];
+			this.panel.append(this.appendComponent(newRoads));
+			this.PanelComponentEvent();
 			this.zoom(roads);
-			$(this.component).on("hdSelected", function(){
-				this.hdSelectedAction();
-			}.bind(this));
-			$(this.component).on("hdRessourceClicked",function(e){
-				this.hdRessourceClickedAction($(this.component).attr("data-targetURL"),this.slugify(e.originalEvent.detail));
-			}.bind(this));
 		}
 		this.componentCalling(id);
 	}.bind(this));
-	
-	crossroads.parse(road);
 }
 
 NetworkViewer.prototype.movingContainer = function(){
@@ -307,8 +287,35 @@ NetworkViewer.prototype.hdSelectedAction = function(){
 }
 
 NetworkViewer.prototype.hdRessourceClickedAction = function(targetUrl,value){
-	this.crossroad(targetUrl+"/"+value);
+	crossroads.parse(targetUrl+"/"+value);
 	history.pushState(null,"Happy "+targetUrl,"/"+targetUrl+"/"+value);
+}
+
+NetworkViewer.prototype.appendComponent = function(node){
+	if(!node.component){
+		var nodeOptions = node[1];
+		node = node[0].roads;
+	}
+
+	this.component = node.component;
+	var toAppend = "<"+this.component+" ";
+	if(node.options){
+		for(var i = 0; i < node.options.length; i++){
+			toAppend += "data-"+node.options[i].name+"="+node.options[i].value+" ";
+		}
+	}
+	if(nodeOptions) toAppend += "data-"+nodeOptions.name+"="+nodeOptions.value+" ";
+	toAppend += "></"+this.component+">";
+	return toAppend;
+}
+
+NetworkViewer.prototype.PanelComponentEvent = function(){
+	$(this.component).on("hdSelected", function(){
+		this.hdSelectedAction();
+	}.bind(this));
+	$(this.component).on("hdRessourceClicked",function(e){
+		this.hdRessourceClickedAction($(this.component).attr("data-targetURL"),this.slugify(e.originalEvent.detail));
+	}.bind(this));
 }
 
 NetworkViewer.prototype.slugify = function(value){
