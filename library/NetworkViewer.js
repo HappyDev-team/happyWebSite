@@ -204,7 +204,7 @@ NetworkViewer.prototype.crossroadInit = function(){
 			this.principal.append(this.appendComponent(roads));
 			if(roads.mail){
 				$(this.component).on("hdSend", function(){
-					this.crossroad("/");
+					crossroads.parse("/");
 				}.bind(this));
 			}
 			this.principal.slideDown();
