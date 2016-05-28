@@ -238,18 +238,16 @@ NetworkViewer.prototype.movingContainer = function(){
 		this.mouseX = elem.clientX;
 		this.mouseY = elem.clientY;
 		elem.preventDefault();
-		this.areaLeft = d3.transform(this.svgContainer.attr("transform")).translate[0];
-		this.areaTop = d3.transform(this.svgContainer.attr("transform")).translate[1];
 	}.bind(this));
 	
 	$("#svg-container").on("mousemove", function(elem){
+		this.areaLeft = d3.transform(this.svgContainer.attr("transform")).translate[0];
+		this.areaTop = d3.transform(this.svgContainer.attr("transform")).translate[1];
 		this.relativeX = this.mouseX - elem.clientX;
 		this.relativeY = this.mouseY - elem.clientY;
 		if(mouseMovement && (this.relativeX || this.relativeY)){
 			this.svgContainer.transition().duration(0).attr("transform",
                 `translate(${this.areaLeft-(this.relativeX*this.zoomLevel)},${this.areaTop-(this.relativeY*this.zoomLevel)})scale(${this.zoomLevel})`);
-			this.areaLeft = d3.transform(this.svgContainer.attr("transform")).translate[0];
-			this.areaTop = d3.transform(this.svgContainer.attr("transform")).translate[1];
 			this.mouseX = elem.clientX;
 			this.mouseY = elem.clientY;
 		}
