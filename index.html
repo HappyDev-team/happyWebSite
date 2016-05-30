@@ -16,7 +16,15 @@
         <script type="text/javascript" src="/library/NetworkViewer.js"></script>
 		<script>
 			$(function(){
-				var loadingOptions = {"file":"/data.json","panel":$("#panel"),"principal":$("#centrale"),"title":"happy-title"};
+				var loadingOptions = {"file":"/data.json","panel":$("#panel"),"principal":$("#centrale"),"title":"happy-title",
+					"d3Options":{
+						"viewWidth":1000,
+						"viewHeight":780,
+						"zoom":3,
+						"charge":-2000,
+						"friction":0.7
+					}
+				};
 				
 				var happyDevNetwork = new NetworkViewer(loadingOptions);
 

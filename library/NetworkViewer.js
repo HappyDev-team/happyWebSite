@@ -4,9 +4,19 @@ function NetworkViewer(globalOptions){
 	this.principal = globalOptions.principal;
 	this.title = globalOptions.title;
 	
-    this.viewportWidth = 1000;
-    this.viewportHeight = 780;
-    this.zoomLevel = 3;
+	if(globalOptions.d3Options){
+		this.viewportWidth = globalOptions.d3Options.viewWidth;
+		this.viewportHeight = globalOptions.d3Options.viewHeight;
+		this.zoomLevel = globalOptions.d3Options.zoom;
+		this.charge = globalOptions.d3Options.charge;
+		this.friction = globalOptions.d3Options.friction;
+	}else{
+		this.viewportWidth = 1000;
+		this.viewportHeight = 780;
+		this.zoomLevel = 3;
+		this.charge = -2000;
+		this.friction = 0.7;
+	}
 	
 	d3.json(globalOptions.file, function(data) {
 		this.nodesMap = new Map(data.nodes.filter(o=>o.name).map(o=>[o.name,o]));
@@ -120,10 +130,10 @@ NetworkViewer.prototype.fetchMembers = function(node){
         
 		var force = d3.layout.force()
 					.size([this.viewportWidth/this.zoomLevel+this.areaLeft,this.viewportHeight/this.zoomLevel+this.areaTop])
-					.charge(-2000)
+					.charge(this.charge)
 					.nodes(nodes)
 					.links(links)
-					.friction(0.7)
+					.friction(this.friction)
 					.start();
 							
 		var link = container.selectAll(".link")
