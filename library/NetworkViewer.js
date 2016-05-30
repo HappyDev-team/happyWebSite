@@ -42,7 +42,7 @@ NetworkViewer.prototype.drawNodes = function(nodelist){
     nodes.each(function(d) {
         if (d.name){
 			d3.select(this).on("click", function(){
-				if(location.pathname.startsWith("/"+d.name) && d.container){
+				if(location.pathname.startsWith("/"+d.name) && d.ldp){
 					objectNV.panel.animate({right:"0"});
 					objectNV.componentCalling();
 				}else{
@@ -241,11 +241,11 @@ NetworkViewer.prototype.movingContainer = function(){
 	}.bind(this));
 	
 	$("#svg-container").on("mousemove", function(elem){
-		this.areaLeft = d3.transform(this.svgContainer.attr("transform")).translate[0];
-		this.areaTop = d3.transform(this.svgContainer.attr("transform")).translate[1];
 		this.relativeX = this.mouseX - elem.clientX;
 		this.relativeY = this.mouseY - elem.clientY;
 		if(mouseMovement && (this.relativeX || this.relativeY)){
+			this.areaLeft = d3.transform(this.svgContainer.attr("transform")).translate[0];
+			this.areaTop = d3.transform(this.svgContainer.attr("transform")).translate[1];
 			this.svgContainer.transition().duration(0).attr("transform",
                 `translate(${this.areaLeft-(this.relativeX*this.zoomLevel)},${this.areaTop-(this.relativeY*this.zoomLevel)})scale(${this.zoomLevel})`);
 			this.mouseX = elem.clientX;
