@@ -47,6 +47,7 @@
 			text-align: right;
 		}
 		::content .hd-step {
+			display:	none;
 			margin-top:	20px;
 		}
 		::content .hd-contact-allInput {
@@ -132,6 +133,9 @@
 			text-align: center;
 			margin-top:	10px;
 		}
+		.hd-step {
+			display:	none;
+		}
 		.hd-step .hd-contact-input {
 			text-align: right;
 		}
@@ -160,6 +164,24 @@
 			<div id="contact-infos">Retrouvez nous à mutinerie</div>
 			<form id="hd-form" onsubmit="return false;">
 				<hr align="left"/>
+				<div>
+					<label for="hd-contact-name">&gt; Bonjour! Comment t'appelles tu?</label><br/>
+					<div class="hd-contact-input"><input type="text" name="hd-name" id="hd-contact-name" placeholder="PRENOM" class="hd-contact-allInput"/> &lt;</div>
+				</div>
+				<div id="hdContactHowru" class="hd-step">
+					<label for="hd-contact-howru"></label><br/>
+					<div class="hd-contact-input"><input type="text" name="hd-howru" id="hd-contact-howru" class="hd-contact-allInput"/> &lt;</div>
+				</div>
+				<div id="hdContactRequest" class="hd-step">
+					<label for="hd-contact-request">&gt; Qu'est-ce qu'on peut faire pour toi?</label>
+					<textarea name="hd-request" id="hd-contact-request" placeholder="Votre requête"></textarea>
+					<div id="divButtonRequest"><button id="hd-request-button">Valider</button></div>
+				</div>
+				<div id="hdContactContact" class="hd-step">
+					<label for="hd-contact-contact">&gt; Comment peut-on te joindre?</label><br/>
+					<div class="hd-contact-input"><input type="text" name="hd-contact" id="hd-contact-contact" class="hd-contact-allInput"/> &lt;</div>
+					<div id="divButtonFinal"><button id="hd-contact-validationButton">Valider</button></div>
+				</div>
 				<content></content>
 			</form>
 </template>
@@ -171,138 +193,60 @@
 		var ContactPrototype = Object.create(HTMLElement.prototype, {
             createdCallback: {
                 value: function() {
-					this.data();
                     var clone = document.importNode(localDoc.querySelector('#contact-template').content, true);
-                    this.createShadowRoot().appendChild(clone);
+                    this.root = this.createShadowRoot();
+					this.root.appendChild(clone);
+					this.hdNameConfig();
                 }
             }
         });
 		
-		ContactPrototype.data = function data(){
+		ContactPrototype.hdNameConfig = function hdNameConfig(){
 			this.eventSend = new Event("hdSend");
-			var container = document.createElement("div");
-			var contactBr = document.createElement("br");
-			var label = document.createElement("label");
-			label.setAttribute("for","hd-contact-name");
-			label.appendChild(document.createTextNode("> Bonjour ! Comment t'appelles tu ?"));
-			var inputDiv = document.createElement("div");
-			inputDiv.className = "hd-contact-input";
-			var input = document.createElement("input");
-			input.setAttribute("type","text");
-			input.setAttribute("name","hd-name");
-			input.setAttribute("id","hd-contact-name");
-			input.setAttribute("placeholder","PRENOM");
-			input.className = "hd-contact-allInput";
+			var input = this.root.querySelector("#hd-contact-name");
 			input.addEventListener("change",function(){
-				this.step2();
+				this.hdHowruConfig();
 			}.bind(this));
-			inputDiv.appendChild(input);
-			inputDiv.appendChild(document.createTextNode("<"));
-			container.appendChild(label);
-			container.appendChild(contactBr);
-			container.appendChild(inputDiv);
-			this.appendChild(container);
 		}
 		
-		ContactPrototype.step2 = function step2(){
-			if(!this.querySelector("#hd-contact-howru")){
-				var container = document.createElement("div");
-				container.setAttribute("id","hd-contactStep1");
-				container.className = "hd-step";
-				var contactBr = document.createElement("br");
-				var label = document.createElement("label");
-				label.setAttribute("for","hd-contact-howru");
-				label.appendChild(document.createTextNode("> Enchanté "+this.querySelector("#hd-contact-name").value+"! Comment ça va aujourd'hui?"));
-				var inputDiv = document.createElement("div");
-				inputDiv.className = "hd-contact-input";
-				var input = document.createElement("input");
-				input.setAttribute("type","text");
-				input.setAttribute("name","hd-howru");
-				input.setAttribute("id","hd-contact-howru");
-				input.className = "hd-contact-allInput";
+		ContactPrototype.hdHowruConfig = function hdHowruConfig(){
+			var label = this.root.querySelector("#hdContactHowru label");
+			var input = this.root.querySelector("#hd-contact-howru");
+			if(!input.value){
+				this.root.querySelector("#hdContactHowru").style.display = "block";
 				input.addEventListener("change",function(){
-					this.step3();
+					this.hdRequestConfig();
 				}.bind(this));
-				inputDiv.appendChild(input);
-				inputDiv.appendChild(document.createTextNode("<"));
-				container.appendChild(label);
-				container.appendChild(contactBr);
-				container.appendChild(inputDiv);
-				this.appendChild(container);
-				
-				this.querySelector("#hd-contact-howru").focus();
-			}else{
-				var contactName = this.querySelector("#hd-contact-name").value;
-				var step2 = this.querySelector("#hd-contactStep1 label");
-				step2.innerHTML = "> Enchanté "+contactName+"! Comment ça va aujourd'hui?";
+				this.root.querySelector("#hd-contact-howru").focus();
 			}
+			label.innerHTML = "> Enchanté "+this.root.querySelector("#hd-contact-name").value+" ! Comment ça va aujourd'hui?";
+			this.root.querySelector("#hdContactHowru").style.display = "block";
 		}
 		
-		ContactPrototype.step3 = function step3(){
-			if(!this.querySelector("#hd-contact-request")){
-				var container = document.createElement("div");
-				container.className = "hd-step";
-				var contactBr = document.createElement("br");
-				var label = document.createElement("label");
-				label.setAttribute("for","hd-contact-request");
-				label.appendChild(document.createTextNode("> Qu'est-ce qu'on peut faire pour toi?"));
-				var textarea = document.createElement("textarea");
-				textarea.setAttribute("name","hd-request");
-				textarea.setAttribute("id","hd-contact-request");
-				textarea.setAttribute("placeholder","Votre requête.");
-				var divButton = document.createElement("div");
-				divButton.setAttribute("id","divButtonRequest");
-				var step3Button = document.createElement("button");
-				step3Button.setAttribute("id","hd-contact-button");
-				step3Button.appendChild(document.createTextNode("Valider"));
+		ContactPrototype.hdRequestConfig = function hdRequestConfig(){
+			var step3Button = this.root.querySelector("#hd-request-button");
+			var requestTextarea = this.root.querySelector("#hd-contact-request");
+			if(!requestTextarea.value){
+				this.root.querySelector("#hdContactRequest").style.display = "block";
 				step3Button.addEventListener("click",function(){
-					if(this.querySelector("#hd-contact-request").value != ""){
-						this.step4();
-						this.querySelector("#divButtonRequest").remove();
+					if(requestTextarea.value != ""){
+						this.hdContactConfig();
+						step3Button.remove();
 					}
 				}.bind(this));
-				divButton.appendChild(step3Button);
-				container.appendChild(label);
-				container.appendChild(contactBr);
-				container.appendChild(textarea);
-				container.appendChild(divButton);
-				this.appendChild(container);
-				this.querySelector("#hd-contact-request").focus();
+				requestTextarea.focus();
 			}
 		}
 		
-		ContactPrototype.step4 = function step4(){
-			if(!this.querySelector("#hd-contact-contact")){
-				var container = document.createElement("div");
-				container.className = "hd-step";
-				var contactBr = document.createElement("br");
-				var label = document.createElement("label");
-				label.setAttribute("for","hd-contact-contact");
-				label.appendChild(document.createTextNode("> Comment peut-on te joindre?"));
-				var inputDiv = document.createElement("div");
-				inputDiv.className = "hd-contact-input";
-				var input = document.createElement("input");
-				input.setAttribute("type","text");
-				input.setAttribute("name","hd-contact");
-				input.setAttribute("id","hd-contact-contact");
-				input.className = "hd-contact-allInput";
-				var divButton = document.createElement("div");
-				divButton.setAttribute("id","divButtonFinal");
-				var step4Button = document.createElement("button");
-				step4Button.setAttribute("id","hd-contact-validationButton");
-				step4Button.appendChild(document.createTextNode("Valider"));
+		ContactPrototype.hdContactConfig = function hdContactConfig(){
+			var step4Button = this.root.querySelector("#hd-contact-validationButton");
+			var input = this.root.querySelector("#hd-contact-contact");
+			if(!input.value){
+				this.root.querySelector("#hdContactContact").style.display = "block";
 				step4Button.addEventListener("click",function(){
-					if(this.querySelector("#hd-contact-contact").value != "") this.mailSend();
+					if(input.value != "") this.mailSend();
 				}.bind(this));
-				divButton.appendChild(step4Button);
-				inputDiv.appendChild(input);
-				inputDiv.appendChild(document.createTextNode("<"));
-				container.appendChild(label);
-				container.appendChild(contactBr);
-				container.appendChild(inputDiv);
-				container.appendChild(divButton);
-				this.appendChild(container);
-				this.querySelector("#hd-contact-contact").focus();
+				input.focus();
 			}
 		}
 		
@@ -310,7 +254,7 @@
 			if(this.querySelector("#errorDiv")) this.querySelector("#errorDiv").remove();
 		
 			var xhttp = new XMLHttpRequest();
-			var params = "name="+this.querySelector("#hd-contact-name").value+"&howru="+this.querySelector("#hd-contact-howru").value+"&request="+this.querySelector("#hd-contact-request").value+"&contact="+this.querySelector("#hd-contact-contact").value+"&action="+this.dataset.action+"&mails="+this.dataset.mails;
+			var params = "name="+this.root.querySelector("#hd-contact-name").value+"&howru="+this.root.querySelector("#hd-contact-howru").value+"&request="+this.root.querySelector("#hd-contact-request").value+"&contact="+this.root.querySelector("#hd-contact-contact").value+"&action="+this.dataset.action+"&mails="+this.dataset.mails;
 			xhttp.open("POST",this.dataset.target, true);
 			
 			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
