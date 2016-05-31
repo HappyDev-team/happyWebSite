@@ -33,6 +33,7 @@ function NetworkViewer(globalOptions){
         this.drawNodes(data.nodes);
         this.drawLinks(data.links);
 		this.crossroadInit();
+		this.previousPage();
 		crossroads.parse(location.pathname);
     }.bind(this));
 }
@@ -327,6 +328,12 @@ NetworkViewer.prototype.PanelComponentEvent = function(){
 	$(this.component).on("hdRessourceClicked",function(e){
 		this.hdRessourceClickedAction($(this.component).attr("data-targetURL"),this.slugify(e.originalEvent.detail));
 	}.bind(this));
+}
+
+NetworkViewer.prototype.previousPage = function(){
+	$(window).on("popstate",function(){
+		crossroads.parse(location.pathname);
+	});
 }
 
 NetworkViewer.prototype.slugify = function(value){
