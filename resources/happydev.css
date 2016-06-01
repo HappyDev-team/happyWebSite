@@ -114,6 +114,20 @@ img .node {
 	transition:			0.5s;
 }
 
+.happy-title img {
+	display: none;
+}
+
+.happy-unzoom img {
+	diplay:	block;
+	width:	48px;
+	height:	48px;
+}
+
+.happy-unzoom img:hover {
+	cursor: initial;
+}
+
 #panel {
     position:           fixed;
     top:                0;
