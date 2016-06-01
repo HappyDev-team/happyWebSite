@@ -54,7 +54,7 @@ NetworkViewer.prototype.drawNodes = function(nodelist){
     nodes.each(function(d) {
         if (d.name){
 			d3.select(this).on("click", function(){
-				if(location.pathname.startsWith("/"+d.name) && d.ldp){
+				if(location.pathname == "/"+d.name && d.ldp){
 					objectNV.panel.animate({right:"0"});
 					objectNV.componentCalling();
 				}else{
@@ -305,15 +305,18 @@ NetworkViewer.prototype.hdRessourceClickedAction = function(targetUrl,value){
 	history.pushState(null,"Happy "+targetUrl,"/"+targetUrl+"/"+value);
 }
 
-//Prend un objet noeud ou un objet comprennant un noeud ainsi qu'un objet avec l'option selected.
+//Take an object node or an object containing a node and the selected options for the component.
 NetworkViewer.prototype.appendComponent = function(obj){
-	//Si l'objet ne contient pas uniquement le noeud, on sépare les deux objets et on affect le noeud à l'objet de base.
+	//If the object is not directly a node, we split it in two different object to use during the component creation.
 	if(!obj.component){
 		var nodeOptions = obj[1];
 		obj = obj[0].sectionNode;
 	}
 
 	this.component = obj.component;
+	//It seems that when creating the ldp component with document.createElement something goes wrong...
+	//We can't create the element in the pincipal div the same way as the ldp component because it's slower than
+	// the slideDown function and it appears before the div in firefox...
 	if(obj.ldp){
 		var toAppend = "<"+this.component+" ";
 		if(obj.options){
@@ -335,6 +338,7 @@ NetworkViewer.prototype.appendComponent = function(obj){
 	return toAppend;
 }
 
+//Event linked to the ldp Component.
 NetworkViewer.prototype.PanelComponentEvent = function(){
 	$(this.component).on("hdSelected", function(){
 		this.hdSelectedAction();
@@ -344,6 +348,7 @@ NetworkViewer.prototype.PanelComponentEvent = function(){
 	}.bind(this));
 }
 
+//Action done when the back button is press in the navigator.
 NetworkViewer.prototype.previousPage = function(){
 	$(window).on("popstate",function(){
 		crossroads.parse(location.pathname);
