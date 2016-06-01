@@ -31,8 +31,8 @@ function NetworkViewer(globalOptions){
         d3.layout.force().nodes(data.nodes)
                  .links(data.links)
                  .start();
+		 this.drawLinks(data.links);
         this.drawNodes(data.nodes);
-        this.drawLinks(data.links);
 		this.crossroadInit();
 		this.previousPage();
 		crossroads.parse(location.pathname);
@@ -120,15 +120,10 @@ NetworkViewer.prototype.fetchMembers = function(node){
 	var objectNV = this;
 	
     d3.json(node.options[0].value, function(data) {
-		var nodes = [{x:(node.cx)-100,y:(node.cy)-10,fixed:true}].concat(data["@graph"][0]["http://www.w3.org/ns/ldp#contains"]);
+		var nodes = [{x:(node.cx)-100,y:(node.cy)-16,fixed:true}].concat(data["@graph"][0]["http://www.w3.org/ns/ldp#contains"]);
 		var links = this.nodesLinkList(nodes);
 		
 		var container = this.svgContainer.append("svg").attr("class", "members");
-		
-        this.members = container.selectAll(".members")
-						.data(nodes)
-						.enter().append("svg")
-						.style("cursor", "pointer");
         
 		var force = d3.layout.force()
 					.size([this.viewportWidth/this.zoomLevel+this.areaLeft,this.viewportHeight/this.zoomLevel+this.areaTop])
@@ -142,11 +137,22 @@ NetworkViewer.prototype.fetchMembers = function(node){
 						.data(links)
 						.enter().append("line")
 						.attr("class", "link");
-						
+		
+		this.members = container.selectAll(".members")
+			.data(nodes)
+			.enter().append("svg")
+			.style("cursor", "pointer");
+		
 		this.members.append("circle")
 			.attr("cx", 100)
-			.attr("cy", 10)
-			.attr("class", "node").attr("r", 8);
+			.attr("cy", 16)
+			.attr("class", "node").attr("r", function(d){if(d.fixed) return 16; else return 8;});
+			
+		// this.members.append("svg:image")
+			// .attr("xlink:href",function(d){return d["foaf:img"];})
+			// .attr("x", 100)
+			// .attr("y", 10)
+			// .attr("class", "node");
 			
 		this.members.on("click",function(d){
 			objectNV.panel.animate({right:"0"});
@@ -157,7 +163,7 @@ NetworkViewer.prototype.fetchMembers = function(node){
 		});
 				
 		this.members.append("text").attr("class", "member-name")
-			.attr("y", 30)
+			.attr("y", 36)
 			.attr("x", 100)
 			.attr("text-anchor","middle")
 			.text(function(d) {
@@ -172,9 +178,9 @@ NetworkViewer.prototype.fetchMembers = function(node){
 				.attr("y", function(d){return d.y;});
 				
 			link.attr("x1", function(d){return (d.source.x)+100;})
-				 .attr("y1", function(d){return (d.source.y)+10;})
+				 .attr("y1", function(d){return (d.source.y)+16;})
 				 .attr("x2", function(d){return (d.target.x)+100;})
-				 .attr("y2", function(d){return (d.target.y)+10;});
+				 .attr("y2", function(d){return (d.target.y)+16;});
 		}.bind(this));
     }.bind(this));
 };
@@ -314,8 +320,8 @@ NetworkViewer.prototype.appendComponent = function(obj){
 	}
 
 	this.component = obj.component;
-	//It seems that when creating the ldp component with document.createElement something goes wrong...
-	//We can't create the element in the pincipal div the same way as the ldp component because it's slower than
+	// It seems that when creating the ldp component with document.createElement something goes wrong...
+	// We can't create the element in the pincipal div the same way as the ldp component because it's slower than
 	// the slideDown function and it appears before the div in firefox...
 	if(obj.ldp){
 		var toAppend = "<"+this.component+" ";

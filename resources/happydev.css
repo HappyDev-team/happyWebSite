@@ -23,10 +23,17 @@ body  {
 }
 
 line  {
-    opacity:            0.6;
+    opacity:            		0.6;
     stroke-dasharray:   1000 1000;
     stroke-dashoffset:  1000;
-    animation:          linedraw forwards;
+    animation:          		linedraw forwards;
+	stroke:						lightgrey
+}
+
+img .node {
+	border-radius:	50px;
+	width:	48px;
+	height:	48px;
 }
 
 .node-name {
@@ -166,4 +173,6 @@ line  {
 .member-name {
 	font-family:		sanspro;
     font-size:          10px;
+	stroke:				white;
+	
 }
