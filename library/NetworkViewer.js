@@ -305,21 +305,22 @@ NetworkViewer.prototype.hdRessourceClickedAction = function(targetUrl,value){
 	history.pushState(null,"Happy "+targetUrl,"/"+targetUrl+"/"+value);
 }
 
-NetworkViewer.prototype.appendComponent = function(node){
-	if(!node.component){
+//Prend un objet noeud ou un objet comprennant un noeud ainsi qu'un objet avec l'option selected.
+NetworkViewer.prototype.appendComponent = function(obj){
+	//Si l'objet ne contient pas uniquement le noeud, on sépare les deux objets et on affect le noeud à l'objet de base.
+	if(!obj.component){
 		var nodeOptions = node[1];
-		node = node[0].roads;
+		obj = node[0].roads;
 	}
 
-	this.component = node.component;
-	var toAppend = "<"+this.component+" ";
-	if(node.options){
-		for(var i = 0; i < node.options.length; i++){
-			toAppend += "data-"+node.options[i].name+"="+node.options[i].value+" ";
+	this.component = obj.component;
+	var toAppend = document.createElement(this.component);
+	if(obj.options){
+		for(var i = 0; i < obj.options.length; i++){
+			toAppend.setAttribute("data-"+obj.options[i].name,obj.options[i].value);
 		}
 	}
-	if(nodeOptions) toAppend += "data-"+nodeOptions.name+"="+nodeOptions.value+" ";
-	toAppend += "></"+this.component+">";
+	if(nodeOptions) toAppend.setAttribute("data-"+nodeOptions.name,nodeOptions.value);
 	return toAppend;
 }
 
