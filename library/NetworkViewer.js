@@ -4,6 +4,7 @@ function NetworkViewer(globalOptions){
 	this.principal = globalOptions.principal;
 	this.title = globalOptions.title;
 	
+	//contient toutes les options concernant les effets d3js.
 	if(globalOptions.d3Options){
 		this.viewportWidth = globalOptions.d3Options.viewWidth;
 		this.viewportHeight = globalOptions.d3Options.viewHeight;
@@ -204,6 +205,7 @@ NetworkViewer.prototype.crossroadInit = function(){
 		roads = this.nodesMap.get(section);
 		this.panel.find($("h2")).remove();
 		this.panel.find($(this.component)).remove();
+		this.principal.find($(this.component)).remove();
 		if(roads.ldp){
 			this.panel.append("<h2>"+roads.name+"</h2>");
 			this.panel.append(this.appendComponent(roads));
@@ -211,8 +213,8 @@ NetworkViewer.prototype.crossroadInit = function(){
 			this.zoom(roads);
 		}else{
 			this.unZoom();
-			this.principal.find($(this.component)).remove();
 			this.principal.append(this.appendComponent(roads));
+			//Si c'est le composant mail, on ajoute un écouteur pour l'événement hdSend.
 			if(roads.mail){
 				$(this.component).on("hdSend", function(){
 					crossroads.parse("/");
@@ -226,6 +228,7 @@ NetworkViewer.prototype.crossroadInit = function(){
 	route3.matched.add(function(section,id){
 		var roads;
 		roads = this.nodesMap.get(section);
+		this.principal.find($(this.component)).remove();
 		if(this.component != roads.component){
 			if(this.component){
 				this.panel.find($("h2")).remove();
@@ -262,7 +265,6 @@ NetworkViewer.prototype.movingContainer = function(){
 					`translate(${this.areaLeft-this.relativeX},${this.areaTop-this.relativeY})scale(${this.zoomLevel})`);
 				this.mouseX = elem.clientX;
 				this.mouseY = elem.clientY;
-				console.log( this.areaLeft+" / "+this.areaTop);
 			}
 		}
 	}.bind(this));
