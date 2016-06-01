@@ -219,52 +219,20 @@
         var MemberPrototype = Object.create(HTMLElement.prototype, {
             createdCallback: {
                 value: function() {
-                    this.loadData();
                     var clone = document.importNode(localDoc.querySelector('#member-template').content, true);
                     this.createShadowRoot().appendChild(clone);
                 }
             }
         });
         
-        MemberPrototype.loadData = function loadData() {
-            if(this.dataset.src) {
-                store.get(this.dataset.src).then(function(member) {
-					var memberTitle = document.createElement("h2");
-					memberTitle.setAttribute("class","member-title");
-					memberTitle.appendChild(document.createTextNode(member["foaf:firstName"] + " " + member["foaf:name"]));
-                    var img = document.createElement("img");
-					img.setAttribute("class","member-image");
-                    img.src = member["foaf:img"];
-					var fn = document.createElement("span");
-					fn.setAttribute("class","hd-member-fn");
-					fn.appendChild(document.createTextNode(member["foaf:firstName"] + " "));
-					var name = document.createElement("span");
-					name.setAttribute("class","hd-member-name");
-					name.appendChild(document.createTextNode(member["foaf:name"]));
-					var memberFull = document.createElement("div");
-					memberFull.setAttribute("id","member-full");
-					
-					this.appendChild(memberTitle);
-                    this.appendChild(img);
-                    this.appendChild(fn);
-					this.appendChild(name);
-					this.appendChild(member-full);
-                });
-            }
-        };
-        
         MemberPrototype.toggleDetail = function toggleDetail(event) {
             Array.prototype.forEach.call(this.parentNode.childNodes, (elt) => {
-					//Pour pouvoir modifier la façon dont se cache les images il faudra modifier cette fonction.
-					// Pour cela il faudra certainement remplacer le display: none par un animate ou autre.
                     if(elt != this) elt.style.display = (this.className == "detail"?"block":"none");
 				});
-			//Cette fonction sera certainement aussi à modifier... En fonction des modification au-dessus.
             this.className = (this.className == "detail"?"":"detail");
 			
-			//Voir pour tester la width de l'image l'action qui sera a effectuée?
+
 			var imag = this.querySelector(".member-image");
-			//console.log(imag.offsetHeight);
 			if(imag.offsetHeight != 48){
 				if(this.dataset.src){
 					store.get(this.dataset.src).then(function(member){
@@ -390,64 +358,121 @@
         
         document.registerElement('hd-team-member', {prototype: MemberPrototype});
         
-        document.registerElement('hd-team', {
-            prototype: Object.create(HTMLElement.prototype, {
-                createdCallback: {
-                    value: function() {
-                        if(this.dataset.src) {
-                            store.list(this.dataset.src).then(function(list) {
-                                list.forEach(function(member) {
-									var eventSelected = new Event("hdSelected");
-                                    var memberElt = document.createElement("hd-team-member");
-									if(member["foaf:nick"])
-										memberElt.setAttribute("id", memberElt.slugify(member["foaf:nick"]));
-									else
-										memberElt.setAttribute("id",memberElt.slugify(member["foaf:firstName"] + " " + member["foaf:name"]));
-									var backImage = document.createElement("img");
-									backImage.src = "/resources/round_back.png";
-									backImage.className = "backImage";
-									backImage.addEventListener("click",function(){
-										this.parentNode.toggleDetail();
-										this.parentNode.parentNode.dispatchEvent(eventSelected);
-									});
-                                    var memberTitle = document.createElement("h2");
-									memberTitle.className ="member-title";
-									memberTitle.appendChild(document.createTextNode(member["foaf:firstName"] + " " + member["foaf:name"]));
-									var img = document.createElement("img");
-									img.className = "member-image";
-									img.src = member["foaf:img"];
-									var memberReduce = document.createElement("div");
-									memberReduce.className = "reduce-title";
-									memberReduce.addEventListener("click",function(){
-										this.parentNode.toggleDetail();
-										this.parentNode.parentNode.dispatchEvent(eventSelected);
-									});
-									var fn = document.createElement("span");
-									fn.className = "hd-member-fn";
-									fn.appendChild(document.createTextNode(member["foaf:firstName"] + " "));
-									memberReduce.appendChild(fn);
-									var name = document.createElement("span");
-									name.className = "hd-member-name";
-									name.appendChild(document.createTextNode(member["foaf:name"]));
-									memberReduce.appendChild(name);
-									var memberFull = document.createElement("div");
-									memberFull.setAttribute("id","member-full");
-									memberElt.appendChild(backImage);
-									memberElt.appendChild(memberTitle);
-                                    memberElt.appendChild(img);
-                                    memberElt.appendChild(memberReduce);
-									memberElt.appendChild(memberFull);
-                                    memberElt.dataset.src = member["@id"];
-                                    this.appendChild(memberElt);
-                                }.bind(this));
-								if(this.dataset.selected){
-									this.querySelector("#"+this.dataset.selected).toggleDetail();
-								}
-                            }.bind(this));
-                        }
-                    }
-                }
-            })
-        });
+		var teamPrototype = Object.create(HTMLElement.prototype, {
+			createdCallback: {
+				value: function() {
+					if(this.dataset.src) {
+						store.list(this.dataset.src).then(function(list) {
+							list.forEach(function(member) {
+								var eventSelected = new Event("hdSelected");
+								var memberElt = document.createElement("hd-team-member");
+								if(member["foaf:nick"])
+									memberElt.setAttribute("id", memberElt.slugify(member["foaf:nick"]));
+								else
+									memberElt.setAttribute("id",memberElt.slugify(member["foaf:firstName"] + " " + member["foaf:name"]));
+								var backImage = document.createElement("img");
+								backImage.src = "/resources/round_back.png";
+								backImage.className = "backImage";
+								backImage.addEventListener("click",function(){
+									this.parentNode.toggleDetail();
+									this.parentNode.parentNode.dispatchEvent(eventSelected);
+								});
+								var memberTitle = document.createElement("h2");
+								memberTitle.className ="member-title";
+								memberTitle.appendChild(document.createTextNode(member["foaf:firstName"] + " " + member["foaf:name"]));
+								var img = document.createElement("img");
+								img.className = "member-image";
+								img.src = member["foaf:img"];
+								var memberReduce = document.createElement("div");
+								memberReduce.className = "reduce-title";
+								memberReduce.addEventListener("click",function(){
+									this.parentNode.toggleDetail();
+									this.parentNode.parentNode.dispatchEvent(eventSelected);
+								});
+								var fn = document.createElement("span");
+								fn.className = "hd-member-fn";
+								fn.appendChild(document.createTextNode(member["foaf:firstName"] + " "));
+								memberReduce.appendChild(fn);
+								var name = document.createElement("span");
+								name.className = "hd-member-name";
+								name.appendChild(document.createTextNode(member["foaf:name"]));
+								memberReduce.appendChild(name);
+								var memberFull = document.createElement("div");
+								memberFull.setAttribute("id","member-full");
+								memberElt.appendChild(backImage);
+								memberElt.appendChild(memberTitle);
+								memberElt.appendChild(img);
+								memberElt.appendChild(memberReduce);
+								memberElt.appendChild(memberFull);
+								memberElt.dataset.src = member["@id"];
+								this.appendChild(memberElt);
+							}.bind(this));
+							if(this.dataset.selected){
+								this.querySelector("#"+this.dataset.selected).toggleDetail();
+							}
+						}.bind(this));
+					}
+				}
+			}
+		});
+		
+		teamPrototype.attributeChangedCallback = function(attribute) {
+			if(attribute == "data-src"){
+				if(this.dataset.src) {
+					store.list(this.dataset.src).then(function(list) {
+						list.forEach(function(member) {
+							var eventSelected = new Event("hdSelected");
+							var memberElt = document.createElement("hd-team-member");
+							if(member["foaf:nick"])
+								memberElt.setAttribute("id", memberElt.slugify(member["foaf:nick"]));
+							else
+								memberElt.setAttribute("id",memberElt.slugify(member["foaf:firstName"] + " " + member["foaf:name"]));
+							var backImage = document.createElement("img");
+							backImage.src = "/resources/round_back.png";
+							backImage.className = "backImage";
+							backImage.addEventListener("click",function(){
+								this.parentNode.toggleDetail();
+								this.parentNode.parentNode.dispatchEvent(eventSelected);
+							});
+							var memberTitle = document.createElement("h2");
+							memberTitle.className ="member-title";
+							memberTitle.appendChild(document.createTextNode(member["foaf:firstName"] + " " + member["foaf:name"]));
+							var img = document.createElement("img");
+							img.className = "member-image";
+							img.src = member["foaf:img"];
+							var memberReduce = document.createElement("div");
+							memberReduce.className = "reduce-title";
+							memberReduce.addEventListener("click",function(){
+								this.parentNode.toggleDetail();
+								this.parentNode.parentNode.dispatchEvent(eventSelected);
+							});
+							var fn = document.createElement("span");
+							fn.className = "hd-member-fn";
+							fn.appendChild(document.createTextNode(member["foaf:firstName"] + " "));
+							memberReduce.appendChild(fn);
+							var name = document.createElement("span");
+							name.className = "hd-member-name";
+							name.appendChild(document.createTextNode(member["foaf:name"]));
+							memberReduce.appendChild(name);
+							var memberFull = document.createElement("div");
+							memberFull.setAttribute("id","member-full");
+							memberElt.appendChild(backImage);
+							memberElt.appendChild(memberTitle);
+							memberElt.appendChild(img);
+							memberElt.appendChild(memberReduce);
+							memberElt.appendChild(memberFull);
+							memberElt.dataset.src = member["@id"];
+							this.appendChild(memberElt);
+						}.bind(this));
+						if(this.dataset.selected){
+							this.querySelector("#"+this.dataset.selected).toggleDetail();
+						}
+					}.bind(this));
+				}
+			}
+		}
+		
+        document.registerElement('hd-team',{prototype: teamPrototype});
+		
     })();
 </script>

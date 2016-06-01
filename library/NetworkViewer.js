@@ -320,27 +320,13 @@ NetworkViewer.prototype.appendComponent = function(obj){
 	}
 
 	this.component = obj.component;
-	// It seems that when creating the ldp component with document.createElement something goes wrong...
-	// We can't create the element in the pincipal div the same way as the ldp component because it's slower than
-	// the slideDown function and it appears before the div in firefox...
-	if(obj.ldp){
-		var toAppend = "<"+this.component+" ";
-		if(obj.options){
-			for(var i = 0; i < obj.options.length; i++){
-				toAppend += "data-"+obj.options[i].name+"="+obj.options[i].value+" ";
-			}
+	var toAppend = document.createElement(this.component);
+	if(obj.options){
+		for(var i = 0; i < obj.options.length; i++){
+			toAppend.setAttribute("data-"+obj.options[i].name,obj.options[i].value);
 		}
-		if(nodeOptions) toAppend += "data-"+nodeOptions.name+"="+nodeOptions.value+" ";
-		toAppend += "></"+this.component+">";
-	}else{
-		var toAppend = document.createElement(this.component);
-		if(obj.options){
-			for(var i = 0; i < obj.options.length; i++){
-				toAppend.setAttribute("data-"+obj.options[i].name,obj.options[i].value);
-			}
-		}
-		if(nodeOptions) toAppend.setAttribute("data-"+nodeOptions.name,nodeOptions.value);
 	}
+	if(nodeOptions) toAppend.setAttribute("data-"+nodeOptions.name,nodeOptions.value);
 	return toAppend;
 }
 

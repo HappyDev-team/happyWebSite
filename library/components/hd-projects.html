@@ -140,32 +140,11 @@
 		var ProjectPrototype = Object.create(HTMLElement.prototype, {
 			createdCallback: {
                 value: function() {
-                    this.loadData();
                     var clone = document.importNode(localDoc.querySelector('#project-template').content, true);
                     this.createShadowRoot().appendChild(clone);
                 }
             }
 		});
-		
-		 ProjectPrototype.loadData = function loadData() {
-            if(this.dataset.src) {
-                store.get(this.dataset.src).then(function(project) {
-					var projectTitle = document.createElement("h2");
-					projectTitle.setAttribute("class","project-title");
-					projectTitle.appendChild(document.createTextNode(project["project_title"]));
-                    var img = document.createElement("img");
-					img.setAttribute("class","project-image");
-                    img.src = project["project_picture"];
-					var reduceTitle = document.createElement("span");
-					reduceTitle.setAttribute("class","reduce-title");
-					reduceTitle.appendChild(document.createTextNode(project["project_title"]));
-					
-					this.appendChild(projectTitle);
-                    this.appendChild(img);
-                    this.appendChild(reduceTitle);
-                });
-            }
-        };
 		
 		ProjectPrototype.toggleDetail = function toggleDetail(event) {
 			 Array.prototype.forEach.call(this.parentNode.childNodes, (elt) => {
@@ -244,54 +223,101 @@
 		
         document.registerElement('hd-projects', {prototype: ProjectPrototype});
         
-        document.registerElement('hd-projects-list', {
-            prototype: Object.create(HTMLElement.prototype, {
-                createdCallback: {
-                    value: function() {
-                        if(this.dataset.src) {
-                            store.list(this.dataset.src).then(function(list) {
-                                list.forEach(function(project) {
-									var eventSelected = new Event("hdSelected");
-                                    var projectElt = document.createElement("hd-projects");
-									projectElt.setAttribute("id", projectElt.slugify(project["project_title"]));
-									var backImage = document.createElement("img");
-									backImage.src = "/resources/round_back.png";
-									backImage.className = "backImage";
-									backImage.addEventListener("click",function(){
-										this.parentNode.toggleDetail();
-										this.parentNode.parentNode.dispatchEvent(eventSelected);
-									});
-									var projectTitle = document.createElement("h2");
-									projectTitle.setAttribute("class","project-title");
-									projectTitle.appendChild(document.createTextNode(project["project_title"]));
-                                    var img = document.createElement("img");
-									img.className = "project-image";
-                                    img.src = project["project_picture"];
-									var projectReduce = document.createElement("span");
-									projectReduce.className = "reduce-title";
-									projectReduce.appendChild(document.createTextNode(project["project_title"]));
-									projectReduce.addEventListener("click",function(){
-										this.parentNode.toggleDetail();
-										this.parentNode.parentNode.dispatchEvent(eventSelected);
-									});
-									var projectFull = document.createElement("div");
-									projectFull.setAttribute("id","project-full");
-                                    projectElt.appendChild(backImage);
-									projectElt.appendChild(projectTitle);
-									projectElt.appendChild(img);
-                                    projectElt.appendChild(projectReduce);
-									projectElt.appendChild(projectFull);
-									projectElt.dataset.src = project["@id"];
-                                    this.appendChild(projectElt);
-                                }.bind(this));
-								if(this.dataset.selected){
-									this.querySelector("#"+this.dataset.selected).toggleDetail();
-								}
-                            }.bind(this));
-                        }
-                    }
-                }
-            })
-        });
+		var projectListPrototype = Object.create(HTMLElement.prototype, {
+			createdCallback: {
+				value: function() {
+					if(this.dataset.src) {
+						store.list(this.dataset.src).then(function(list) {
+							list.forEach(function(project) {
+								var eventSelected = new Event("hdSelected");
+								var projectElt = document.createElement("hd-projects");
+								projectElt.setAttribute("id", projectElt.slugify(project["project_title"]));
+								var backImage = document.createElement("img");
+								backImage.src = "/resources/round_back.png";
+								backImage.className = "backImage";
+								backImage.addEventListener("click",function(){
+									this.parentNode.toggleDetail();
+									this.parentNode.parentNode.dispatchEvent(eventSelected);
+								});
+								var projectTitle = document.createElement("h2");
+								projectTitle.setAttribute("class","project-title");
+								projectTitle.appendChild(document.createTextNode(project["project_title"]));
+								var img = document.createElement("img");
+								img.className = "project-image";
+								img.src = project["project_picture"];
+								var projectReduce = document.createElement("span");
+								projectReduce.className = "reduce-title";
+								projectReduce.appendChild(document.createTextNode(project["project_title"]));
+								projectReduce.addEventListener("click",function(){
+									this.parentNode.toggleDetail();
+									this.parentNode.parentNode.dispatchEvent(eventSelected);
+								});
+								var projectFull = document.createElement("div");
+								projectFull.setAttribute("id","project-full");
+								projectElt.appendChild(backImage);
+								projectElt.appendChild(projectTitle);
+								projectElt.appendChild(img);
+								projectElt.appendChild(projectReduce);
+								projectElt.appendChild(projectFull);
+								projectElt.dataset.src = project["@id"];
+								this.appendChild(projectElt);
+							}.bind(this));
+							if(this.dataset.selected){
+								this.querySelector("#"+this.dataset.selected).toggleDetail();
+							}
+						}.bind(this));
+					}
+				}
+			}
+		});
+		
+		projectListPrototype.attributeChangedCallback = function(attribute){
+			if(attribute == "data-src"){
+				if(this.dataset.src) {
+					store.list(this.dataset.src).then(function(list) {
+						list.forEach(function(project) {
+							var eventSelected = new Event("hdSelected");
+							var projectElt = document.createElement("hd-projects");
+							projectElt.setAttribute("id", projectElt.slugify(project["project_title"]));
+							var backImage = document.createElement("img");
+							backImage.src = "/resources/round_back.png";
+							backImage.className = "backImage";
+							backImage.addEventListener("click",function(){
+								this.parentNode.toggleDetail();
+								this.parentNode.parentNode.dispatchEvent(eventSelected);
+							});
+							var projectTitle = document.createElement("h2");
+							projectTitle.setAttribute("class","project-title");
+							projectTitle.appendChild(document.createTextNode(project["project_title"]));
+							var img = document.createElement("img");
+							img.className = "project-image";
+							img.src = project["project_picture"];
+							var projectReduce = document.createElement("span");
+							projectReduce.className = "reduce-title";
+							projectReduce.appendChild(document.createTextNode(project["project_title"]));
+							projectReduce.addEventListener("click",function(){
+								this.parentNode.toggleDetail();
+								this.parentNode.parentNode.dispatchEvent(eventSelected);
+							});
+							var projectFull = document.createElement("div");
+							projectFull.setAttribute("id","project-full");
+							projectElt.appendChild(backImage);
+							projectElt.appendChild(projectTitle);
+							projectElt.appendChild(img);
+							projectElt.appendChild(projectReduce);
+							projectElt.appendChild(projectFull);
+							projectElt.dataset.src = project["@id"];
+							this.appendChild(projectElt);
+						}.bind(this));
+						if(this.dataset.selected){
+							this.querySelector("#"+this.dataset.selected).toggleDetail();
+						}
+					}.bind(this));
+				}
+			}
+		}
+		
+		document.registerElement('hd-projects-list',{prototype: projectListPrototype});
+		
     })();
 </script>
