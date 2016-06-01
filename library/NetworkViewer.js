@@ -4,7 +4,7 @@ function NetworkViewer(globalOptions){
 	this.principal = globalOptions.principal;
 	this.title = globalOptions.title;
 	
-	//contient toutes les options concernant les effets d3js.
+	//contain all the options for the d3js effetcs.
 	if(globalOptions.d3Options){
 		this.viewportWidth = globalOptions.d3Options.viewWidth;
 		this.viewportHeight = globalOptions.d3Options.viewHeight;
@@ -214,7 +214,7 @@ NetworkViewer.prototype.crossroadInit = function(){
 		}else{
 			this.unZoom();
 			this.principal.append(this.appendComponent(sectionNode));
-			//Si c'est le composant mail, on ajoute un écouteur pour l'événement hdSend.
+			//if it's the mail component, we add a listener for the hdSend event.
 			if(sectionNode.mail){
 				$(this.component).on("hdSend", function(){
 					crossroads.parse("/");
