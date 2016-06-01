@@ -201,44 +201,44 @@ NetworkViewer.prototype.crossroadInit = function(){
 	}.bind(this));
 	
 	route2.matched.add(function(section){
-		var roads;
-		roads = this.nodesMap.get(section);
+		var sectionNode;
+		sectionNode = this.nodesMap.get(section);
 		this.panel.find($("h2")).remove();
 		this.panel.find($(this.component)).remove();
 		this.principal.find($(this.component)).remove();
-		if(roads.ldp){
-			this.panel.append("<h2>"+roads.name+"</h2>");
-			this.panel.append(this.appendComponent(roads));
+		if(sectionNode.ldp){
+			this.panel.append("<h2>"+sectionNode.name+"</h2>");
+			this.panel.append(this.appendComponent(sectionNode));
 			this.PanelComponentEvent();
-			this.zoom(roads);
+			this.zoom(sectionNode);
 		}else{
 			this.unZoom();
-			this.principal.append(this.appendComponent(roads));
+			this.principal.append(this.appendComponent(sectionNode));
 			//Si c'est le composant mail, on ajoute un écouteur pour l'événement hdSend.
-			if(roads.mail){
+			if(sectionNode.mail){
 				$(this.component).on("hdSend", function(){
 					crossroads.parse("/");
 				}.bind(this));
 			}
 			this.principal.slideDown();
 		}
-		history.pushState(null,"Happy "+roads.name,"/"+roads.name);
+		history.pushState(null,"Happy "+sectionNode.name,"/"+sectionNode.name);
 	}.bind(this));
 	
 	route3.matched.add(function(section,id){
-		var roads;
-		roads = this.nodesMap.get(section);
+		var sectionNode;
+		sectionNode = this.nodesMap.get(section);
 		this.principal.find($(this.component)).remove();
-		if(this.component != roads.component){
+		if(this.component != sectionNode.component){
 			if(this.component){
 				this.panel.find($("h2")).remove();
 				this.panel.find($(this.component)).remove();
 			}
-			this.panel.append("<h2>"+roads.name+"</h2>");
-			var newRoads = [{roads},{"name":"selected","value":id}];
-			this.panel.append(this.appendComponent(newRoads));
+			this.panel.append("<h2>"+sectionNode.name+"</h2>");
+			var newsectionNode = [{sectionNode},{"name":"selected","value":id}];
+			this.panel.append(this.appendComponent(newsectionNode));
 			this.PanelComponentEvent();
-			this.zoom(roads);
+			this.zoom(sectionNode);
 		}
 		this.componentCalling(id);
 	}.bind(this));
@@ -309,8 +309,8 @@ NetworkViewer.prototype.hdRessourceClickedAction = function(targetUrl,value){
 NetworkViewer.prototype.appendComponent = function(obj){
 	//Si l'objet ne contient pas uniquement le noeud, on sépare les deux objets et on affect le noeud à l'objet de base.
 	if(!obj.component){
-		var nodeOptions = node[1];
-		obj = node[0].roads;
+		var nodeOptions = obj[1];
+		obj = obj[0].sectionNode;
 	}
 
 	this.component = obj.component;
