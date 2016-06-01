@@ -213,10 +213,11 @@ NetworkViewer.prototype.crossroadInit = function(){
 		this.panel.find($(this.component)).remove();
 		this.principal.find($(this.component)).remove();
 		if(sectionNode.ldp){
+			if(this.component != sectionNode.component)
+				this.zoom(sectionNode);
 			this.panel.append("<h2>"+sectionNode.name+"</h2>");
 			this.panel.append(this.appendComponent(sectionNode));
 			this.PanelComponentEvent();
-			this.zoom(sectionNode);
 		}else{
 			this.unZoom();
 			this.principal.append(this.appendComponent(sectionNode));
