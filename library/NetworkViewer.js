@@ -141,25 +141,50 @@ NetworkViewer.prototype.fetchMembers = function(node){
 		this.members = container.selectAll(".members")
 			.data(nodes)
 			.enter().append("svg")
-			.style("cursor", "pointer");
+			.style("cursor", "pointer")
+			.attr("class","node");
 		
-		this.members.append("circle")
+		this.members.append('clipPath').attr("id",function(d){
+				if(d["foaf:firstName"])
+					return objectNV.slugify(d["foaf:firstName"] + " " + d["foaf:name"]);
+				else
+					return objectNV.slugify(d["project_title"]);
+			})
+			.append("circle")
 			.attr("cx", 100)
 			.attr("cy", 16)
-			.attr("class", "node").attr("r", function(d){if(d.fixed) return 16; else return 8;});
+			.attr("r", function(d){if(d.fixed) return 16; else return 8;});
+		
+		// this.members.append("circle")
+			// .attr("cx", 100)
+			// .attr("cy", 16)
+			// .attr("class", "node").attr("r", function(d){if(d.fixed) return 16; else return 8;});
 			
-		// this.members.append("svg:image")
-			// .attr("xlink:href",function(d){return d["foaf:img"];})
-			// .attr("x", 100)
-			// .attr("y", 10)
-			// .attr("class", "node");
+		this.members.append("image")
+			.attr("xlink:href",function(d){
+				if(d["foaf:firstName"])
+					return d["foaf:img"];
+				else
+					return d["project_picture"];
+			})
+			.attr("x", 90)
+			.attr("y", 5)
+			.attr("width",20)
+			.attr("height",20)
+			.attr("clip-path", function(d){
+				if(d["foaf:firstName"])
+					return "url(#"+objectNV.slugify(d["foaf:firstName"] + " " + d["foaf:name"])+")";
+				else
+					return "url(#"+objectNV.slugify(d["project_title"])+")";
+			});
+
 			
 		this.members.on("click",function(d){
 			objectNV.panel.animate({right:"0"});
 			var oldURL = location.pathname.split("/");
 			if(d.project_title)	crossroads.parse(oldURL[1]+"/"+d.project_title);
 			else if(d["foaf:nick"]) crossroads.parse(oldURL[1]+"/"+objectNV.slugify(d["foaf:nick"]));
-			else crossroads.parse(oldURL[1]+"/"+d["foaf:firstName"] + " " + d["foaf:name"]);
+			else crossroads.parse(oldURL[1]+"/"+objectNV.slugify(d["foaf:firstName"] + " " + d["foaf:name"]));
 		});
 				
 		this.members.append("text").attr("class", "member-name")

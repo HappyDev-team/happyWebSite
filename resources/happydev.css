@@ -30,12 +30,6 @@ line  {
 	stroke:						lightgrey
 }
 
-img .node {
-	border-radius:	50px;
-	width:	48px;
-	height:	48px;
-}
-
 .node-name {
     font-family:        bebas, sans-serif;
     font-size:          32px;
@@ -185,8 +179,12 @@ img .node {
 }
 
 .member-name {
+	display:			none;
 	font-family:		sanspro;
     font-size:          10px;
 	stroke:				white;
-	
+}
+
+.node:hover .member-name{
+	display:	block;
 }
