@@ -291,10 +291,29 @@ NetworkViewer.prototype.movingContainer = function(){
 	$("#svg-container").on("mouseleave", function(elem){	
 		mouseMovement = false;
 	});
+	
+	$(document).on("keydown", function(elem){
+		this.areaLeft = d3.transform(this.svgContainer.attr("transform")).translate[0];
+		this.areaTop = d3.transform(this.svgContainer.attr("transform")).translate[1];
+		if(elem.keyCode == 37){
+			this.svgContainer.transition().duration(0).attr("transform",
+					`translate(${this.areaLeft+(1*this.zoomLevel)},${this.areaTop})scale(${this.zoomLevel})`);
+		}else if(elem.keyCode == 38){
+			this.svgContainer.transition().duration(0).attr("transform",
+					`translate(${this.areaLeft},${this.areaTop+(1*this.zoomLevel)})scale(${this.zoomLevel})`);
+		}else if(elem.keyCode == 39){
+			this.svgContainer.transition().duration(0).attr("transform",
+					`translate(${this.areaLeft-(1*this.zoomLevel)},${this.areaTop})scale(${this.zoomLevel})`);
+		}else if(elem.keyCode == 40){
+			this.svgContainer.transition().duration(0).attr("transform",
+					`translate(${this.areaLeft},${this.areaTop-(1*this.zoomLevel)})scale(${this.zoomLevel})`);
+		}
+	}.bind(this));
 }
 
 NetworkViewer.prototype.stopMoving = function(){
 	$("#svg-container").off();
+	$(document).off();
 }
 
 NetworkViewer.prototype.componentCalling = function(target){
