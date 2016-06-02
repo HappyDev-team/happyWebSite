@@ -208,7 +208,6 @@ NetworkViewer.prototype.crossroadInit = function(){
 	}.bind(this));
 	
 	route2.matched.add(function(section){
-		console.log("route2");
 		var sectionNode;
 		sectionNode = this.nodesMap.get(section);
 		this.principal.find($(this.component)).remove();
@@ -327,7 +326,6 @@ NetworkViewer.prototype.createComponent = function(obj){
 //Event linked to the ldp Component.
 NetworkViewer.prototype.PanelComponentEvent = function(){
 	$(this.component).on("hdSelected", function(e){
-		console.log(e.originalEvent.detail);
 		var URL = location.pathname.split("/");
 		crossroads.parse("/"+URL[1]+"/"+this.slugify(e.originalEvent.detail));
 	}.bind(this));
