@@ -1,0 +1,288 @@
+<template id="contact-template">
+	<style scoped>
+		:host(hd-contact){
+			text-align: center;
+			display:	block;
+			width:	100%;
+			min-height:	400px;
+			padding-bottom:	40px;
+			background-color:	rgb(253, 200, 21);
+			font-family:	bebas, sans-serif;
+			font-size:		150%;
+			color:	white;
+			padding-top:	32px;
+		}
+		:host(hd-contact) hr {
+			width:					100px;
+			color:					lightgray;
+		}
+		:host(hd-contact) ::content #messAlert{
+			position: absolute;
+			top: 0;
+			left: 0;
+			width:	100%;
+			height: 400px;
+			padding-top:	275px;
+			background-color: rgb(253, 200, 21);
+			color: #3D3C37;
+			text-align: center;
+		}
+		::content .hd-contact-input {
+			text-align: right;
+		}
+		::content textarea {
+			width:	400px;
+			height: 100px;
+			resize:	none;
+		}
+		::content #divButtonRequest {
+			text-align: center;
+			margin-top:	10px;
+		}
+		::content #divButtonFinal {
+			text-align: center;
+			margin-top:	10px;
+		}
+		::content .hd-contact-input {
+			text-align: right;
+		}
+		::content .hd-step {
+			display:	none;
+			margin-top:	20px;
+		}
+		::content .hd-contact-allInput {
+			margin-bottom:		10px;
+			border: 			0;
+			outline: 			0;
+			background: 		transparent;
+			border-bottom: 		2px solid rgb(253, 200, 21);
+			text-align:			right;
+		}
+		::content label {
+			margin-bottom:		10px;
+		}
+		::content button {
+			font-family:	bebas, sans-serif;
+			font-size:	90%;
+			border-radius:	10px;
+		}
+		::content #errorDiv {
+			margin-top: 20px;
+			text-align: center;
+		}
+		hd-contact{
+			text-align: center;
+			display:	block;
+			width:	100%;
+			min-height:	400px;
+			padding-bottom:	40px;
+			background-color:	rgb(253, 200, 21);
+			font-family:	bebas, sans-serif;
+			font-size:		150%;
+			color:	white;
+			padding-top:	32px;
+		}
+		hd-contact hr {
+			width:					100px;
+			color:					lightgray;
+		}
+		hd-contact #messAlert{
+			position: absolute;
+			top: 0;
+			left: 0;
+			width:	100%;
+			height: 400px;
+			padding-top:	275px;
+			background-color: rgb(253, 200, 21);
+			color: #3D3C37;
+			text-align: center;
+		}
+		#contact-title {
+			position: 		absolute;
+			top:			20px;
+			left:			20px;
+		}
+		#contact-infos{
+			width:			100%;
+			position:		absolute;
+			left:			0;
+			bottom:			20px;
+		}
+		#hd-form {
+			background-color:		white;
+			margin:					auto;
+			color:					black;
+			width:					400px;
+			padding:				20px 10px 10px 20px;
+			text-align:				left;
+			margin-bottom:			60px;
+		}
+		.hd-contact-input {
+			text-align: right;
+		}
+		textarea {
+			width:	400px;
+			height: 100px;
+			resize:	none;
+			margin-bottom: 20px;
+		}
+		#divButtonRequest {
+			text-align: center;
+		}
+		#divButtonFinal {
+			text-align: center;
+			margin-top:	10px;
+		}
+		.hd-step {
+			display:	none;
+		}
+		.hd-step .hd-contact-input {
+			text-align: right;
+		}
+		.hd-contact-allInput {
+			margin-bottom:		20px;
+			border: 			0;
+			outline: 			0;
+			background: 		transparent;
+			border-bottom: 		2px solid rgb(253, 200, 21);
+			text-align:			right;
+		}
+		label {
+			margin-bottom:		20px;
+		}
+		.hd-step button {
+			font-family:	bebas, sans-serif;
+			font-size:	90%;
+			border-radius:	10px;
+		}
+		#errorDiv {
+			margin-top: 20px;
+			text-align: center;
+		}
+	</style>
+			<div id="contact-title">HAPPY DEV</div>
+			<div id="contact-infos">Retrouvez nous à mutinerie</div>
+			<form id="hd-form" onsubmit="return false;">
+				<hr align="left"/>
+				<div>
+					<label for="hd-contact-name">&gt; Bonjour! Comment t'appelles tu?</label><br/>
+					<div class="hd-contact-input"><input type="text" name="hd-name" id="hd-contact-name" placeholder="PRENOM" class="hd-contact-allInput"/> &lt;</div>
+				</div>
+				<div id="hdContactHowru" class="hd-step">
+					<label for="hd-contact-howru"></label><br/>
+					<div class="hd-contact-input"><input type="text" name="hd-howru" id="hd-contact-howru" class="hd-contact-allInput"/> &lt;</div>
+				</div>
+				<div id="hdContactRequest" class="hd-step">
+					<label for="hd-contact-request">&gt; Qu'est-ce qu'on peut faire pour toi?</label>
+					<textarea name="hd-request" id="hd-contact-request" placeholder="Votre requête"></textarea>
+					<div id="divButtonRequest"><button id="hd-request-button">Valider</button></div>
+				</div>
+				<div id="hdContactContact" class="hd-step">
+					<label for="hd-contact-contact">&gt; Comment peut-on te joindre?</label><br/>
+					<div class="hd-contact-input"><input type="text" name="hd-contact" id="hd-contact-contact" class="hd-contact-allInput"/> &lt;</div>
+					<div id="divButtonFinal"><button id="hd-contact-validationButton">Valider</button></div>
+				</div>
+				<content></content>
+			</form>
+</template>
+	
+<script>
+	(function(){
+		var localDoc = document._currentScript.ownerDocument;
+		
+		var ContactPrototype = Object.create(HTMLElement.prototype, {
+            createdCallback: {
+                value: function() {
+                    var clone = document.importNode(localDoc.querySelector('#contact-template').content, true);
+                    this.root = this.createShadowRoot();
+					this.root.appendChild(clone);
+					this.hdNameConfig();
+                }
+            }
+        });
+		
+		ContactPrototype.hdNameConfig = function hdNameConfig(){
+			this.eventSend = new Event("hdSend");
+			var input = this.root.querySelector("#hd-contact-name");
+			input.addEventListener("change",function(){
+				this.hdHowruConfig();
+			}.bind(this));
+		}
+		
+		ContactPrototype.hdHowruConfig = function hdHowruConfig(){
+			var label = this.root.querySelector("#hdContactHowru label");
+			var input = this.root.querySelector("#hd-contact-howru");
+			if(!input.value){
+				this.root.querySelector("#hdContactHowru").style.display = "block";
+				input.addEventListener("change",function(){
+					this.hdRequestConfig();
+				}.bind(this));
+				this.root.querySelector("#hd-contact-howru").focus();
+			}
+			label.innerHTML = "> Enchanté "+this.root.querySelector("#hd-contact-name").value+" ! Comment ça va aujourd'hui?";
+			this.root.querySelector("#hdContactHowru").style.display = "block";
+		}
+		
+		ContactPrototype.hdRequestConfig = function hdRequestConfig(){
+			var step3Button = this.root.querySelector("#hd-request-button");
+			var requestTextarea = this.root.querySelector("#hd-contact-request");
+			if(!requestTextarea.value){
+				this.root.querySelector("#hdContactRequest").style.display = "block";
+				step3Button.addEventListener("click",function(){
+					if(requestTextarea.value != ""){
+						this.hdContactConfig();
+						step3Button.remove();
+					}
+				}.bind(this));
+				requestTextarea.focus();
+			}
+		}
+		
+		ContactPrototype.hdContactConfig = function hdContactConfig(){
+			var step4Button = this.root.querySelector("#hd-contact-validationButton");
+			var input = this.root.querySelector("#hd-contact-contact");
+			if(!input.value){
+				this.root.querySelector("#hdContactContact").style.display = "block";
+				step4Button.addEventListener("click",function(){
+					if(input.value != "") this.mailSend();
+				}.bind(this));
+				input.focus();
+			}
+		}
+		
+		ContactPrototype.mailSend = function mailSend(){
+			if(this.querySelector("#errorDiv")) this.querySelector("#errorDiv").remove();
+		
+			var xhttp = new XMLHttpRequest();
+			var params = "name="+this.root.querySelector("#hd-contact-name").value+"&howru="+this.root.querySelector("#hd-contact-howru").value+"&request="+this.root.querySelector("#hd-contact-request").value+"&contact="+this.root.querySelector("#hd-contact-contact").value+"&action="+this.dataset.action+"&mails="+this.dataset.mails;
+			xhttp.open("POST",this.dataset.target, true);
+			
+			xhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+			
+			xhttp.onreadystatechange = function(){
+				if(xhttp.readyState == 4){
+					if(xhttp.status == 200){
+						var messAlert = document.createElement("div");
+						messAlert.setAttribute("id","messAlert");
+						messAlert.appendChild(document.createTextNode("Merci pour ton message, on va le prendre en compte dans les meilleurs délais!"));
+						
+						this.appendChild(messAlert);
+						var objectCP = this;
+						setTimeout(function() {
+							objectCP.dispatchEvent(objectCP.eventSend);},3000);
+					}else{
+						var errorDiv = document.createElement("div");
+						errorDiv.setAttribute("id","errorDiv");
+						errorDiv.appendChild(document.createTextNode("Une erreur s'est produite, merci de réessayer plus tard."));
+						errorDiv.appendChild(document.createElement("br"));
+						errorDiv.appendChild(document.createTextNode("Veuillez nous excusez pour la gène occasioné."));
+						this.appendChild(errorDiv);
+					}
+				}
+			}.bind(this);
+			xhttp.send(params);
+		}
+		
+		document.registerElement("hd-contact",{prototype: ContactPrototype});
+	})();
+</script>
