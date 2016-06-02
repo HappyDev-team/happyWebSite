@@ -185,6 +185,14 @@ line  {
 	stroke:				white;
 }
 
+.node {
+	stroke:		lightgrey;
+}
+
 .node:hover .member-name{
 	display:	block;
+}
+
+.foreignImage {
+	width: 20px;
 }

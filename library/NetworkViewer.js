@@ -144,6 +144,11 @@ NetworkViewer.prototype.fetchMembers = function(node){
 			.style("cursor", "pointer")
 			.attr("class","node");
 		
+		this.members.append("circle")
+			.attr("cx", 100)
+			.attr("cy", 16)
+			.attr("class", "node").attr("r", function(d){if(d.fixed) return 16; else return 8;});
+		
 		this.members.append('clipPath').attr("id",function(d){
 				if(d["foaf:firstName"])
 					return objectNV.slugify(d["foaf:firstName"] + " " + d["foaf:name"]);
@@ -154,11 +159,6 @@ NetworkViewer.prototype.fetchMembers = function(node){
 			.attr("cx", 100)
 			.attr("cy", 16)
 			.attr("r", function(d){if(d.fixed) return 16; else return 8;});
-		
-		// this.members.append("circle")
-			// .attr("cx", 100)
-			// .attr("cy", 16)
-			// .attr("class", "node").attr("r", function(d){if(d.fixed) return 16; else return 8;});
 			
 		this.members.append("image")
 			.attr("xlink:href",function(d){
