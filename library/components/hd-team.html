@@ -231,7 +231,6 @@
 				});
             this.className = (this.className == "detail"?"":"detail");
 			
-
 			var imag = this.querySelector(".member-image");
 			if(imag.offsetHeight != 48){
 				if(this.dataset.src){
@@ -364,18 +363,21 @@
 					if(this.dataset.src) {
 						store.list(this.dataset.src).then(function(list) {
 							list.forEach(function(member) {
-								var eventSelected = new Event("hdSelected");
+								var eventSelected;
+								var eventUnSelected = new Event("hdUnSelected");
 								var memberElt = document.createElement("hd-team-member");
-								if(member["foaf:nick"])
-									memberElt.setAttribute("id", memberElt.slugify(member["foaf:nick"]));
-								else
+								if(member["foaf:nick"]){
+										memberElt.setAttribute("id", memberElt.slugify(member["foaf:nick"]));
+										eventSelected = new CustomEvent("hdSelected",{detail: memberElt.slugify(member["foaf:nick"])});
+								}else{
 									memberElt.setAttribute("id",memberElt.slugify(member["foaf:firstName"] + " " + member["foaf:name"]));
+									eventSelected = new CustomEvent("hdSelected",{detail: memberElt.slugify(member["foaf:firstName"] + " " + member["foaf:name"])});
+								}
 								var backImage = document.createElement("img");
 								backImage.src = "/resources/round_back.png";
 								backImage.className = "backImage";
 								backImage.addEventListener("click",function(){
-									this.parentNode.toggleDetail();
-									this.parentNode.parentNode.dispatchEvent(eventSelected);
+									this.parentNode.parentNode.dispatchEvent(eventUnSelected);
 								});
 								var memberTitle = document.createElement("h2");
 								memberTitle.className ="member-title";
@@ -386,7 +388,6 @@
 								var memberReduce = document.createElement("div");
 								memberReduce.className = "reduce-title";
 								memberReduce.addEventListener("click",function(){
-									this.parentNode.toggleDetail();
 									this.parentNode.parentNode.dispatchEvent(eventSelected);
 								});
 								var fn = document.createElement("span");
@@ -421,18 +422,21 @@
 				if(this.dataset.src) {
 					store.list(this.dataset.src).then(function(list) {
 						list.forEach(function(member) {
-							var eventSelected = new Event("hdSelected");
+							var eventSelected;
+							var eventUnSelected = new Event("hdUnSelected");
 							var memberElt = document.createElement("hd-team-member");
-							if(member["foaf:nick"])
+							if(member["foaf:nick"]){
 								memberElt.setAttribute("id", memberElt.slugify(member["foaf:nick"]));
-							else
+								eventSelected = new CustomEvent("hdSelected",{detail:memberElt.slugify(member["foaf:nick"])});
+							}else{
 								memberElt.setAttribute("id",memberElt.slugify(member["foaf:firstName"] + " " + member["foaf:name"]));
+								eventSelected = new CustomEvent("hdSelected",{detail:memberElt.slugify(member["foaf:firstName"] + " " + member["foaf:name"])});
+							}
 							var backImage = document.createElement("img");
 							backImage.src = "/resources/round_back.png";
 							backImage.className = "backImage";
 							backImage.addEventListener("click",function(){
-								this.parentNode.toggleDetail();
-								this.parentNode.parentNode.dispatchEvent(eventSelected);
+								this.parentNode.parentNode.dispatchEvent(eventUnSelected);
 							});
 							var memberTitle = document.createElement("h2");
 							memberTitle.className ="member-title";
@@ -443,7 +447,6 @@
 							var memberReduce = document.createElement("div");
 							memberReduce.className = "reduce-title";
 							memberReduce.addEventListener("click",function(){
-								this.parentNode.toggleDetail();
 								this.parentNode.parentNode.dispatchEvent(eventSelected);
 							});
 							var fn = document.createElement("span");
@@ -469,6 +472,11 @@
 						}
 					}.bind(this));
 				}
+			}else if(attribute == "data-selected"){
+				if(this.querySelector(".detail"))
+					this.querySelector(".detail").toggleDetail();
+				if(this.dataset.selected && this.querySelector("#"+this.dataset.selected))
+					this.querySelector("#"+this.dataset.selected).toggleDetail();
 			}
 		}
 		

@@ -56,7 +56,7 @@ NetworkViewer.prototype.drawNodes = function(nodelist){
 			d3.select(this).on("click", function(){
 				if(location.pathname == "/"+d.name && d.ldp){
 					objectNV.panel.animate({right:"0"});
-					objectNV.componentCalling();
+					objectNV.componentCalling("undefined");
 				}else{
 					crossroads.parse(d.name);
 				}
@@ -203,24 +203,31 @@ NetworkViewer.prototype.crossroadInit = function(){
 	route1.matched.add(function(){
 		this.unZoom();
 		this.principal.slideUp();
+		this.panelComponent = "undefined";
 		history.pushState(null,"HappyHome","/");
 	}.bind(this));
 	
 	route2.matched.add(function(section){
+		console.log("route2");
 		var sectionNode;
 		sectionNode = this.nodesMap.get(section);
-		this.panel.find($("h2")).remove();
-		this.panel.find($(this.component)).remove();
 		this.principal.find($(this.component)).remove();
 		if(sectionNode.ldp){
-			if(this.component != sectionNode.component)
+			if(this.panelComponent != sectionNode.component){
+				this.panel.find($("h2")).remove();
+				this.panel.find($(this.component)).remove();
 				this.zoom(sectionNode);
-			this.panel.append("<h2>"+sectionNode.name+"</h2>");
-			this.panel.append(this.appendComponent(sectionNode));
-			this.PanelComponentEvent();
+				this.panelComponent = sectionNode.component;
+				this.panel.append("<h2>"+sectionNode.name+"</h2>");
+				this.panel.append(this.createComponent(sectionNode));
+				this.PanelComponentEvent();
+			}else{
+				this.componentCalling("undefined");
+				this.panel.animate({right:"0"});
+			}
 		}else{
 			this.unZoom();
-			this.principal.append(this.appendComponent(sectionNode));
+			this.principal.append(this.createComponent(sectionNode));
 			//if it's the mail component, we add a listener for the hdSend event.
 			if(sectionNode.mail){
 				$(this.component).on("hdSend", function(){
@@ -229,25 +236,27 @@ NetworkViewer.prototype.crossroadInit = function(){
 			}
 			this.principal.slideDown();
 		}
-		history.pushState(null,"Happy "+sectionNode.name,"/"+sectionNode.name);
+		history.pushState(null,"Happy "+section,"/"+section);
 	}.bind(this));
 	
 	route3.matched.add(function(section,id){
 		var sectionNode;
 		sectionNode = this.nodesMap.get(section);
 		this.principal.find($(this.component)).remove();
-		if(this.component != sectionNode.component){
+		if(this.panelComponent != sectionNode.component){
+			this.panelComponent = sectionNode.component;
 			if(this.component){
 				this.panel.find($("h2")).remove();
 				this.panel.find($(this.component)).remove();
 			}
 			this.panel.append("<h2>"+sectionNode.name+"</h2>");
 			var newsectionNode = [{sectionNode},{"name":"selected","value":id}];
-			this.panel.append(this.appendComponent(newsectionNode));
+			this.panel.append(this.createComponent(newsectionNode));
 			this.PanelComponentEvent();
 			this.zoom(sectionNode);
 		}
 		this.componentCalling(id);
+		history.pushState(null,"Happy "+section,"/"+section+"/"+this.slugify(id));
 	}.bind(this));
 }
 
@@ -290,30 +299,14 @@ NetworkViewer.prototype.stopMoving = function(){
 }
 
 NetworkViewer.prototype.componentCalling = function(target){
-	if($(this.component).children(".detail").attr("id"))
-		$(this.component).children(".detail").children(".backImage").trigger("click");
-	if(target)
-		$(this.component).children("#"+this.slugify(target)).children(".reduce-title").trigger("click");
-}
-
-NetworkViewer.prototype.hdSelectedAction = function(){
-	if($(this.component).children(".detail").attr("id")){
-		var id = $(this.component).children(".detail").attr("id");
-		var oldURL = location.pathname.split("/");
-		history.pushState(null,"Happy "+oldURL[1],"/"+oldURL[1]+"/"+id);
-	}else{
-		var oldURL = location.pathname.split("/");
-		history.pushState(null,"Happy "+oldURL[1],"/"+oldURL[1]);
-	}
-}
-
-NetworkViewer.prototype.hdRessourceClickedAction = function(targetUrl,value){
-	crossroads.parse(targetUrl+"/"+value);
-	history.pushState(null,"Happy "+targetUrl,"/"+targetUrl+"/"+value);
+	if(target != "undefined")
+		$(this.component).attr("data-selected",this.slugify(target));
+	else
+		$(this.component).removeAttr("data-selected");
 }
 
 //Take an object node or an object containing a node and the selected options for the component.
-NetworkViewer.prototype.appendComponent = function(obj){
+NetworkViewer.prototype.createComponent = function(obj){
 	//If the object is not directly a node, we split it in two different object to use during the component creation.
 	if(!obj.component){
 		var nodeOptions = obj[1];
@@ -327,17 +320,23 @@ NetworkViewer.prototype.appendComponent = function(obj){
 			toAppend.setAttribute("data-"+obj.options[i].name,obj.options[i].value);
 		}
 	}
-	if(nodeOptions) toAppend.setAttribute("data-"+nodeOptions.name,nodeOptions.value);
+	if(nodeOptions)  toAppend.setAttribute("data-"+nodeOptions.name,nodeOptions.value);
 	return toAppend;
 }
 
 //Event linked to the ldp Component.
 NetworkViewer.prototype.PanelComponentEvent = function(){
-	$(this.component).on("hdSelected", function(){
-		this.hdSelectedAction();
+	$(this.component).on("hdSelected", function(e){
+		console.log(e.originalEvent.detail);
+		var URL = location.pathname.split("/");
+		crossroads.parse("/"+URL[1]+"/"+this.slugify(e.originalEvent.detail));
 	}.bind(this));
+	$(this.component).on("hdUnSelected", function(){
+		var URL = location.pathname.split("/");
+		crossroads.parse(URL[1]);
+	});
 	$(this.component).on("hdRessourceClicked",function(e){
-		this.hdRessourceClickedAction($(this.component).attr("data-targetURL"),this.slugify(e.originalEvent.detail));
+		crossroads.parse("/"+$(this.component).attr("data-targetURL")+"/"+this.slugify(e.originalEvent.detail));
 	}.bind(this));
 }
 

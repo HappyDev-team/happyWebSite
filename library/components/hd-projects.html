@@ -229,15 +229,15 @@
 					if(this.dataset.src) {
 						store.list(this.dataset.src).then(function(list) {
 							list.forEach(function(project) {
-								var eventSelected = new Event("hdSelected");
 								var projectElt = document.createElement("hd-projects");
 								projectElt.setAttribute("id", projectElt.slugify(project["project_title"]));
+								var eventSelected = new CustomEvent("hdSelected",{detail:projectElt.slugify(project["project_title"])});
+								var eventUnSelected = new Event("hdUnSelected");
 								var backImage = document.createElement("img");
 								backImage.src = "/resources/round_back.png";
 								backImage.className = "backImage";
 								backImage.addEventListener("click",function(){
-									this.parentNode.toggleDetail();
-									this.parentNode.parentNode.dispatchEvent(eventSelected);
+									this.parentNode.parentNode.dispatchEvent(eventUnSelected);
 								});
 								var projectTitle = document.createElement("h2");
 								projectTitle.setAttribute("class","project-title");
@@ -249,7 +249,6 @@
 								projectReduce.className = "reduce-title";
 								projectReduce.appendChild(document.createTextNode(project["project_title"]));
 								projectReduce.addEventListener("click",function(){
-									this.parentNode.toggleDetail();
 									this.parentNode.parentNode.dispatchEvent(eventSelected);
 								});
 								var projectFull = document.createElement("div");
@@ -276,15 +275,15 @@
 				if(this.dataset.src) {
 					store.list(this.dataset.src).then(function(list) {
 						list.forEach(function(project) {
-							var eventSelected = new Event("hdSelected");
 							var projectElt = document.createElement("hd-projects");
 							projectElt.setAttribute("id", projectElt.slugify(project["project_title"]));
+							var eventSelected = new CustomEvent("hdSelected",{detail:projectElt.slugify(project["project_title"])});
+							var eventUnSelected = new Event("hdUnSelected");
 							var backImage = document.createElement("img");
 							backImage.src = "/resources/round_back.png";
 							backImage.className = "backImage";
 							backImage.addEventListener("click",function(){
-								this.parentNode.toggleDetail();
-								this.parentNode.parentNode.dispatchEvent(eventSelected);
+								this.parentNode.parentNode.dispatchEvent(eventUnSelected);
 							});
 							var projectTitle = document.createElement("h2");
 							projectTitle.setAttribute("class","project-title");
@@ -296,7 +295,6 @@
 							projectReduce.className = "reduce-title";
 							projectReduce.appendChild(document.createTextNode(project["project_title"]));
 							projectReduce.addEventListener("click",function(){
-								this.parentNode.toggleDetail();
 								this.parentNode.parentNode.dispatchEvent(eventSelected);
 							});
 							var projectFull = document.createElement("div");
@@ -314,6 +312,11 @@
 						}
 					}.bind(this));
 				}
+			}else if(attribute == "data-selected"){
+				if(this.querySelector(".detail"))
+					this.querySelector(".detail").toggleDetail();
+				if(this.dataset.selected && this.querySelector("#"+this.dataset.selected))
+					this.querySelector("#"+this.dataset.selected).toggleDetail();
 			}
 		}
 		
