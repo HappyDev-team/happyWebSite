@@ -120,7 +120,7 @@ NetworkViewer.prototype.fetchMembers = function(node){
 	var objectNV = this;
 	
     d3.json(node.options[0].value, function(data) {
-		var nodes = [{x:(node.cx)-100,y:(node.cy)-16,fixed:true}].concat(data["@graph"][0]["http://www.w3.org/ns/ldp#contains"]);
+		var nodes = [{x:(node.cx)-100,y:(node.cy)-18,fixed:true}].concat(data["@graph"][0]["http://www.w3.org/ns/ldp#contains"]);
 		var links = this.nodesLinkList(nodes);
 		
 		var container = this.svgContainer.append("svg").attr("class", "members");
@@ -146,8 +146,8 @@ NetworkViewer.prototype.fetchMembers = function(node){
 		
 		this.members.append("circle")
 			.attr("cx", 100)
-			.attr("cy", 16)
-			.attr("class", "node").attr("r", function(d){console.log("test");if(d.fixed) return 16; else return 8;});
+			.attr("cy", 19)
+			.attr("class", "node").attr("r", function(d){console.log("test");if(d.fixed) return 17; else return 8;});
 		
 		this.members.append('clipPath').attr("id",function(d){
 				if(d["foaf:firstName"])
@@ -160,7 +160,7 @@ NetworkViewer.prototype.fetchMembers = function(node){
 			})
 			.append("circle")
 			.attr("cx", 100)
-			.attr("cy", 16)
+			.attr("cy", 19)
 			.attr("r", function(d){if(d.fixed) return 16; else return 8;});
 			
 		this.members.append("image")
@@ -171,7 +171,7 @@ NetworkViewer.prototype.fetchMembers = function(node){
 					return d["project_picture"];
 			})
 			.attr("x", 90)
-			.attr("y", 5)
+			.attr("y", 8)
 			.attr("width",20)
 			.attr("height",20)
 			.attr("style", function(d){
