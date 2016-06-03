@@ -367,10 +367,10 @@
 								var eventUnSelected = new Event("hdUnSelected");
 								var memberElt = document.createElement("hd-team-member");
 								if(member["foaf:nick"]){
-										memberElt.setAttribute("id", memberElt.slugify(member["foaf:nick"]));
+										memberElt.setAttribute("id", "hd"+memberElt.slugify(member["foaf:nick"]));
 										eventSelected = new CustomEvent("hdSelected",{detail: memberElt.slugify(member["foaf:nick"])});
 								}else{
-									memberElt.setAttribute("id",memberElt.slugify(member["foaf:firstName"] + " " + member["foaf:name"]));
+									memberElt.setAttribute("id", "hd"+memberElt.slugify(member["foaf:firstName"] + " " + member["foaf:name"]));
 									eventSelected = new CustomEvent("hdSelected",{detail: memberElt.slugify(member["foaf:firstName"] + " " + member["foaf:name"])});
 								}
 								var backImage = document.createElement("img");
@@ -409,7 +409,7 @@
 								this.appendChild(memberElt);
 							}.bind(this));
 							if(this.dataset.selected){
-								this.querySelector("#"+this.dataset.selected).toggleDetail();
+								this.querySelector("#hd"+this.dataset.selected).toggleDetail();
 							}
 						}.bind(this));
 					}
@@ -426,10 +426,10 @@
 							var eventUnSelected = new Event("hdUnSelected");
 							var memberElt = document.createElement("hd-team-member");
 							if(member["foaf:nick"]){
-								memberElt.setAttribute("id", memberElt.slugify(member["foaf:nick"]));
+								memberElt.setAttribute("id", "hd"+memberElt.slugify(member["foaf:nick"]));
 								eventSelected = new CustomEvent("hdSelected",{detail:memberElt.slugify(member["foaf:nick"])});
 							}else{
-								memberElt.setAttribute("id",memberElt.slugify(member["foaf:firstName"] + " " + member["foaf:name"]));
+								memberElt.setAttribute("id", "hd"+memberElt.slugify(member["foaf:firstName"] + " " + member["foaf:name"]));
 								eventSelected = new CustomEvent("hdSelected",{detail:memberElt.slugify(member["foaf:firstName"] + " " + member["foaf:name"])});
 							}
 							var backImage = document.createElement("img");
@@ -468,15 +468,15 @@
 							this.appendChild(memberElt);
 						}.bind(this));
 						if(this.dataset.selected){
-							this.querySelector("#"+this.dataset.selected).toggleDetail();
+							this.querySelector("#hd"+this.dataset.selected).toggleDetail();
 						}
 					}.bind(this));
 				}
 			}else if(attribute == "data-selected"){
 				if(this.querySelector(".detail"))
 					this.querySelector(".detail").toggleDetail();
-				if(this.dataset.selected && this.querySelector("#"+this.dataset.selected))
-					this.querySelector("#"+this.dataset.selected).toggleDetail();
+				if(this.dataset.selected && this.querySelector("#hd"+this.dataset.selected))
+					this.querySelector("#hd"+this.dataset.selected).toggleDetail();
 			}
 		}
 		

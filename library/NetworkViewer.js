@@ -147,13 +147,16 @@ NetworkViewer.prototype.fetchMembers = function(node){
 		this.members.append("circle")
 			.attr("cx", 100)
 			.attr("cy", 16)
-			.attr("class", "node").attr("r", function(d){if(d.fixed) return 16; else return 8;});
+			.attr("class", "node").attr("r", function(d){console.log("test");if(d.fixed) return 16; else return 8;});
 		
 		this.members.append('clipPath').attr("id",function(d){
 				if(d["foaf:firstName"])
-					return objectNV.slugify(d["foaf:firstName"] + " " + d["foaf:name"]);
+					if(d["foaf:nick"])
+						return "clip"+objectNV.slugify(d["foaf:nick"]);
+					else
+						return "clip"+objectNV.slugify(d["foaf:firstName"] + " " + d["foaf:name"]);
 				else
-					return objectNV.slugify(d["project_title"]);
+					return "clip"+objectNV.slugify(d["project_title"]);
 			})
 			.append("circle")
 			.attr("cx", 100)
@@ -171,11 +174,14 @@ NetworkViewer.prototype.fetchMembers = function(node){
 			.attr("y", 5)
 			.attr("width",20)
 			.attr("height",20)
-			.attr("clip-path", function(d){
+			.attr("style", function(d){
 				if(d["foaf:firstName"])
-					return "url(#"+objectNV.slugify(d["foaf:firstName"] + " " + d["foaf:name"])+")";
+					if(d["foaf:nick"])
+						return "clip-path:url(#clip"+objectNV.slugify(d["foaf:nick"])+")";
+					else				
+						return "clip-path:url(#clip"+objectNV.slugify(d["foaf:firstName"] + " " + d["foaf:name"])+")";
 				else
-					return "url(#"+objectNV.slugify(d["project_title"])+")";
+					return "clip-path:url(#clip"+objectNV.slugify(d["project_title"])+")";
 			});
 
 			

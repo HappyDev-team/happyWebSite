@@ -230,7 +230,7 @@
 						store.list(this.dataset.src).then(function(list) {
 							list.forEach(function(project) {
 								var projectElt = document.createElement("hd-projects");
-								projectElt.setAttribute("id", projectElt.slugify(project["project_title"]));
+								projectElt.setAttribute("id", "hd"+projectElt.slugify(project["project_title"]));
 								var eventSelected = new CustomEvent("hdSelected",{detail:projectElt.slugify(project["project_title"])});
 								var eventUnSelected = new Event("hdUnSelected");
 								var backImage = document.createElement("img");
@@ -262,7 +262,7 @@
 								this.appendChild(projectElt);
 							}.bind(this));
 							if(this.dataset.selected){
-								this.querySelector("#"+this.dataset.selected).toggleDetail();
+								this.querySelector("#hd"+this.dataset.selected).toggleDetail();
 							}
 						}.bind(this));
 					}
@@ -276,7 +276,7 @@
 					store.list(this.dataset.src).then(function(list) {
 						list.forEach(function(project) {
 							var projectElt = document.createElement("hd-projects");
-							projectElt.setAttribute("id", projectElt.slugify(project["project_title"]));
+							projectElt.setAttribute("id", "hd"+projectElt.slugify(project["project_title"]));
 							var eventSelected = new CustomEvent("hdSelected",{detail:projectElt.slugify(project["project_title"])});
 							var eventUnSelected = new Event("hdUnSelected");
 							var backImage = document.createElement("img");
@@ -308,15 +308,15 @@
 							this.appendChild(projectElt);
 						}.bind(this));
 						if(this.dataset.selected){
-							this.querySelector("#"+this.dataset.selected).toggleDetail();
+							this.querySelector("#hd"+this.dataset.selected).toggleDetail();
 						}
 					}.bind(this));
 				}
 			}else if(attribute == "data-selected"){
 				if(this.querySelector(".detail"))
 					this.querySelector(".detail").toggleDetail();
-				if(this.dataset.selected && this.querySelector("#"+this.dataset.selected))
-					this.querySelector("#"+this.dataset.selected).toggleDetail();
+				if(this.dataset.selected && this.querySelector("#hd"+this.dataset.selected))
+					this.querySelector("#hd"+this.dataset.selected).toggleDetail();
 			}
 		}
 		
