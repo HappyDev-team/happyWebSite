@@ -1,6 +1,6 @@
 Options +FollowSymlinks
 RewriteEngine On
 RewriteBase /
-RewriteRule ^(library|resources) - [L]
+RewriteRule ^resources - [L]
 RewriteRule (.+)(js|css|json|html)$ - [L]
 RewriteRule (.*) index.html [L,QSA]

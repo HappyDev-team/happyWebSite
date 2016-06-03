@@ -162,6 +162,7 @@ line  {
     left:               		10%;
     right:              		10%;
     display:            	none;
+    height:                 80%;
 }
 
 #centrale .back {
@@ -176,6 +177,10 @@ line  {
 	cursor:				pointer;
 	transform:			rotate(90deg);
 	transition:			1s;
+}
+
+hd-contact {
+    height: 100%;
 }
 
 .member-name {
