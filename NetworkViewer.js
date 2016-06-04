@@ -121,9 +121,9 @@ NetworkViewer.prototype.fetchMembers = function(node){
         var linksdata = nodes.map(elem => ({source:0, target:elem}));
         
         var container = this.svgContainer.append("svg").attr("class", "members");
-        
+        console.log(this.zoomLevel);
         var force = d3.layout.force()
-                    .size([this.viewportWidth/this.zoomLevel, this.viewportHeight/this.zoomLevel])
+                    .size([node.cx*2, node.cy*2])
                     .charge(this.charge)
                     .nodes(nodes)
                     .links(linksdata)
