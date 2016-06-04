@@ -46,16 +46,16 @@ NetworkViewer.prototype.drawNodes = function(nodelist){
     var objectNV = this;
 
     nodes.append("circle")
-        .attr("cx", function(d) { return d.cx;})
-        .attr("cy", function(d) { return d.cy;})
-        .attr("r", function(d) { return d.name ? 16 : 4; });
+        .attr("cx", d => d.cx)
+        .attr("cy", d => d.cy)
+        .attr("r", d => d.name ? 16 : 4);
 
     nodes.each(function(d) {
         if (d.name){
             d3.select(this).on("click", function(){
                 if(location.pathname == "/"+d.name && d.ldp){
                     objectNV.panel.animate({right:"0"});
-                    objectNV.componentCalling("undefined");
+                    $(objectNV.component).attr("data-selected", "undefined");
                 }else{
                     crossroads.parse(d.name);
                 }
@@ -63,10 +63,10 @@ NetworkViewer.prototype.drawNodes = function(nodelist){
             .style("cursor", "pointer")
             .append("text")
                 .attr("class", "node-name")
-                .attr("x", function(d) { return d.cx; })
-                .attr("y", function(d) { return d.cy+55; })
+                .attr("x", d => d.cx)
+                .attr("y", d => d.cy+55)
                 .attr("text-anchor","middle")
-                .text(function(d) { return d.name; });
+                .text(d => d.name);
         }});
     return nodes;
 };
@@ -76,28 +76,28 @@ NetworkViewer.prototype.drawLinks = function(links){
         .data(links)
         .enter().append("line")
         .attr("class", "link")
-        .attr("x1", function(d) { return d.source.cx; })
-        .attr("y1", function(d) { return d.source.cy; })
-        .attr("x2", function(d) { return d.target.cx; })
-        .attr("y2", function(d) { return d.target.cy; })
-        .style("animation-duration", function(d){return d.duration})
-        .style("animation-delay", function(d){return d.delay});
+        .attr("x1", d => d.source.cx)
+        .attr("y1", d => d.source.cy)
+        .attr("x2", d => d.target.cx)
+        .attr("y2", d => d.target.cy)
+        .style("animation-duration", d => d.duration)
+        .style("animation-delay", d => d.delay);
     return links;
 }
 
+NetworkViewer.prototype.setContainerTransform = function(x, y, zoom, transition) {
+    if(transition) this.svgContainer.transition().duration(500);
+    this.svgContainer.attr("transform", `translate(${x},${y})scale(${this.zoomLevel})`);
+}
+
 NetworkViewer.prototype.zoom = function(node){
-    if(node.name){
-        if(node.ldp){
-            this.panel.animate({right:"0"});
-            $("."+this.title).attr("class","happy-unZoom");
-            $(".happy-unZoom").on("click", () => {crossroads.parse("/")});
-            this.areaLeft = node.cx - this.viewportWidth/this.zoomLevel/2;
-            this.areaTop = node.cy - this.viewportHeight/this.zoomLevel/2;
-            this.svgContainer.transition().duration(500).attr("transform",
-                `translate(${this.viewportWidth/2-node.cx*this.zoomLevel},${this.viewportHeight/2-node.cy*this.zoomLevel})scale(${this.zoomLevel})`);
-            this.fetchMembers(node);
-            this.startMoving();
-        }
+    if(node.ldp){
+        this.panel.animate({right:"0"});
+        $("."+this.title).attr("class","happy-unZoom");
+        $(".happy-unZoom").on("click", () => crossroads.parse("/"));
+        this.setContainerTransform(this.viewportWidth/2-node.cx*this.zoomLevel, this.viewportHeight/2-node.cy*this.zoomLevel, true);
+        this.fetchMembers(node);
+        this.startMoving();
     }
 }
 
@@ -118,20 +118,20 @@ NetworkViewer.prototype.fetchMembers = function(node){
     
     d3.json(node.options.src, function(data) {
         var nodes = [{x:(node.cx)-100,y:(node.cy)-18,fixed:true}].concat(data["@graph"][0]["http://www.w3.org/ns/ldp#contains"]);
-        var links = this.nodesLinkList(nodes);
+        var linksdata = nodes.map(elem => ({source:0, target:elem}));
         
         var container = this.svgContainer.append("svg").attr("class", "members");
         
         var force = d3.layout.force()
-                    .size([this.viewportWidth/this.zoomLevel+this.areaLeft,this.viewportHeight/this.zoomLevel+this.areaTop])
+                    .size([this.viewportWidth/this.zoomLevel, this.viewportHeight/this.zoomLevel])
                     .charge(this.charge)
                     .nodes(nodes)
-                    .links(links)
+                    .links(linksdata)
                     .friction(this.friction)
                     .start();
                             
-        var link = container.selectAll(".link")
-                        .data(links)
+        var links = container.selectAll(".link")
+                        .data(linksdata)
                         .enter().append("line")
                         .attr("class", "link");
         
@@ -144,7 +144,7 @@ NetworkViewer.prototype.fetchMembers = function(node){
         this.members.append("circle")
             .attr("cx", 100)
             .attr("cy", 19)
-            .attr("class", "node").attr("r", function(d){if(d.fixed) return 17; else return 8;});
+            .attr("class", "node").attr("r", d => d.fixed?17:8);
         
         this.members.append('clipPath').attr("id",function(d){
                 if(d["foaf:firstName"])
@@ -201,133 +201,108 @@ NetworkViewer.prototype.fetchMembers = function(node){
                     return d["project_title"];
             });
         
-        force.on("tick",function(){
-            this.members.attr("x", function(d){return d.x;})
-                .attr("y", function(d){return d.y;});
+        force.on("tick",() => {
+            this.members.attr("x", d => d.x)
+                .attr("y", d => d.y);
                 
-            link.attr("x1", function(d){return (d.source.x)+100;})
-                 .attr("y1", function(d){return (d.source.y)+16;})
-                 .attr("x2", function(d){return (d.target.x)+100;})
-                 .attr("y2", function(d){return (d.target.y)+16;});
-        }.bind(this));
+            links.attr("x1", d => d.source.x+100)
+                 .attr("y1", d => d.source.y+16)
+                 .attr("x2", d => d.target.x+100)
+                 .attr("y2", d => d.target.y+16);
+        });
     }.bind(this));
 };
 
-NetworkViewer.prototype.nodesLinkList = function(nodes){
-    return nodes.map((elem) => {return {source:0, target:elem}});
-};
+NetworkViewer.prototype.routeHome = function(){
+    this.unZoom();
+    this.principal.slideUp();
+    this.panelComponent = "undefined";
+    history.pushState(null,"Happy Home","/");
+}
+NetworkViewer.prototype.routeComponent = function(section) {
+    var sectionNode = this.nodesMap.get(section);
+    this.principal.find($(this.component)).remove();
+    if(sectionNode.ldp){
+        if(this.panelComponent != sectionNode.component){
+            this.panel.find($("h2")).remove();
+            this.panel.find($(this.component)).remove();
+            this.zoom(sectionNode);
+            this.panelComponent = sectionNode.component;
+            this.panel.append("<h2>"+sectionNode.name+"</h2>");
+            this.createComponent(sectionNode, this.panel);
+        }else{
+            $(this.component).attr("data-selected", "undefined");
+            this.panel.animate({right:"0"});
+        }
+    }else{
+        this.unZoom();
+        this.createComponent(sectionNode, this.principal);
+        //if it's the mail component, we add a listener for the hdSend event.
+        if(sectionNode.mail) $(this.component).on("hdSend", () => crossroads.parse("/"));
+        this.principal.slideDown();
+    }
+    history.pushState(null,"Happy "+section,"/"+section);
+}
+NetworkViewer.prototype.routeDetail = function(section,id){
+    var sectionNode = this.nodesMap.get(section);
+    this.principal.find($(this.component)).remove();
+    if(this.panelComponent != sectionNode.component){
+        this.panelComponent = sectionNode.component;
+        if(this.component){
+            this.panel.find($("h2")).remove();
+            this.panel.find($(this.component)).remove();
+        }
+        this.panel.append("<h2>"+sectionNode.name+"</h2>");
+        this.createComponent(sectionNode, this.panel, {"name":"selected","value":id});
+        this.zoom(sectionNode);
+    }
+    $(this.component).attr("data-selected",this.slugify(id));
+    history.pushState(null,"Happy "+section,"/"+section+"/"+this.slugify(id));
+}
 
 NetworkViewer.prototype.crossroadInit = function(){
-    var route1 = crossroads.addRoute("/");
-    var route2 = crossroads.addRoute("{section}");
-    var route3 = crossroads.addRoute("/{section}/{title}");
+    crossroads.addRoute("/").matched.add(this.routeHome.bind(this));
+    crossroads.addRoute("{section}").matched.add(this.routeComponent.bind(this));
+    crossroads.addRoute("/{section}/{title}").matched.add(this.routeDetail.bind(this));
     
-     $(window).on("popstate", () => {crossroads.parse(location.pathname);});
-    
-    route1.matched.add(function(){
-        this.unZoom();
-        this.principal.slideUp();
-        this.panelComponent = "undefined";
-        history.pushState(null,"Happy Home","/");
-    }.bind(this));
-    
-    route2.matched.add(function(section){
-        var sectionNode = this.nodesMap.get(section);
-        this.principal.find($(this.component)).remove();
-        if(sectionNode.ldp){
-            if(this.panelComponent != sectionNode.component){
-                this.panel.find($("h2")).remove();
-                this.panel.find($(this.component)).remove();
-                this.zoom(sectionNode);
-                this.panelComponent = sectionNode.component;
-                this.panel.append("<h2>"+sectionNode.name+"</h2>");
-                this.createComponent(sectionNode, this.panel);
-            }else{
-                this.componentCalling("undefined");
-                this.panel.animate({right:"0"});
-            }
-        }else{
-            this.unZoom();
-            this.createComponent(sectionNode, this.principal);
-            //if it's the mail component, we add a listener for the hdSend event.
-            if(sectionNode.mail){
-                $(this.component).on("hdSend", function(){
-                    crossroads.parse("/");
-                }.bind(this));
-            }
-            this.principal.slideDown();
-        }
-        history.pushState(null,"Happy "+section,"/"+section);
-    }.bind(this));
-    
-    route3.matched.add(function(section,id){
-        var sectionNode = this.nodesMap.get(section);
-        this.principal.find($(this.component)).remove();
-        if(this.panelComponent != sectionNode.component){
-            this.panelComponent = sectionNode.component;
-            if(this.component){
-                this.panel.find($("h2")).remove();
-                this.panel.find($(this.component)).remove();
-            }
-            this.panel.append("<h2>"+sectionNode.name+"</h2>");
-            this.createComponent(sectionNode, this.panel, {"name":"selected","value":id});
-            this.zoom(sectionNode);
-        }
-        this.componentCalling(id);
-        history.pushState(null,"Happy "+section,"/"+section+"/"+this.slugify(id));
-    }.bind(this));
+    $(window).on("popstate", () => crossroads.parse(location.pathname));
+}
+
+NetworkViewer.prototype.handleKeyboard = function(event){
+    var newX = d3.transform(this.svgContainer.attr("transform")).translate[0];
+    var newY = d3.transform(this.svgContainer.attr("transform")).translate[1];
+    switch(event.keyCode) {
+        case 37: newX += 5; break;
+        case 38: newY += 5; break;
+        case 39: newX -= 5; break;
+        case 40: newY -= 5; break;
+    }
+    this.setContainerTransform(newX, newY);
 }
 
 NetworkViewer.prototype.startMoving = function(){
      var mouseMovement = false;
     
-    $("#svg-container").on("mousedown", function(elem){
+    $("#svg-container").on("mousedown", function(event){
         mouseMovement = true;
-        this.mouseX = elem.clientX;
-        this.mouseY = elem.clientY;
-        elem.preventDefault();
+        this.previousX = event.clientX;
+        this.previousY = event.clientY;
+        event.preventDefault();
     }.bind(this));
     
-    $("#svg-container").on("mousemove", function(elem){
-        this.relativeX = this.mouseX - elem.clientX;
-        this.relativeY = this.mouseY - elem.clientY;
-        if(mouseMovement && (this.relativeX || this.relativeY)){
-            if(this.areaLeft != d3.transform(this.svgContainer.attr("transform")).translate[0] || this.areaTop != d3.transform(this.svgContainer.attr("transform")).translate[1]){
-                this.areaLeft = d3.transform(this.svgContainer.attr("transform")).translate[0];
-                this.areaTop = d3.transform(this.svgContainer.attr("transform")).translate[1];
-                this.svgContainer.transition().duration(0).attr("transform",
-                    `translate(${this.areaLeft-this.relativeX},${this.areaTop-this.relativeY})scale(${this.zoomLevel})`);
-                this.mouseX = elem.clientX;
-                this.mouseY = elem.clientY;
-            }
+    $("#svg-container").on("mousemove", function(event){
+        if(mouseMovement){
+            var newX = d3.transform(this.svgContainer.attr("transform")).translate[0] - (this.previousX - event.clientX);
+            var newY = d3.transform(this.svgContainer.attr("transform")).translate[1] - (this.previousY - event.clientY);
+            this.setContainerTransform(newX, newY);
+            this.previousX = event.clientX;
+            this.previousY = event.clientY;
         }
     }.bind(this));
     
-    $("#svg-container").on("mouseup", function(elem){
-        mouseMovement = false;
-    });
-    
-    $("#svg-container").on("mouseleave", function(elem){    
-        mouseMovement = false;
-    });
-    
-    $(document).on("keydown", function(elem){
-        this.areaLeft = d3.transform(this.svgContainer.attr("transform")).translate[0];
-        this.areaTop = d3.transform(this.svgContainer.attr("transform")).translate[1];
-        if(elem.keyCode == 37){
-            this.svgContainer.transition().duration(0).attr("transform",
-                    `translate(${this.areaLeft+(1*this.zoomLevel)},${this.areaTop})scale(${this.zoomLevel})`);
-        }else if(elem.keyCode == 38){
-            this.svgContainer.transition().duration(0).attr("transform",
-                    `translate(${this.areaLeft},${this.areaTop+(1*this.zoomLevel)})scale(${this.zoomLevel})`);
-        }else if(elem.keyCode == 39){
-            this.svgContainer.transition().duration(0).attr("transform",
-                    `translate(${this.areaLeft-(1*this.zoomLevel)},${this.areaTop})scale(${this.zoomLevel})`);
-        }else if(elem.keyCode == 40){
-            this.svgContainer.transition().duration(0).attr("transform",
-                    `translate(${this.areaLeft},${this.areaTop-(1*this.zoomLevel)})scale(${this.zoomLevel})`);
-        }
-    }.bind(this));
+    $("#svg-container").on("mouseup", () => {mouseMovement = false;});
+    $("#svg-container").on("mouseleave", () => {mouseMovement = false;});
+    $(document).on("keydown", this.handleKeyboard.bind(this));
 }
 
 NetworkViewer.prototype.stopMoving = function(){
@@ -335,19 +310,11 @@ NetworkViewer.prototype.stopMoving = function(){
     $(document).off();
 }
 
-NetworkViewer.prototype.componentCalling = function(target){
-    if(target != "undefined")
-        $(this.component).attr("data-selected",this.slugify(target));
-    else
-        $(this.component).removeAttr("data-selected");
-}
-
 //Take an object node or an object containing a node and the selected options for the component.
 NetworkViewer.prototype.createComponent = function(obj, target, nodeOptions){
     var link = document.createElement('link');
     link.setAttribute('rel', 'import');
     link.setAttribute('href', obj.import);
-    console.log(obj.import);
     link.onload = () => {
         this.component = document.createElement(obj.component);
         for(optionName in obj.options)
@@ -362,12 +329,12 @@ NetworkViewer.prototype.createComponent = function(obj, target, nodeOptions){
 //Event linked to the ldp Component.
 NetworkViewer.prototype.setComponentEvent = function(){
     $(this.component).on("hdSelected", function(e){
-        var URL = location.pathname.split("/");
-        crossroads.parse("/"+URL[1]+"/"+this.slugify(e.originalEvent.detail));
+        var componentName = location.pathname.split("/")[1];
+        crossroads.parse("/"+componentName+"/"+this.slugify(e.originalEvent.detail));
     }.bind(this));
     $(this.component).on("hdUnSelected", function(){
-        var URL = location.pathname.split("/");
-        crossroads.parse(URL[1]);
+        var componentName = location.pathname.split("/")[1];
+        crossroads.parse(componentName);
     });
     $(this.component).on("hdRessourceClicked",function(e){
         crossroads.parse("/"+$(this.component).attr("data-targetURL")+"/"+this.slugify(e.originalEvent.detail));
