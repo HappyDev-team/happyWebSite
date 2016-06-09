@@ -121,21 +121,26 @@ NetworkViewer.prototype.fetchMembers = function(node){
         var linksdata = nodes.map(elem => ({source:0, target:elem}));
         
         var container = this.svgContainer.append("svg").attr("class", "members");
-        console.log(this.zoomLevel);
-        var force = d3.layout.force()
-                    .size([node.cx*2, node.cy*2])
-                    .charge(this.charge)
-                    .nodes(nodes)
-                    .links(linksdata)
-                    .friction(this.friction)
-                    .start();
-                            
-        var links = container.selectAll(".link")
+		
+		this.setMemberLinks(linksdata,container);
+		
+		this.setMemberNode(nodes,container);
+		
+		this.startMemberAnimation(node,nodes,linksdata);
+    }.bind(this));
+};
+
+NetworkViewer.prototype.setMemberLinks = function(linksdata,container){
+	this.links = container.selectAll(".link")
                         .data(linksdata)
                         .enter().append("line")
                         .attr("class", "link");
-        
-        this.members = container.selectAll(".members")
+}
+
+NetworkViewer.prototype.setMemberNode = function(nodes,container){
+		var objectNV = this;
+		
+		this.members = container.selectAll(".members")
             .data(nodes)
             .enter().append("svg")
             .style("cursor", "pointer")
@@ -189,8 +194,8 @@ NetworkViewer.prototype.fetchMembers = function(node){
             else if(d["foaf:nick"]) crossroads.parse(oldURL[1]+"/"+objectNV.slugify(d["foaf:nick"]));
             else crossroads.parse(oldURL[1]+"/"+objectNV.slugify(d["foaf:firstName"] + " " + d["foaf:name"]));
         });
-                
-        this.members.append("text").attr("class", "member-name")
+		
+		this.members.append("text").attr("class", "member-name")
             .attr("y", 36)
             .attr("x", 100)
             .attr("text-anchor","middle")
@@ -200,18 +205,27 @@ NetworkViewer.prototype.fetchMembers = function(node){
                 else
                     return d["project_title"];
             });
-        
-        force.on("tick",() => {
+}
+
+NetworkViewer.prototype.startMemberAnimation = function(node,nodes,linksdata){
+	this.force = d3.layout.force()
+                    .size([node.cx*2, node.cy*2])
+                    .charge(this.charge)
+                    .nodes(nodes)
+                    .links(linksdata)
+                    .friction(this.friction)
+                    .start();
+	
+	this.force.on("tick",() => {
             this.members.attr("x", d => d.x)
                 .attr("y", d => d.y);
                 
-            links.attr("x1", d => d.source.x+100)
+            this.links.attr("x1", d => d.source.x+100)
                  .attr("y1", d => d.source.y+16)
                  .attr("x2", d => d.target.x+100)
                  .attr("y2", d => d.target.y+16);
         });
-    }.bind(this));
-};
+}
 
 NetworkViewer.prototype.routeHome = function(){
     this.unZoom();
