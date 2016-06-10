@@ -30,6 +30,12 @@ line  {
 	stroke:						lightgrey
 }
 
+@supports (-ms-accelerator:true){
+	line {
+		stroke-dashoffset: initial;
+	}
+}
+
 .node-name {
     font-family:        bebas, sans-serif;
     font-size:          32px;

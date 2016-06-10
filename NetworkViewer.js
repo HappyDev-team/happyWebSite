@@ -85,9 +85,11 @@ NetworkViewer.prototype.drawLinks = function(links){
     return links;
 }
 
-NetworkViewer.prototype.setContainerTransform = function(x, y, zoom, transition) {
-    if(transition) this.svgContainer.transition().duration(500);
-    this.svgContainer.attr("transform", `translate(${x},${y})scale(${this.zoomLevel})`);
+NetworkViewer.prototype.setContainerTransform = function(x, y, transition) {
+    if(transition)
+		this.svgContainer.transition().duration(500).attr("transform", `translate(${x},${y})scale(${this.zoomLevel})`);
+	else
+		this.svgContainer.attr("transform", `translate(${x},${y})scale(${this.zoomLevel})`);
 }
 
 NetworkViewer.prototype.zoom = function(node){
@@ -192,7 +194,15 @@ NetworkViewer.prototype.setMemberNode = function(nodes,container){
             var oldURL = location.pathname.split("/");
             if(d.project_title)    crossroads.parse(oldURL[1]+"/"+d.project_title);
             else if(d["foaf:nick"]) crossroads.parse(oldURL[1]+"/"+objectNV.slugify(d["foaf:nick"]));
-            else crossroads.parse(oldURL[1]+"/"+objectNV.slugify(d["foaf:firstName"] + " " + d["foaf:name"]));
+            else if(d["foaf:firstName"])crossroads.parse(oldURL[1]+"/"+objectNV.slugify(d["foaf:firstName"] + " " + d["foaf:name"]));
+			else {
+				if(location.pathname == "/"+d.name){
+                    this.panel.animate({right:"0"});
+                    $(this.component).attr("data-selected", "undefined");
+                }else{
+                    crossroads.parse(oldURL[1]);
+                }
+			}
         });
 		
 		this.members.append("text").attr("class", "member-name")
