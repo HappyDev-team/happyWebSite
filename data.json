@@ -9,7 +9,7 @@
         {"cx":121, "cy":452, "name": "manifeste", "component": "hd-manifesto"},
         {"cx":601, "cy":490},
         {"cx":357, "cy":661},
-        {"cx":609, "cy":690, "name": "contact", "component": "hd-contact","mail":1,"options":[{"name":"target","value": "http://ldp.happy-dev.fr/wp-admin/admin-ajax.php"},{"name":"action","value":"send_HD_mail"},{"name":"mails","value":"associes@happy-dev.fr"}]},
+        {"cx":609, "cy":690, "name": "contact", "component": "hd-contact","mail":1,"options":[{"name":"target","value": "http://ldp.happy-dev.fr/wp-admin/admin-ajax.php"},{"name":"action","value":"send_HD_mail"},{"name":"mails","value":"smile@happy-dev.fr"}]},
         {"cx":818, "cy":638}
     ],
     "links": [
