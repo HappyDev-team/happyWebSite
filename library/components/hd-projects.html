@@ -177,6 +177,7 @@
 							urlTitle.appendChild(document.createTextNode("VISITER LE SITE"));
 							var url = document.createElement("a");
 							url.setAttribute("href",project["project_url"]);
+							url.setAttribute("target","_blank");
 							url.appendChild(document.createTextNode(project["project_url"]));
 							container.appendChild(urlTitle);
 							container.appendChild(url);
