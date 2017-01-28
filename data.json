@@ -2,14 +2,14 @@
     "nodes": [
         {"cx":152, "cy":116},
         {"cx":522, "cy":120},
-        {"cx":774, "cy":174, "name": "team","component":"hd-team","ldp":1,"options":[{"name":"src","value":"https://ldp.happy-dev.fr/ldp/members/"},{"name":"targetUrl","value":"projects"}]},
+        {"cx":774, "cy":174, "name": "team","component":"hd-team","ldp":1,"options":[{"name":"src","value":"http://ldp.happy-dev.fr/ldp/members/"},{"name":"targetUrl","value":"projects"}]},
         {"cx":192, "cy":259},
-        {"cx":390, "cy":220, "name": "projects","component":"hd-projects-list","ldp":1,"options":[{"name":"src","value":"https://ldp.happy-dev.fr/ldp/projects/"}]},
+        {"cx":390, "cy":220, "name": "projects","component":"hd-projects-list","ldp":1,"options":[{"name":"src","value":"http://ldp.happy-dev.fr/ldp/projects/"}]},
         {"cx":902, "cy":325},
         {"cx":121, "cy":452, "name": "manifeste", "component": "hd-manifesto"},
         {"cx":601, "cy":490},
         {"cx":357, "cy":661},
-        {"cx":609, "cy":690, "name": "contact", "component": "hd-contact","mail":1,"options":[{"name":"target","value": "https://ldp.happy-dev.fr/wp-admin/admin-ajax.php"},{"name":"action","value":"send_HD_mail"},{"name":"mails","value":"smile@happy-dev.fr"}]},
+        {"cx":609, "cy":690, "name": "contact", "component": "hd-contact","mail":1,"options":[{"name":"target","value": "http://ldp.happy-dev.fr/wp-admin/admin-ajax.php"},{"name":"action","value":"send_HD_mail"},{"name":"mails","value":"smile@happy-dev.fr"}]},
         {"cx":818, "cy":638}
     ],
     "links": [
