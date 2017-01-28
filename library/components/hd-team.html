@@ -210,11 +210,11 @@
 		<content></content>
 </template>
 
-<script type="text/javascript" src="http://happy-dev.fr/library/LDP-framework/ldpframework.js"></script>
+<script type="text/javascript" src="https://happy-dev.fr/library/LDP-framework/ldpframework.js"></script>
 <script>
     (function(){
         var localDoc = document._currentScript.ownerDocument;
-        window.store = new MyStore({context: "http://owl.openinitiative.com/oicontext.jsonld"});
+        window.store = new MyStore({context: "https://owl.openinitiative.com/oicontext.jsonld"});
         
         var MemberPrototype = Object.create(HTMLElement.prototype, {
             createdCallback: {
