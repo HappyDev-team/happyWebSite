@@ -1,5 +1,5 @@
 function NetworkViewer(globalOptions){
-	this.store = new MyStore({context: "http://owl.openinitiative.com/oicontext.jsonld"});
+	this.store = new MyStore({context: "https://owl.openinitiative.com/oicontext.jsonld"});
 	this.panel = globalOptions.panel;
 	this.principal = globalOptions.principal;
 	this.title = globalOptions.title;
@@ -120,7 +120,7 @@ NetworkViewer.prototype.fetchMembers = function(node){
 	var objectNV = this;
 	
     d3.json(node.options[0].value, function(data) {
-		var nodes = [{x:(node.cx)-100,y:(node.cy)-16,fixed:true}].concat(data["@graph"][0]["http://www.w3.org/ns/ldp#contains"]);
+		var nodes = [{x:(node.cx)-100,y:(node.cy)-16,fixed:true}].concat(data["@graph"][0]["https://www.w3.org/ns/ldp#contains"]);
 		var links = this.nodesLinkList(nodes);
 		
 		var container = this.svgContainer.append("svg").attr("class", "members");
