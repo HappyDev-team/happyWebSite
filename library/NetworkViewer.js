@@ -1,5 +1,5 @@
 function NetworkViewer(globalOptions){
-	this.store = new MyStore({context: "http://owl.openinitiative.com/oicontext.jsonld"});
+	this.store = new MyStore({context: "https://owl.openinitiative.com/oicontext.jsonld"});
 	this.panel = globalOptions.panel;
 	this.principal = globalOptions.principal;
 	this.title = globalOptions.title;
