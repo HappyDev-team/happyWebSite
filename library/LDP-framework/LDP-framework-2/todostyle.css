@@ -1,0 +1,12 @@
+#todolistcontainer {
+  width: 500px;
+  min-height: 400px;
+  background: url(http://i.stack.imgur.com/ynxjD.png) repeat-y;
+  position: relative;
+  float: left;
+}
+
+#todolist {
+  margin-left: 100px;
+  padding: 10px;
+}
