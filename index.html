@@ -1,84 +1,106 @@
 <html>
-    <head>
-	<meta name="google-site-verification" content="hkZpLal3w556OFfhul5qiAVXCw6MLREzH8LhUD_Owjs" />
-        <meta charset="utf-8" />
-        <title>happyHome</title>
-        <link rel="stylesheet" href="/resources/happydev.css" />
-		<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.21/webcomponents.min.js"></script>
-        <link rel="import" href="/library/components/hd-manifesto.html" />
-		<link rel="import" href="/library/components/hd-contact.html" />
-		<link rel="import" href="/library/components/hd-team.html" />
-		<link rel="import" href="/library/components/hd-projects.html" />
-		<script type="text/javascript" src="/library/d3.min.js"></script>
-        <script type="text/javascript" src="/library/jquery-1.11.3.min.js"></script>
-        <script type="text/javascript" src="/library/LDP-framework/ldpframework.js"></script>
-		<script type="text/javascript" src="/library/crossroads/signals.js"></script>
-		<script type="text/javascript" src="/library/crossroads/crossroads.min.js"></script>
-        <script type="text/javascript" src="/library/NetworkViewer.js"></script>
-		<script>
-			$(function(){
-				var loadingOptions = {"file":"/data.json","panel":$("#panel"),"principal":$("#centrale"),"title":"happy-title",
-					"d3Options":{
-						"viewWidth":1000,
-						"viewHeight":780,
-						"zoom":3,
-						"charge":-2000,
-						"friction":0.7
-					}
-				};
-				
-				var happyDevNetwork = new NetworkViewer(loadingOptions);
+<head>
+    <meta name="google-site-verification" content="hkZpLal3w556OFfhul5qiAVXCw6MLREzH8LhUD_Owjs"/>
+    <meta charset="utf-8"/>
+    <title>happyHome</title>
+    <link rel="stylesheet" href="resources/happydev.css"/>
+    <script type="text/javascript" src="//cdnjs.cloudflare.com/ajax/libs/webcomponentsjs/0.7.21/webcomponents.min.js"></script>
+    <link rel="import" href="library/components/hd-manifesto.html"/>
+    <link rel="import" href="library/components/hd-contact.html"/>
+    <link rel="import" href="library/components/hd-team.html"/>
+    <link rel="import" href="library/components/hd-projects.html"/>
+    <script type="text/javascript" src="library/d3.min.js"></script>
+    <script type="text/javascript" src="library/jquery-1.11.3.min.js"></script>
+    <script type="text/javascript" src="library/LDP-framework/ldpframework.js"></script>
+    <script type="text/javascript" src="library/crossroads/signals.js"></script>
+    <script type="text/javascript" src="library/crossroads/crossroads.min.js"></script>
+    <script type="text/javascript" src="library/NetworkViewer.js"></script>
 
-				$("#centrale img").on("click", function(){
-					crossroads.parse("/");
-				});
-				
-				$("#panel img").on("click", function(){
-					$("#panel").animate({right:"-350px"});
-				});
-				
-			});
-		</script>
-	<script>
-		(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+    <script>
+    $(function () {
+      var loadingOptions = {
+        "file": "data.json", "panel": $("#panel"), "principal": $("#centrale"), "title": "happy-title",
+        "d3Options": {
+          "viewWidth": 1000,
+          "viewHeight": 780,
+          "zoom": 3,
+          "charge": -2000,
+          "friction": 0.7
+        }
+      };
 
-		  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-		 m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+      new NetworkViewer(loadingOptions);
 
-		 })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+      $("#centrale img").on("click", function () {
+        crossroads.parse("/");
+      });
 
-		  ga('create', 'UA-88503807-1', 'auto');
+      $("#panel img").on("click", function () {
+        $("#panel").animate({ right: "-350px" });
+      });
 
-		  ga('send', 'pageview');
-	</script>
-	<script>
-		(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    });
+    </script>
 
-			new Date().getTime(),event:'gtm.js'});
-			
-			var f=d.getElementsByTagName(s)[0],j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';
-			
-			j.async=true;j.src='https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    <script>
+    (function (i, s, o, g, r, a, m) {
+      i['GoogleAnalyticsObject'] = r;
+      i[r] = i[r] || function () {
 
-		})(window,document,'script','dataLayer','GTM-PPWNT2Q');
-	</script>
-    </head>
-    <body>
-	<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PPWNT2Q" height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
-        <div class="happy-title">
-            <div class="chevron">
-            </div>
-            <h1>Happy Dev</h1>
-            <h4>Réseau de développeurs indépendants</h4>
-            <div class="chevron">
-            </div>
-			<img src="/resources/arrows.png"/>
-        </div>
-        <div id="panel">
-			<img src="/resources/close.png" class="back"/>
-        </div>
-		<div id="centrale">
-			<img src="/resources/close.png" class="back"/>
-        </div>
-    </body>
+        (i[r].q = i[r].q || []).push(arguments)
+      }, i[r].l = 1 * new Date();
+      a = s.createElement(o),
+        m = s.getElementsByTagName(o)[0];
+      a.async = 1;
+      a.src = g;
+      m.parentNode.insertBefore(a, m)
+
+    })(window, document, 'script', 'https://www.google-analytics.com/analytics.js', 'ga');
+
+    ga('create', 'UA-88503807-1', 'auto');
+
+    ga('send', 'pageview');
+    </script>
+
+    <script>
+    (function (w, d, s, l, i) {
+      w[l] = w[l] || [];
+      w[l].push({
+        'gtm.start':
+
+          new Date().getTime(), event: 'gtm.js'
+      });
+
+      var f = d.getElementsByTagName(s)[0], j = d.createElement(s), dl = l != 'dataLayer' ? '&l=' + l : '';
+
+      j.async = true;
+      j.src = 'https://www.googletagmanager.com/gtm.js?id=' + i + dl;
+      f.parentNode.insertBefore(j, f);
+
+    })(window, document, 'script', 'dataLayer', 'GTM-PPWNT2Q');
+    </script>
+</head>
+<body>
+
+<noscript>
+    <iframe src="https://www.googletagmanager.com/ns.html?id=GTM-PPWNT2Q" height="0" width="0" style="display:none;visibility:hidden"></iframe>
+</noscript>
+
+<div class="happy-title">
+    <div class="chevron"></div>
+    <h1>Happy Dev</h1>
+    <h4>Réseau d'indépendants du numérique</h4>
+    <div class="chevron"></div>
+    <img src="resources/arrows.png" alt="arrow" />
+</div>
+
+<div id="panel">
+    <img src="resources/close.png" class="back" alt="close"/>
+</div>
+
+<div id="centrale">
+    <img src="resources/close.png" class="back" alt="close"/>
+</div>
+
+</body>
 </html>

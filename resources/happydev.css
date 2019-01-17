@@ -1,192 +1,195 @@
 @font-face {
-    font-family:        bebas;
-    src:                url('fonts/BebasNeue.otf');
+    font-family: bebas;
+    src: url('fonts/BebasNeue.otf');
 }
 
 @font-face {
-	font-family:		sanspro;
-	src:				url('fonts/SourceSansPro-Light.ttf');
+    font-family: sanspro;
+    src: url('fonts/SourceSansPro-Light.ttf');
 }
 
 @keyframes linedraw {
-    from    {stroke-dashoffset: 1000;}
-    to      {stroke-dashoffset: 0;}
+    from {
+        stroke-dashoffset: 1000;
+    }
+    to {
+        stroke-dashoffset: 0;
+    }
 }
 
-body  {
-	margin:				0;
-    color:              rgb(253, 200, 21);
-    stroke:             rgb(253, 200, 21);
-    fill:               rgb(253, 200, 21);
-	background-color:	#3D3C37;
-    font-family:        helvetica, sans-serif;
+body {
+    margin: 0;
+    color: rgb(253, 200, 21);
+    stroke: rgb(253, 200, 21);
+    fill: rgb(253, 200, 21);
+    background-color: #3D3C37;
+    font-family: helvetica, sans-serif;
 }
 
-line  {
-    opacity:            		0.6;
-    stroke-dasharray:   1000 1000;
-    stroke-dashoffset:  1000;
-    animation:          		linedraw forwards;
-	stroke:						lightgrey
+line {
+    opacity: 0.6;
+    stroke-dasharray: 1000, 1000;
+    stroke-dashoffset: 1000;
+    animation: linedraw forwards;
+    stroke: lightgrey
 }
 
 img .node {
-	border-radius:	50px;
-	width:	48px;
-	height:	48px;
+    border-radius: 50px;
+    width: 48px;
+    height: 48px;
 }
 
 .node-name {
-    font-family:        bebas, sans-serif;
-    font-size:          32px;
+    font-family: bebas, sans-serif;
+    font-size: 32px;
 }
 
 .happy-title {
-    position:absolute;
-	width: 400px;
-	height: 200px;
-	top: 50%;
-	margin-left: -200px;
-	margin-top: -100px;
-	left: 50%;
-	text-align: center;
-	transition: 0.5s;
-	z-index:			-1;
+    position: absolute;
+    width: 400px;
+    height: 200px;
+    top: 50%;
+    margin-left: -200px;
+    margin-top: -100px;
+    left: 50%;
+    text-align: center;
+    transition: 0.5s;
+    z-index: -1;
 }
 
 .happy-unzoom {
-    position:absolute;
-	width: 150px;
-	height: 50px;
-	top: 20;
-	left: 20;
-	margin: 0;
-	text-align: center;
-	transition: 0.5s;
-	z-index:			2;
+    position: absolute;
+    width: 150px;
+    height: 50px;
+    top: 20px;
+    left: 20px;
+    margin: 0;
+    text-align: center;
+    transition: 0.5s;
+    z-index: 2;
 }
 
-.happy-unzoom:hover{
-	cursor:				pointer;
+.happy-unzoom:hover {
+    cursor: pointer;
 }
 
 .happy-title h1 {
-    font-family:        bebas, sans-serif;
-    font-size:          750%;
-    font-weight:        400;
-    margin:             -20px 0;
-	transition: 		0.5s;
+    font-family: bebas, sans-serif;
+    font-size: 750%;
+    font-weight: 400;
+    margin: -20px 0;
+    transition: 0.5s;
 }
 
-.happy-unzoom h1{
-	font-family:        bebas, sans-serif;
-	font-size: 			200%;
-	margin:             2px 0;
-	transition: 		0.5s;
+.happy-unzoom h1 {
+    font-family: bebas, sans-serif;
+    font-size: 200%;
+    margin: 2px 0;
+    transition: 0.5s;
 }
 
 .happy-title h4 {
-    font-size:          130%;
-    font-family:        helvetica, sans-serif;
-    margin:             0;
-	transition:			0.5s;
+    font-size: 130%;
+    font-family: helvetica, sans-serif;
+    margin: 0;
+    transition: 0.5s;
 }
 
-.happy-unzoom h4{
-	font-size:			50%;
-    font-family:        helvetica, sans-serif;
-    margin:             0;
-	transition:			0.5s;
+.happy-unzoom h4 {
+    font-size: 50%;
+    font-family: helvetica, sans-serif;
+    margin: 0;
+    transition: 0.5s;
 }
 
 .chevron {
-    background-color:   rgb(253, 200, 21);
-    height:             5px;
-    width:              19px;
-    margin:             30px auto;
-	transition:			0.5s;
+    background-color: rgb(253, 200, 21);
+    height: 5px;
+    width: 19px;
+    margin: 30px auto;
+    transition: 0.5s;
 }
 
-.happy-unzoom .chevron{
-	height:				1px;
-	width:				5px;
-	margin: 			3px auto;
-	transition:			0.5s;
+.happy-unzoom .chevron {
+    height: 1px;
+    width: 5px;
+    margin: 3px auto;
+    transition: 0.5s;
 }
 
 .happy-title img {
-	display: none;
+    display: none;
 }
 
 .happy-unzoom img {
-	diplay:	block;
-	width:	48px;
-	height:	48px;
+    display: block;
+    width: 48px;
+    height: 48px;
 }
 
 .happy-unzoom img:hover {
-	cursor: initial;
+    cursor: initial;
 }
 
 #panel {
-    position:           fixed;
-    top:                0;
-    right:              -350px;
-    height:             100%;
-    width:              100%;
-    max-width:          350px;
-    z-index:            2;
-    background:         white;
-    border-left:        solid 1px #3D3C37;
-	overflow:			auto;
+    position: fixed;
+    top: 0;
+    right: -350px;
+    height: 100%;
+    width: 100%;
+    max-width: 350px;
+    z-index: 2;
+    background: white;
+    border-left: solid 1px #3D3C37;
+    overflow: auto;
 }
 
 #panel > h2 {
-	color:	black;
-	text-align: center;
-	text-transform: uppercase;
+    color: black;
+    text-align: center;
+    text-transform: uppercase;
 }
 
 #panel .back {
-    position: 					absolute;
-    top: 						1.1em;
-    left: 							1em;
-    width:						2em;
-	transition:				1s;
+    position: absolute;
+    top: 1.1em;
+    left: 1em;
+    width: 2em;
+    transition: 1s;
 }
 
 #panel .back:hover {
-	cursor:				pointer;
-	transform:		rotate(90deg);
-	transition:		1s;
+    cursor: pointer;
+    transform: rotate(90deg);
+    transition: 1s;
 }
 
 #centrale {
-    position:           	absolute;
-    border:             	solid 1px rgb(253, 200, 21);
-    top:                		10%;
-    left:               		10%;
-    right:              		10%;
-    display:            	none;
+    position: absolute;
+    border: solid 1px rgb(253, 200, 21);
+    top: 10%;
+    left: 10%;
+    right: 10%;
+    display: none;
 }
 
 #centrale .back {
-    position: 					absolute;
-    top: 						16px;
-    right: 						1em;
-	width:						2em;
-	transition:				1s;
+    position: absolute;
+    top: 16px;
+    right: 1em;
+    width: 2em;
+    transition: 1s;
 }
 
 #centrale .back:hover {
-	cursor:				pointer;
-	transform:			rotate(90deg);
-	transition:			1s;
+    cursor: pointer;
+    transform: rotate(90deg);
+    transition: 1s;
 }
 
 .member-name {
-	font-family:		sanspro;
-    font-size:          10px;
-	stroke:				white;
-	
+    font-family: sanspro, sans-serif;
+    font-size: 10px;
+    stroke: white;
 }

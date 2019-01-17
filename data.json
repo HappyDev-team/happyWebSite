@@ -1,48 +1,277 @@
 {
-    "nodes": [
-        {"cx":152, "cy":116},
-        {"cx":522, "cy":120},
-        {"cx":774, "cy":174, "name": "team","component":"hd-team","ldp":1,"options":[{"name":"src","value":"https://ldp.happy-dev.fr/ldp/members/"},{"name":"targetUrl","value":"projects"}]},
-        {"cx":192, "cy":259},
-        {"cx":390, "cy":220, "name": "projects","component":"hd-projects-list","ldp":1,"options":[{"name":"src","value":"https://ldp.happy-dev.fr/ldp/projects/"}]},
-        {"cx":902, "cy":325},
-        {"cx":121, "cy":452, "name": "manifeste", "component": "hd-manifesto"},
-        {"cx":601, "cy":490},
-        {"cx":357, "cy":661},
-        {"cx":609, "cy":690, "name": "contact", "component": "hd-contact","mail":1,"options":[{"name":"target","value": "https://ldp.happy-dev.fr/wp-admin/admin-ajax.php"},{"name":"action","value":"send_HD_mail"},{"name":"mails","value":"smile@happy-dev.fr"}]},
-        {"cx":818, "cy":638}
-    ],
-    "links": [
-        {"source":0, "target":3, "delay": "2.5s", "duration": "2s"},
-        {"source":0, "target":5, "delay": "2.5s", "duration": "2s"},
-        {"source":1, "target":2, "delay": "2.5s", "duration": "2s"},
-        {"source":1, "target":4, "delay": "0s", "duration": "5s"},
-        {"source":1, "target":5, "delay": "2.5s", "duration": "2s"},
-        {"source":1, "target":7, "delay": "1s", "duration": "3s"},
-        {"source":1, "target":8, "delay": "1s", "duration": "3s"},
-        {"source":1, "target":10, "delay": "1s", "duration": "3s"},
-        {"source":2, "target":5, "delay": "3.5s", "duration": "1s"},
-        {"source":3, "target":6, "delay": "3.5s", "duration": "1s"},
-        {"source":3, "target":7, "delay": "3.5s", "duration": "1s"},
-        {"source":3, "target":9, "delay": "3.5s", "duration": "1s"},
-		{"source":4, "target":0, "delay": "1s", "duration": "3s"},
-		{"source":4, "target":3, "delay": "2.5s", "duration": "2s"},
-        {"source":4, "target":5, "delay": "3.5s", "duration": "1s"},
-        {"source":4, "target":6, "delay": "1s", "duration": "3s"},
-        {"source":4, "target":7, "delay": "3.5s", "duration": "1s"},
-        {"source":4, "target":8, "delay": "3.5s", "duration": "1s"},
-        {"source":4, "target":9, "delay": "1s", "duration": "3s"},
-        {"source":5, "target":7, "delay": "3.5s", "duration": "1s"},
-        {"source":5, "target":9, "delay": "3.5s", "duration": "1s"},
-        {"source":5, "target":10, "delay": "3.5s", "duration": "1s"},
-        {"source":6, "target":2, "delay": "3.5s", "duration": "1s"},
-		{"source":6, "target":7, "delay": "3.5s", "duration": "1s"},
-        {"source":6, "target":8, "delay": "3.5s", "duration": "1s"},
-        {"source":6, "target":9, "delay": "3.5s", "duration": "1s"},
-        {"source":7, "target":8, "delay": "3.5s", "duration": "1s"},
-        {"source":7, "target":9, "delay": "3.5s", "duration": "1s"},
-        {"source":7, "target":10, "delay": "3.5s", "duration": "1s"},
-		{"source":8, "target":2, "delay": "2.5s", "duration": "2s"},
-		{"source":9, "target":2, "delay": "2.5s", "duration": "2s"}
-    ]
+  "nodes": [
+    {
+      "cx": 152,
+      "cy": 116
+    },
+    {
+      "cx": 522,
+      "cy": 120
+    },
+    {
+      "cx": 774,
+      "cy": 174,
+      "name": "team",
+      "component": "hd-team",
+      "ldp": 1,
+      "options": [
+        {
+          "name": "src",
+          "value": "https://ldp.happy-dev.fr/ldp/members/"
+        },
+        {
+          "name": "targetUrl",
+          "value": "projects"
+        }
+      ]
+    },
+    {
+      "cx": 192,
+      "cy": 259
+    },
+    {
+      "cx": 390,
+      "cy": 220,
+      "name": "projects",
+      "component": "hd-projects-list",
+      "ldp": 1,
+      "options": [
+        {
+          "name": "src",
+          "value": "https://ldp.happy-dev.fr/ldp/projects/"
+        }
+      ]
+    },
+    {
+      "cx": 902,
+      "cy": 325
+    },
+    {
+      "cx": 121,
+      "cy": 452,
+      "name": "manifeste",
+      "component": "hd-manifesto"
+    },
+    {
+      "cx": 601,
+      "cy": 490
+    },
+    {
+      "cx": 357,
+      "cy": 661
+    },
+    {
+      "cx": 609,
+      "cy": 690,
+      "name": "contact",
+      "component": "hd-contact",
+      "mail": 1,
+      "options": [
+        {
+          "name": "target",
+          "value": "https://ldp.happy-dev.fr/hd-mail.php"
+        },
+        {
+          "name": "action",
+          "value": "send_HD_mail"
+        },
+        {
+          "name": "mails",
+          "value": "smile@happy-dev.fr"
+        }
+      ]
+    },
+    {
+      "cx": 818,
+      "cy": 638
+    }
+  ],
+  "links": [
+    {
+      "source": 0,
+      "target": 3,
+      "delay": "2.5s",
+      "duration": "2s"
+    },
+    {
+      "source": 0,
+      "target": 5,
+      "delay": "2.5s",
+      "duration": "2s"
+    },
+    {
+      "source": 1,
+      "target": 2,
+      "delay": "2.5s",
+      "duration": "2s"
+    },
+    {
+      "source": 1,
+      "target": 4,
+      "delay": "0s",
+      "duration": "5s"
+    },
+    {
+      "source": 1,
+      "target": 5,
+      "delay": "2.5s",
+      "duration": "2s"
+    },
+    {
+      "source": 1,
+      "target": 7,
+      "delay": "1s",
+      "duration": "3s"
+    },
+    {
+      "source": 1,
+      "target": 8,
+      "delay": "1s",
+      "duration": "3s"
+    },
+    {
+      "source": 1,
+      "target": 10,
+      "delay": "1s",
+      "duration": "3s"
+    },
+    {
+      "source": 2,
+      "target": 5,
+      "delay": "3.5s",
+      "duration": "1s"
+    },
+    {
+      "source": 3,
+      "target": 6,
+      "delay": "3.5s",
+      "duration": "1s"
+    },
+    {
+      "source": 3,
+      "target": 7,
+      "delay": "3.5s",
+      "duration": "1s"
+    },
+    {
+      "source": 3,
+      "target": 9,
+      "delay": "3.5s",
+      "duration": "1s"
+    },
+    {
+      "source": 4,
+      "target": 0,
+      "delay": "1s",
+      "duration": "3s"
+    },
+    {
+      "source": 4,
+      "target": 3,
+      "delay": "2.5s",
+      "duration": "2s"
+    },
+    {
+      "source": 4,
+      "target": 5,
+      "delay": "3.5s",
+      "duration": "1s"
+    },
+    {
+      "source": 4,
+      "target": 6,
+      "delay": "1s",
+      "duration": "3s"
+    },
+    {
+      "source": 4,
+      "target": 7,
+      "delay": "3.5s",
+      "duration": "1s"
+    },
+    {
+      "source": 4,
+      "target": 8,
+      "delay": "3.5s",
+      "duration": "1s"
+    },
+    {
+      "source": 4,
+      "target": 9,
+      "delay": "1s",
+      "duration": "3s"
+    },
+    {
+      "source": 5,
+      "target": 7,
+      "delay": "3.5s",
+      "duration": "1s"
+    },
+    {
+      "source": 5,
+      "target": 9,
+      "delay": "3.5s",
+      "duration": "1s"
+    },
+    {
+      "source": 5,
+      "target": 10,
+      "delay": "3.5s",
+      "duration": "1s"
+    },
+    {
+      "source": 6,
+      "target": 2,
+      "delay": "3.5s",
+      "duration": "1s"
+    },
+    {
+      "source": 6,
+      "target": 7,
+      "delay": "3.5s",
+      "duration": "1s"
+    },
+    {
+      "source": 6,
+      "target": 8,
+      "delay": "3.5s",
+      "duration": "1s"
+    },
+    {
+      "source": 6,
+      "target": 9,
+      "delay": "3.5s",
+      "duration": "1s"
+    },
+    {
+      "source": 7,
+      "target": 8,
+      "delay": "3.5s",
+      "duration": "1s"
+    },
+    {
+      "source": 7,
+      "target": 9,
+      "delay": "3.5s",
+      "duration": "1s"
+    },
+    {
+      "source": 7,
+      "target": 10,
+      "delay": "3.5s",
+      "duration": "1s"
+    },
+    {
+      "source": 8,
+      "target": 2,
+      "delay": "2.5s",
+      "duration": "2s"
+    },
+    {
+      "source": 9,
+      "target": 2,
+      "delay": "2.5s",
+      "duration": "2s"
+    }
+  ]
 }
