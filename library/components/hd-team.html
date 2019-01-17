@@ -1,486 +1,531 @@
 <template id="member-template">
     <style scoped>
-		hd-team-member {
-			display:			block;
-			border-bottom: 		solid 1px lightgray;
-			padding-top:		10px;
-			padding-bottom:		20px;
-			padding-left:	20px;
-			color:	black;
-			width:	100%;
-			margin-top: 0;
-		}
-		.backImage {
-			position: absolute;
-			top:	70px;
-			left:	16px;
-			display: none;
-		}
-		.backImage:hover {
-			cursor: pointer;
-		}
-		.member-title {
-			display: none;
-			width:	275px;
-			margin-left:	auto;
-			margin-right:	auto;
-			text-align:center;
-			margin-top:	0;
-		}
-		.member-image {
+        hd-team-member {
+            display: block;
+            border-bottom: solid 1px lightgray;
+            padding-top: 10px;
+            padding-bottom: 20px;
+            padding-left: 20px;
+            color: black;
+            width: 100%;
+            margin-top: 0;
+        }
+
+        .backImage {
+            position: absolute;
+            top: 70px;
+            left: 16px;
+            display: none;
+        }
+
+        .backImage:hover {
+            cursor: pointer;
+        }
+
+        .member-title {
+            display: none;
+            width: 275px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+            margin-top: 0;
+        }
+
+        .member-image {
             height: 48px;
             border-radius: 50px;
             width: 48px;
-			vertical-align:	middle;
+            vertical-align: middle;
         }
+
         .reduce-title {
             display: inline-block;
-			vertical-align: middle;
+            vertical-align: middle;
         }
-		.reduce-title:hover {
-			cursor: pointer;
-		}
-		.reduce-title > .hd-member-fn {
-			color: black;
-			font-weight: bold;
-		}
-		.reduce-title > .hd-member-name {
-			color:				RGB(211,211,211);
-			transition:			color 2s, font-weight 4s;
-		}
-		hd-team-member:hover .reduce-title > .hd-member-name {
-			color: black;
-			font-weight: bold;
-			transition:	0s;
-		}
-		.detail {
-			padding-top: 0;
-			border: none;
-			padding-left:	initial;
-		}
-		.detail:hover {
-			cursor: initial;
-		}
-		.detail .backImage {
-			display: block;
-		}
-		.detail .member-title {
-			display: block;
-		}
+
+        .reduce-title:hover {
+            cursor: pointer;
+        }
+
+        .reduce-title > .hd-member-fn {
+            color: black;
+            font-weight: bold;
+        }
+
+        .reduce-title > .hd-member-name {
+            color: RGB(211, 211, 211);
+            transition: color 2s, font-weight 4s;
+        }
+
+        hd-team-member:hover .reduce-title > .hd-member-name {
+            color: black;
+            font-weight: bold;
+            transition: 0s;
+        }
+
+        .detail {
+            padding-top: 0;
+            border: none;
+            padding-left: initial;
+        }
+
+        .detail:hover {
+            cursor: initial;
+        }
+
+        .detail .backImage {
+            display: block;
+        }
+
+        .detail .member-title {
+            display: block;
+        }
+
         .detail > .member-image {
             width: 100%;
             border-radius: 0;
-			height:	initial;
+            height: initial;
         }
+
         .detail .reduce-title {
             display: none;
         }
-		.detail .img-project {
-			width:		48px;
-			height:		48px;
-		}
-		#member-full {
-			text-align:	center;
-		}
-		#member-full ul{
-			text-align:	left;
-		}
-		#member-full > #cityContainer {
-			display: flex;
-			justify-content: center;
-			align-items:	center;
-		}
-		#cityContainer h3{
-			margin-right:	5px;
-		}
-		#hdProjectDiv img {
-			height: 48px;
-            border-radius: 50px;
+
+        .detail .img-project {
             width: 48px;
-			vertical-align:	middle;
-		}
-		#hdProjectDiv img:hover {
-			cursor:	pointer;
-		}
-		:host(hd-team-member) {
-			display:			block;
-			border-bottom: 		solid 1px lightgray;
-			padding-top:	10px;
-			padding-bottom:		20px;
-			padding-left:	20px;
-			color:	black;
-			width:	100%;
-			margin-top: 0;
-		}
-		::content .backImage {
-			position: absolute;
-			top:	70px;
-			left:	16px;
-			display: none;
-		}
-		::content .backImage:hover {
-			cursor: pointer;
-		}
-		::content .member-title {
-			display: none;
-			width:	275px;
-			margin-left:	auto;
-			margin-right:	auto;
-			text-align:center;
-		}
-		::content .member-image {
+            height: 48px;
+        }
+
+        #member-full {
+            text-align: center;
+        }
+
+        #member-full ul {
+            text-align: left;
+        }
+
+        #member-full > #cityContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        #cityContainer h3 {
+            margin-right: 5px;
+        }
+
+        #hdProjectDiv img {
             height: 48px;
             border-radius: 50px;
             width: 48px;
-			vertical-align:	middle;
+            vertical-align: middle;
         }
+
+        #hdProjectDiv img:hover {
+            cursor: pointer;
+        }
+
+        :host(hd-team-member) {
+            display: block;
+            border-bottom: solid 1px lightgray;
+            padding-top: 10px;
+            padding-bottom: 20px;
+            padding-left: 20px;
+            color: black;
+            width: 100%;
+            margin-top: 0;
+        }
+
+        ::content .backImage {
+            position: absolute;
+            top: 70px;
+            left: 16px;
+            display: none;
+        }
+
+        ::content .backImage:hover {
+            cursor: pointer;
+        }
+
+        ::content .member-title {
+            display: none;
+            width: 275px;
+            margin-left: auto;
+            margin-right: auto;
+            text-align: center;
+        }
+
+        ::content .member-image {
+            height: 48px;
+            border-radius: 50px;
+            width: 48px;
+            vertical-align: middle;
+        }
+
         ::content .reduce-title {
             display: inline-block;
-			vertical-align: middle;
+            vertical-align: middle;
         }
-		::content .reduce-title:hover {
-			cursor: pointer;
-		}
-		::content .hd-member-fn {
-			color: black;
-			font-weight: bold;
-		}
-		::content .hd-member-name {
-			color:				RGB(211,211,211);
-			transition:			color 2s, font-weight 4s;
-		}
-		:host(hd-team-member:hover) ::content .hd-member-name {
-			color: black;
-			font-weight: bold;
-			transition:	0s;
-		}
-		:host(.detail) {
-			padding-top: 0;
-			border: none;
-			padding-left:	initial;
-		}
-		:host(.detail:hover) {
-			cursor: initial;
-		}
-		:host(.detail) ::content .backImage {
-			display: block;
-		}
-		:host(.detail) ::content .member-title {
-			display: block;
-		}
+
+        ::content .reduce-title:hover {
+            cursor: pointer;
+        }
+
+        ::content .hd-member-fn {
+            color: black;
+            font-weight: bold;
+        }
+
+        ::content .hd-member-name {
+            color: RGB(211, 211, 211);
+            transition: color 2s, font-weight 4s;
+        }
+
+        :host(hd-team-member:hover) ::content .hd-member-name {
+            color: black;
+            font-weight: bold;
+            transition: 0s;
+        }
+
+        :host(.detail) {
+            padding-top: 0;
+            border: none;
+            padding-left: initial;
+        }
+
+        :host(.detail:hover) {
+            cursor: initial;
+        }
+
+        :host(.detail) ::content .backImage {
+            display: block;
+        }
+
+        :host(.detail) ::content .member-title {
+            display: block;
+        }
+
         :host(.detail) ::content .member-image {
             width: 100%;
             border-radius: 0;
-			height:	initial;
+            height: initial;
         }
-        :host(.detail)  ::content .reduce-title {
+
+        :host(.detail) ::content .reduce-title {
             display: none;
         }
-		:host(.detail) .img-project {
-			width:		48px;
-			height:		48px;
-		}
-		::content #member-full {
-			text-align:	center;
-		}
-		::content #member-full ul{
-			text-align:	left;
-		}
-		::content #cityContainer {
-			display: flex;
-			justify-content: center;
-			align-items:	center;
-		}
-		::content #cityContainer h3{
-			margin-right:	5px;
-		}
-		::content #hdProjectDiv img {
-			height: 48px;
+
+        :host(.detail) .img-project {
+            width: 48px;
+            height: 48px;
+        }
+
+        ::content #member-full {
+            text-align: center;
+        }
+
+        ::content #member-full ul {
+            text-align: left;
+        }
+
+        ::content #cityContainer {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        ::content #cityContainer h3 {
+            margin-right: 5px;
+        }
+
+        ::content #hdProjectDiv img {
+            height: 48px;
             border-radius: 50px;
             width: 48px;
-			vertical-align:	middle;
-			margin-left:	10px;
-		}
-		::content #hdProjectDiv img:hover {
-			cursor:	pointer;
-		}
+            vertical-align: middle;
+            margin-left: 10px;
+        }
+
+        ::content #hdProjectDiv img:hover {
+            cursor: pointer;
+        }
     </style>
-		<content select=".member-title"></content>
-        <content select=".member-image"></content>
-		<content></content>
+    <content select=".member-title"></content>
+    <content select=".member-image"></content>
+    <content></content>
 </template>
 
-<script type="text/javascript" src="https://happy-dev.fr/library/LDP-framework/ldpframework.js"></script>
+<script type="text/javascript" src="../../library/LDP-framework/ldpframework.js"></script>
 <script>
-    (function(){
-        var localDoc = document._currentScript.ownerDocument;
-        window.store = new MyStore({context: "https://owl.openinitiative.com/oicontext.jsonld"});
-        
-        var MemberPrototype = Object.create(HTMLElement.prototype, {
-            createdCallback: {
-                value: function() {
-                    var clone = document.importNode(localDoc.querySelector('#member-template').content, true);
-                    this.createShadowRoot().appendChild(clone);
-                }
+(function () {
+  var localDoc = document._currentScript.ownerDocument;
+  window.store = new MyStore({ context: "https://owl.openinitiative.com/oicontext.jsonld" });
+
+  var MemberPrototype = Object.create(HTMLElement.prototype, {
+    createdCallback: {
+      value: function () {
+        var clone = document.importNode(localDoc.querySelector('#member-template').content, true);
+        this.createShadowRoot().appendChild(clone);
+      }
+    }
+  });
+
+  MemberPrototype.toggleDetail = function toggleDetail(event) {
+    Array.prototype.forEach.call(this.parentNode.childNodes, (elt) => {
+      if (elt !== this) elt.style.display = (this.className === "detail" ? "block" : "none");
+    });
+    this.className = (this.className === "detail" ? "" : "detail");
+
+    var imag = this.querySelector(".member-image");
+    if (imag.offsetHeight != 48) {
+      if (this.dataset.src) {
+        store.get(this.dataset.src).then(function (member) {
+          var container = this.querySelector("#member-full");
+          container.style.display = "block";
+          container.innerHTML = "";
+          if (member["av:biography"]) {
+            var bio = document.createElement("p");
+            bio.appendChild(document.createTextNode(member["av:biography"]));
+            container.appendChild(bio);
+          }
+          if (member["city"]) {
+            var cityContainer = document.createElement("div");
+            cityContainer.setAttribute("id", "cityContainer");
+            var cityTitle = document.createElement("h3");
+            cityTitle.appendChild(document.createTextNode("VILLE :"));
+            var city = document.createElement("span");
+            city.appendChild(document.createTextNode(member["city"]));
+            cityContainer.appendChild(cityTitle);
+            cityContainer.appendChild(city);
+            container.appendChild(cityContainer);
+          }
+          if (member["skillA"]) {
+            var skillsTitle = document.createElement("h3");
+            skillsTitle.appendChild(document.createTextNode("COMPETENCES"));
+            var skills = document.createElement("ul");
+            var list = document.createElement("li");
+            list.appendChild(document.createTextNode(member["skillA"]));
+            skills.appendChild(list);
+            if (member["skillB"]) {
+              var list = document.createElement("li");
+              list.appendChild(document.createTextNode(member["skillB"]));
+              skills.appendChild(list);
             }
-        });
-        
-        MemberPrototype.toggleDetail = function toggleDetail(event) {
-            Array.prototype.forEach.call(this.parentNode.childNodes, (elt) => {
-                    if(elt != this) elt.style.display = (this.className == "detail"?"block":"none");
-				});
-            this.className = (this.className == "detail"?"":"detail");
-			
-			var imag = this.querySelector(".member-image");
-			if(imag.offsetHeight != 48){
-				if(this.dataset.src){
-					store.get(this.dataset.src).then(function(member){
-						var container = this.querySelector("#member-full");
-						container.style.display = "block";
-						container.innerHTML = "";
-						if(member["av:biography"]){
-							var bio = document.createElement("p");
-							bio.appendChild(document.createTextNode(member["av:biography"]));
-							container.appendChild(bio);
-						}
-						if(member["city"]){
-							var cityContainer = document.createElement("div");
-							cityContainer.setAttribute("id","cityContainer");
-							var cityTitle = document.createElement("h3");
-							cityTitle.appendChild(document.createTextNode("VILLE :"));
-							var city = document.createElement("span");
-							city.appendChild(document.createTextNode(member["city"]));
-							cityContainer.appendChild(cityTitle);
-							cityContainer.appendChild(city);
-							container.appendChild(cityContainer);
-						}
-						if(member["skillA"]){
-							var skillsTitle = document.createElement("h3");
-							skillsTitle.appendChild(document.createTextNode("COMPETENCES"));
-							var skills = document.createElement("ul");
-							var list = document.createElement("li");
-							list.appendChild(document.createTextNode(member["skillA"]));
-							skills.appendChild(list);
-							if(member["skillB"]){
-								var list = document.createElement("li");
-								list.appendChild(document.createTextNode(member["skillB"]));
-								skills.appendChild(list);
-							}
-							if(member["skillC"]){
-								var list = document.createElement("li");
-								list.appendChild(document.createTextNode(member["skillC"]));
-								skills.appendChild(list);
-							}
-							if(member["skillD"]){
-								var list = document.createElement("li");
-								list.appendChild(document.createTextNode(member["skillD"]));
-								skills.appendChild(list);
-							}
-							if(member["skillE"]){
-								var list = document.createElement("li");
-								list.appendChild(document.createTextNode(member["skillE"]));
-								skills.appendChild(list);
-							}
-							container.appendChild(skillsTitle);
-							container.appendChild(skills);
-						}
-						if(member["foaf:currentProject"]){
-							var projectTitle = document.createElement("h3");
-							projectTitle.appendChild(document.createTextNode("PROJETS"));
-							var projectDiv = document.createElement("div");
-							projectDiv.setAttribute("id","hdProjectDiv");
-							if(!member["foaf:currentProject"].length){
-								store.get(member["foaf:currentProject"]["@id"]).then(function(project){
-									var img = document.createElement("img");
-									img.src = project.project_picture;
-									img.addEventListener("click",function(elem){
-										var hdRessourceClicked = new CustomEvent("hdRessourceClicked",{detail: project.project_title});
-										this.parentNode.parentNode.parentNode.parentNode.dispatchEvent(hdRessourceClicked);
-									});
-									projectDiv.appendChild(img);
-								}.bind(projectDiv));
-							}else{
-								member["foaf:currentProject"].forEach(function(projectURL){
-									store.get(projectURL["@id"]).then(function(project){
-										var img = document.createElement("img");
-										img.src = project.project_picture;
-										img.addEventListener("click",function(elem){
-											var hdRessourceClicked = new CustomEvent("hdRessourceClicked",{detail: project.project_title});
-											this.parentNode.parentNode.parentNode.parentNode.dispatchEvent(hdRessourceClicked);
-										});
-										projectDiv.appendChild(img);
-									}.bind(projectDiv));
-								}.bind(projectDiv));
-							}
-							container.appendChild(projectTitle);
-							container.appendChild(projectDiv);
-						}
-					}.bind(this));
-				}
-			}else{
-				if(this.querySelector("#member-full")){
-					var cible = this.querySelector("#member-full");
-					cible.style.display = "none";
-				}
-			}
-        };
-		
-		MemberPrototype.slugify = function slugify(value) {
-			var rExps=[
-				{re:/[\xC0-\xC6]/g, ch:'A'},
-				{re:/[\xE0-\xE6]/g, ch:'a'},
-				{re:/[\xC8-\xCB]/g, ch:'E'},
-				{re:/[\xE8-\xEB]/g, ch:'e'},
-				{re:/[\xCC-\xCF]/g, ch:'I'},
-				{re:/[\xEC-\xEF]/g, ch:'i'},
-				{re:/[\xD2-\xD6]/g, ch:'O'},
-				{re:/[\xF2-\xF6]/g, ch:'o'},
-				{re:/[\xD9-\xDC]/g, ch:'U'},
-				{re:/[\xF9-\xFC]/g, ch:'u'},
-				{re:/[\xC7-\xE7]/g, ch:'c'},
-				{re:/[\xD1]/g, ch:'N'},
-				{re:/[\xF1]/g, ch:'n'} ];
-			 
-			// converti les caractères accentués en leurs équivalent alpha
-			for(var i=0, len=rExps.length; i<len; i++)
-				value=value.replace(rExps[i].re, rExps[i].ch);
-			 
-			// 1) met en bas de casse
-			// 2) remplace les espace par des tirets
-			// 3) enleve tout les caratères non alphanumeriques
-			// 4) enlève les doubles tirets
-			return value.toLowerCase()
-				.replace(/\s+/g, '-')
-				.replace(/[^a-z0-9-]/g, '')
-				.replace(/\-{2,}/g,'-');
-		}
-        
-        document.registerElement('hd-team-member', {prototype: MemberPrototype});
-        
-		var teamPrototype = Object.create(HTMLElement.prototype, {
-			createdCallback: {
-				value: function() {
-					if(this.dataset.src) {
-						store.list(this.dataset.src).then(function(list) {
-							list.forEach(function(member) {
-								var eventSelected;
-								var eventUnSelected = new Event("hdUnSelected");
-								var memberElt = document.createElement("hd-team-member");
-								if(member["foaf:nick"]){
-										memberElt.setAttribute("id", memberElt.slugify(member["foaf:nick"]));
-										eventSelected = new CustomEvent("hdSelected",{detail: memberElt.slugify(member["foaf:nick"])});
-								}else{
-									memberElt.setAttribute("id",memberElt.slugify(member["foaf:firstName"] + " " + member["foaf:name"]));
-									eventSelected = new CustomEvent("hdSelected",{detail: memberElt.slugify(member["foaf:firstName"] + " " + member["foaf:name"])});
-								}
-								var backImage = document.createElement("img");
-								backImage.src = "/resources/round_back.png";
-								backImage.className = "backImage";
-								backImage.addEventListener("click",function(){
-									this.parentNode.parentNode.dispatchEvent(eventUnSelected);
-								});
-								var memberTitle = document.createElement("h2");
-								memberTitle.className ="member-title";
-								memberTitle.appendChild(document.createTextNode(member["foaf:firstName"] + " " + member["foaf:name"]));
-								var img = document.createElement("img");
-								img.className = "member-image";
-								img.src = member["foaf:img"];
-								var memberReduce = document.createElement("div");
-								memberReduce.className = "reduce-title";
-								memberReduce.addEventListener("click",function(){
-									this.parentNode.parentNode.dispatchEvent(eventSelected);
-								});
-								var fn = document.createElement("span");
-								fn.className = "hd-member-fn";
-								fn.appendChild(document.createTextNode(member["foaf:firstName"] + " "));
-								memberReduce.appendChild(fn);
-								var name = document.createElement("span");
-								name.className = "hd-member-name";
-								name.appendChild(document.createTextNode(member["foaf:name"]));
-								memberReduce.appendChild(name);
-								var memberFull = document.createElement("div");
-								memberFull.setAttribute("id","member-full");
-								memberElt.appendChild(backImage);
-								memberElt.appendChild(memberTitle);
-								memberElt.appendChild(img);
-								memberElt.appendChild(memberReduce);
-								memberElt.appendChild(memberFull);
-								memberElt.dataset.src = member["@id"];
-								this.appendChild(memberElt);
-							}.bind(this));
-							if(this.dataset.selected){
-								this.querySelector("#"+this.dataset.selected).toggleDetail();
-							}
-						}.bind(this));
-					}
-				}
-			}
-		});
-		
-		teamPrototype.attributeChangedCallback = function(attribute) {
-			if(attribute == "data-src"){
-				if(this.dataset.src) {
-					store.list(this.dataset.src).then(function(list) {
-						list.forEach(function(member) {
-							var eventSelected;
-							var eventUnSelected = new Event("hdUnSelected");
-							var memberElt = document.createElement("hd-team-member");
-							if(member["foaf:nick"]){
-								memberElt.setAttribute("id", memberElt.slugify(member["foaf:nick"]));
-								eventSelected = new CustomEvent("hdSelected",{detail:memberElt.slugify(member["foaf:nick"])});
-							}else{
-								memberElt.setAttribute("id",memberElt.slugify(member["foaf:firstName"] + " " + member["foaf:name"]));
-								eventSelected = new CustomEvent("hdSelected",{detail:memberElt.slugify(member["foaf:firstName"] + " " + member["foaf:name"])});
-							}
-							var backImage = document.createElement("img");
-							backImage.src = "/resources/round_back.png";
-							backImage.className = "backImage";
-							backImage.addEventListener("click",function(){
-								this.parentNode.parentNode.dispatchEvent(eventUnSelected);
-							});
-							var memberTitle = document.createElement("h2");
-							memberTitle.className ="member-title";
-							memberTitle.appendChild(document.createTextNode(member["foaf:firstName"] + " " + member["foaf:name"]));
-							var img = document.createElement("img");
-							img.className = "member-image";
-							img.src = member["foaf:img"];
-							var memberReduce = document.createElement("div");
-							memberReduce.className = "reduce-title";
-							memberReduce.addEventListener("click",function(){
-								this.parentNode.parentNode.dispatchEvent(eventSelected);
-							});
-							var fn = document.createElement("span");
-							fn.className = "hd-member-fn";
-							fn.appendChild(document.createTextNode(member["foaf:firstName"] + " "));
-							memberReduce.appendChild(fn);
-							var name = document.createElement("span");
-							name.className = "hd-member-name";
-							name.appendChild(document.createTextNode(member["foaf:name"]));
-							memberReduce.appendChild(name);
-							var memberFull = document.createElement("div");
-							memberFull.setAttribute("id","member-full");
-							memberElt.appendChild(backImage);
-							memberElt.appendChild(memberTitle);
-							memberElt.appendChild(img);
-							memberElt.appendChild(memberReduce);
-							memberElt.appendChild(memberFull);
-							memberElt.dataset.src = member["@id"];
-							this.appendChild(memberElt);
-						}.bind(this));
-						if(this.dataset.selected){
-							this.querySelector("#"+this.dataset.selected).toggleDetail();
-						}
-					}.bind(this));
-				}
-			}else if(attribute == "data-selected"){
-				if(this.querySelector(".detail"))
-					this.querySelector(".detail").toggleDetail();
-				if(this.dataset.selected && this.querySelector("#"+this.dataset.selected))
-					this.querySelector("#"+this.dataset.selected).toggleDetail();
-			}
-		}
-		
-        document.registerElement('hd-team',{prototype: teamPrototype});
-		
-    })();
+            if (member["skillC"]) {
+              var list = document.createElement("li");
+              list.appendChild(document.createTextNode(member["skillC"]));
+              skills.appendChild(list);
+            }
+            if (member["skillD"]) {
+              var list = document.createElement("li");
+              list.appendChild(document.createTextNode(member["skillD"]));
+              skills.appendChild(list);
+            }
+            if (member["skillE"]) {
+              var list = document.createElement("li");
+              list.appendChild(document.createTextNode(member["skillE"]));
+              skills.appendChild(list);
+            }
+            container.appendChild(skillsTitle);
+            container.appendChild(skills);
+          }
+          if (member["foaf:currentProject"]) {
+            var projectTitle = document.createElement("h3");
+            projectTitle.appendChild(document.createTextNode("PROJETS"));
+            var projectDiv = document.createElement("div");
+            projectDiv.setAttribute("id", "hdProjectDiv");
+            if (!member["foaf:currentProject"].length) {
+              store.get(member["foaf:currentProject"]["@id"]).then(function (project) {
+                var img = document.createElement("img");
+                img.src = project.project_picture;
+                img.addEventListener("click", function (elem) {
+                  var hdRessourceClicked = new CustomEvent("hdRessourceClicked", { detail: project.project_title });
+                  this.parentNode.parentNode.parentNode.parentNode.dispatchEvent(hdRessourceClicked);
+                });
+                projectDiv.appendChild(img);
+              }.bind(projectDiv));
+            } else {
+              member["foaf:currentProject"].forEach(function (projectURL) {
+                store.get(projectURL["@id"]).then(function (project) {
+                  var img = document.createElement("img");
+                  img.src = project.project_picture;
+                  img.addEventListener("click", function (elem) {
+                    var hdRessourceClicked = new CustomEvent("hdRessourceClicked", { detail: project.project_title });
+                    this.parentNode.parentNode.parentNode.parentNode.dispatchEvent(hdRessourceClicked);
+                  });
+                  projectDiv.appendChild(img);
+                }.bind(projectDiv));
+              }.bind(projectDiv));
+            }
+            container.appendChild(projectTitle);
+            container.appendChild(projectDiv);
+          }
+        }.bind(this));
+      }
+    } else {
+      if (this.querySelector("#member-full")) {
+        var cible = this.querySelector("#member-full");
+        cible.style.display = "none";
+      }
+    }
+  };
+
+  MemberPrototype.slugify = function slugify(value) {
+    var rExps = [
+      { re: /[\xC0-\xC6]/g, ch: 'A' },
+      { re: /[\xE0-\xE6]/g, ch: 'a' },
+      { re: /[\xC8-\xCB]/g, ch: 'E' },
+      { re: /[\xE8-\xEB]/g, ch: 'e' },
+      { re: /[\xCC-\xCF]/g, ch: 'I' },
+      { re: /[\xEC-\xEF]/g, ch: 'i' },
+      { re: /[\xD2-\xD6]/g, ch: 'O' },
+      { re: /[\xF2-\xF6]/g, ch: 'o' },
+      { re: /[\xD9-\xDC]/g, ch: 'U' },
+      { re: /[\xF9-\xFC]/g, ch: 'u' },
+      { re: /[\xC7-\xE7]/g, ch: 'c' },
+      { re: /[\xD1]/g, ch: 'N' },
+      { re: /[\xF1]/g, ch: 'n' }];
+
+    // converti les caractères accentués en leurs équivalent alpha
+    for (var i = 0, len = rExps.length; i < len; i++)
+      value = value.replace(rExps[i].re, rExps[i].ch);
+
+    // 1) met en bas de casse
+    // 2) remplace les espace par des tirets
+    // 3) enleve tout les caratères non alphanumeriques
+    // 4) enlève les doubles tirets
+    return value.toLowerCase()
+      .replace(/\s+/g, '-')
+      .replace(/[^a-z0-9-]/g, '')
+      .replace(/\-{2,}/g, '-');
+  }
+
+  document.registerElement('hd-team-member', { prototype: MemberPrototype });
+
+  var teamPrototype = Object.create(HTMLElement.prototype, {
+    createdCallback: {
+      value: function () {
+        if (this.dataset.src) {
+          store.list(this.dataset.src).then(function (list) {
+            list.forEach(function (member) {
+              var eventSelected;
+              var eventUnSelected = new Event("hdUnSelected");
+              var memberElt = document.createElement("hd-team-member");
+              if (member["foaf:nick"]) {
+                memberElt.setAttribute("id", memberElt.slugify(member["foaf:nick"]));
+                eventSelected = new CustomEvent("hdSelected", { detail: memberElt.slugify(member["foaf:nick"]) });
+              } else {
+                memberElt.setAttribute("id", memberElt.slugify(member["foaf:firstName"] + " " + member["foaf:name"]));
+                eventSelected = new CustomEvent("hdSelected", { detail: memberElt.slugify(member["foaf:firstName"] + " " + member["foaf:name"]) });
+              }
+              var backImage = document.createElement("img");
+              backImage.src = "/resources/round_back.png";
+              backImage.className = "backImage";
+              backImage.addEventListener("click", function () {
+                this.parentNode.parentNode.dispatchEvent(eventUnSelected);
+              });
+              var memberTitle = document.createElement("h2");
+              memberTitle.className = "member-title";
+              memberTitle.appendChild(document.createTextNode(member["foaf:firstName"] + " " + member["foaf:name"]));
+              var img = document.createElement("img");
+              img.className = "member-image";
+              img.src = member["foaf:img"];
+              var memberReduce = document.createElement("div");
+              memberReduce.className = "reduce-title";
+              memberReduce.addEventListener("click", function () {
+                this.parentNode.parentNode.dispatchEvent(eventSelected);
+              });
+              var fn = document.createElement("span");
+              fn.className = "hd-member-fn";
+              fn.appendChild(document.createTextNode(member["foaf:firstName"] + " "));
+              memberReduce.appendChild(fn);
+              var name = document.createElement("span");
+              name.className = "hd-member-name";
+              name.appendChild(document.createTextNode(member["foaf:name"]));
+              memberReduce.appendChild(name);
+              var memberFull = document.createElement("div");
+              memberFull.setAttribute("id", "member-full");
+              memberElt.appendChild(backImage);
+              memberElt.appendChild(memberTitle);
+              memberElt.appendChild(img);
+              memberElt.appendChild(memberReduce);
+              memberElt.appendChild(memberFull);
+              memberElt.dataset.src = member["@id"];
+              this.appendChild(memberElt);
+            }.bind(this));
+            if (this.dataset.selected) {
+              this.querySelector("#" + this.dataset.selected).toggleDetail();
+            }
+          }.bind(this));
+        }
+      }
+    }
+  });
+
+  teamPrototype.attributeChangedCallback = function (attribute) {
+    if (attribute == "data-src") {
+      if (this.dataset.src) {
+        store.list(this.dataset.src).then(function (list) {
+          list.forEach(function (member) {
+            var eventSelected;
+            var eventUnSelected = new Event("hdUnSelected");
+            var memberElt = document.createElement("hd-team-member");
+            if (member["foaf:nick"]) {
+              memberElt.setAttribute("id", memberElt.slugify(member["foaf:nick"]));
+              eventSelected = new CustomEvent("hdSelected", { detail: memberElt.slugify(member["foaf:nick"]) });
+            } else {
+              memberElt.setAttribute("id", memberElt.slugify(member["foaf:firstName"] + " " + member["foaf:name"]));
+              eventSelected = new CustomEvent("hdSelected", { detail: memberElt.slugify(member["foaf:firstName"] + " " + member["foaf:name"]) });
+            }
+            var backImage = document.createElement("img");
+            backImage.src = "/resources/round_back.png";
+            backImage.className = "backImage";
+            backImage.addEventListener("click", function () {
+              this.parentNode.parentNode.dispatchEvent(eventUnSelected);
+            });
+            var memberTitle = document.createElement("h2");
+            memberTitle.className = "member-title";
+            memberTitle.appendChild(document.createTextNode(member["foaf:firstName"] + " " + member["foaf:name"]));
+            var img = document.createElement("img");
+            img.className = "member-image";
+            img.src = member["foaf:img"];
+            var memberReduce = document.createElement("div");
+            memberReduce.className = "reduce-title";
+            memberReduce.addEventListener("click", function () {
+              this.parentNode.parentNode.dispatchEvent(eventSelected);
+            });
+            var fn = document.createElement("span");
+            fn.className = "hd-member-fn";
+            fn.appendChild(document.createTextNode(member["foaf:firstName"] + " "));
+            memberReduce.appendChild(fn);
+            var name = document.createElement("span");
+            name.className = "hd-member-name";
+            name.appendChild(document.createTextNode(member["foaf:name"]));
+            memberReduce.appendChild(name);
+            var memberFull = document.createElement("div");
+            memberFull.setAttribute("id", "member-full");
+            memberElt.appendChild(backImage);
+            memberElt.appendChild(memberTitle);
+            memberElt.appendChild(img);
+            memberElt.appendChild(memberReduce);
+            memberElt.appendChild(memberFull);
+            memberElt.dataset.src = member["@id"];
+            this.appendChild(memberElt);
+          }.bind(this));
+          if (this.dataset.selected) {
+            this.querySelector("#" + this.dataset.selected).toggleDetail();
+          }
+        }.bind(this));
+      }
+    } else if (attribute == "data-selected") {
+      if (this.querySelector(".detail"))
+        this.querySelector(".detail").toggleDetail();
+      if (this.dataset.selected && this.querySelector("#" + this.dataset.selected))
+        this.querySelector("#" + this.dataset.selected).toggleDetail();
+    }
+  }
+
+  document.registerElement('hd-team', { prototype: teamPrototype });
+
+})();
 </script>
