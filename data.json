@@ -69,7 +69,7 @@
       "options": [
         {
           "name": "target",
-          "value": "http://hd-mail.happy-dev.fr/"
+          "value": "https://hd-mail.happy-dev.fr/"
         },
         {
           "name": "action",
